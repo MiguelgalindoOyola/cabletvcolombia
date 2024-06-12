@@ -1,0 +1,172 @@
+<style type="text/css" media="screen">
+    <!--
+    .abs-center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 2vh;
+    }
+
+    .form {
+        width: 450px;
+    }
+    -->
+</style>
+<script src="<?php echo $_layoutParams['ruta_js']; ?>script.js" type="text/javascript"></script>
+<script src="<?php echo COMMON; ?>/js/ajax.js" type="text/javascript"></script>
+<script src="<?php echo COMMON; ?>/js/jquery.js" type="text/javascript"></script>
+<script src="<?php echo COMMON; ?>/formvalidation/src/js/bootstrapValidator.js" type="text/javascript"></script>
+<script src="<?php echo COMMON; ?>/vendor/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<link href="<?php echo COMMON; ?>/formvalidation/src/css/bootstrapValidator.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo COMMON; ?>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<script src="<?php echo COMMON; ?>/vendor/jquery/jquery.js" type="text/javascript"></script>
+<div id="vista" class="container">
+
+    <div  class="abs-center">
+        <script src='<?php echo COMMON; ?>js/validar.js'></script>
+        
+        
+        <div id="CargaformBarrios"class="card border-info mb-2" style="max-width: 40rem;">
+            <div class="card-header bg-lightblue border-success"> 
+                <h5 class="text-center "><?php echo $this->accion; ?></h5>
+            </div>
+            <form id="form1" method="post" enctype="multipart/form-data" action="<?php echo RUTA_URL . 'parametros/GuardarBarrio'; ?>">
+                <div class="card-body">
+                    <?php
+                    $valor = $this->ConsultaulBarrios[0]['baid'];
+                    $total = $valor + 1;
+                    ?>
+                    <input type="hidden" name="txtId" value="<?php
+                    if (empty($this->datos)) {
+                        
+                    } else {
+                        echo $this->datos[0]['iasId'];
+                    }
+                    ?>">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label for="exampleInputDoc" class="">Codigo</label>
+                                <input name="codigobarrio" disabled class="form-control " value="<?php
+                                if (empty($this->datos)) {
+                                    echo $total;
+                                } else {
+                                    echo $this->datos[0]['baid'];
+                                }
+                                ?>" id="codigobarrio"   type="number " aria-describedby="nameHelp" placeholder="Codigo del Barrio Auto">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="exampleInputName">Nombre </label>
+                                <input name="txtnombrebarrio" class="form-control" value="<?php
+                                if (empty($this->datos)) {
+                                    
+                                } else {
+                                    echo $this->datos[0]['banombre'];
+                                }
+                                ?>" id="txtnombrebarrio" required  type="text" aria-describedby="nameHelp" placeholder="Ingrese el Nombre del Barrio">
+                            </div>                   
+                        </div>
+                    </div>
+                    <div class="form-row">
+
+                        <div class="col-md-12">
+                            <label for="exampleInputName">Detalle </label>
+                            <input name="txtdetallebarrio" required class="form-control" value="<?php
+                            if (empty($this->datos)) {
+                                
+                            } else {
+                                echo $this->datos[0]['badetalle'];
+                            }
+                            ?>" id="txtdetallebarrio " type="text" aria-describedby="nameHelp" placeholder="Detalle/Descripcion">
+                        </div>                   
+                    </div>
+                </div>
+                <div class="form-group card-footer bg-transparent border-success">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <input type="submit" class="btn btn-success btn-block" value="Guardar">
+                        </div>
+                        <div class="col-md-6">
+                            <a class="btn btn-danger btn-block" href="<?php echo RUTA_URL . 'administracion/bienvenido'; ?>">Volver</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div> 
+    </div>
+    <div class="card">
+        <div class="card-title center-block card bg-light"> <h5 class="text-center">Barrios Registrados</h5></div>
+        <div class="card-body center-block ">
+            <div id="vista1">
+                <div class="card mb-3 p-3 mb-2 bg-light text-dark">
+                    <div class="card-body">
+                        <div class="">
+                            <table   style="width: 100%;" class=" table table table-sm  table-condensed" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr> 
+                                        <th style="" class="col-sm-">Codigo</th>
+                                        <th style="" class="col-sm-">Nombre</th>                            
+                                        <th style="" class="col-sm-">Detalle</th>
+                                        <th style="" class="col-sm-">Estado</th>
+                                        <th style="" class="col-sm-1">Accion</th>   
+                                    </tr>
+                                </thead>
+                                <tbody class="table-condensed">
+                                    <?php for ($i = 0; $i < count($this->ConsultaBarrios); $i++) { ?>
+                                        <tr>
+                                            <td ><?php echo ucwords(strtolower($this->ConsultaBarrios[$i]['baid'])); ?></td>
+                                            <td ><?php echo ucwords(strtolower($this->ConsultaBarrios[$i]['banombre'])); ?></td>
+                                            <td ><?php echo ucwords(strtolower($this->ConsultaBarrios[$i]['badetalle'])); ?></td>
+                                            <td ><?php echo ucwords(strtolower($this->ConsultaBarrios[$i]['baestado'])); ?></td>
+                                            <td class="text-center ">
+                                                <button  class="default" title="Editar" value="<?php echo $this->ConsultaBarrios[$i]['baid']; ?>" name="btnEditarBarrio" id="btnEditarBarrio"><i class="fa fa-pencil-square-o fa-0" ></i></button>
+                                               <button 
+                                                   id="btnmodaleliminarr"
+                                                      class="btn btn-danger btn-sm" 
+                                                      data-target="#modalEliminarSedes" 
+                                                      data-toggle="modal" 
+                                                      ata-id="<?php echo $this->ConsultaBarrios[$i]['baid']; ?>" 
+                                                         data-nom="<?php echo ucwords(strtolower($this->ConsultaBarrios[$i]['banombre'])); ?>">
+                                                      <i class="fa fa fa-trash-o"></i>
+                                                  </button>
+                               
+
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" tabindex="-1" id="modalEliminarSedes" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">Mensaje de confirmacion<button class="close" data-dismiss="modal">&times;</button></div>
+                        <div class="modal-body">
+                            <h4>¿Esta seguro que desea eliminar esta sede?</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#" class="btn btn-warning" id="enviar">Si</a>
+                            <a href="#" class="btn btn-danger" data-dismiss="modal">No</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--            <button id="SD">MIGUEL</button>-->
+            <style type="text/css" >
+                #btnmodaleliminarr{
+                    width: 25px; height: 25px; border: 0
+                }
+                #btnEditarBarrio{
+                    width: 25px; height: 25px; border: 0;
+                }
+
+            </style>
+
+        </div>
+    </div>
+
+</div><!-- comment -->

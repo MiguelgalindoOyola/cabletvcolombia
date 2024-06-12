@@ -1,0 +1,195 @@
+<link href="<?php echo COMMON; ?>/sweetalert.css" rel="stylesheet" type="text/css"/>
+<script src="<?php echo COMMON; ?>/sweetalert.min.js" type="text/javascript"></script>
+<script src='<?php echo COMMON; ?>js/validar.js'></script>
+
+<script src="<?php echo COMMON; ?>/js/ajax.js" type="text/javascript"></script>
+<script src="<?php echo COMMON; ?>/js/jquery.js" type="text/javascript"></script>
+<script src='<?php echo COMMON; ?>js/validar.js'></script>
+<script src="<?php echo $_layoutParams['ruta_js']; ?>script.js" type="text/javascript"></script>
+
+<div id="cargaSuspender" class="container-fluid ">
+    <div class="col-md-12 row">
+        <div class="col-md-12 alert alert-success text-center" role="alert">
+            <h4>Reporte Morosos</h4>
+        </div>
+        <div class="col-md-12 row">
+            <div class="col-md-3 d-flex justify-content-center">
+                <!-- small box -->
+                <div class="small-box bg-cyan">
+                    <div class="inner">
+                        <h6>Mostrar todos los Usuarios</h6>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-ios-cart"></i>
+                    </div>
+                    <button id="btnMostrarDatosTabla" style="cursor:pointer;" class="small-box-footer btn btn-block">Mostrar <i class="fas fa-eye"></i></button>
+                </div>
+            </div>
+            <div class="col-md-6">
+            </div> 
+            <div class="col-md-3 d-flex justify-content-center">
+                <!-- small box -->
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h6>Cantidad Usuarios Morosos
+                            <i class="fa fa-bars"></i>
+                            <?php
+                            echo $this->cantidadmorosos[0]['MOROSOS'];
+                            ?>
+                        </h6>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-ios-cart"></i>
+                    </div>
+                    <a style="cursor:pointer;" class="small-box-footer" href= "<?php echo RUTA_URL; ?>reportes/reportemorosos">Imprimir Listado <i class="fas fa-print"></i></a>
+                </div>
+            </div>    
+        </div>
+        <style>
+            /* Estilos personalizados para el botón */
+            .btn-sm-custom {
+                padding: 3px 6px; /* Ajustamos el padding para que el botón sea más compacto */
+                font-size: 12px; /* Tamaño de fuente */
+                width: 90px; /* Ajustamos el ancho del botón */
+                height: 25px; /* Ajustamos el alto del botón */
+            }
+        </style>
+        <div class="table-responsive col-md-12 row" id="CargaConsultaUsuarios">
+            <table style="width: 100%;" class="table table-bordered table-hover tab-custom-content table-borderless table-sm table-condensed table-centered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr> 
+                        <th class="col-sm-">NIT</th>
+                        <th class="col-sm-">NOMBRES & APELLIDOS</th>
+                        <th class="col-sm-">DIRECCION</th>
+                        <th class="col-sm-">CTO</th>
+                        <th class="col-sm-">FECHA/INICIO</th>   
+                        <th class="col-sm-">N/FACT</th>
+                        <th class="col-sm-">DEUDA</th>   
+                        <th class="col-sm-">OPCION</th>   
+                    </tr>
+                </thead>
+                <tbody class="table-condensed">
+                    <?php
+                    for ($i = 0; $i < count($this->datos); $i++) {
+                        ?>
+                        <tr>
+                            <td class="text-center" ><?php echo ucwords(strtolower($this->datos[$i]['uosDocumento'])); ?></td>
+                            <td class="text-center" ><?php echo ucwords(strtolower($this->datos[$i]['NOMBRES'])); ?></td>
+                            <td class="text-center" ><?php echo ucwords(strtolower($this->datos[$i]['DIRECCION'])); ?></td>
+                            <td class="text-center" ><?php echo ucwords(strtolower($this->datos[$i]['froContrato'])); ?></td>
+                            <td class="text-center" ><?php echo ucwords(strtolower($this->datos[$i]['cosFechainici'])); ?> </td>
+                            <td class="text-center" ><?php echo ucwords(strtolower($this->datos[$i]['froNomFctura'])); ?> </td>
+
+                            <?php
+                            $valor = $this->datos[$i]['froTotalVenta'];
+                            $formato = number_format($valor, 2);
+                            ?>
+                            <td class="text-center" ><?php echo '$ ', $formato; ?></td>
+                            <td class="text-center">
+                                <button
+                                    id="btncortar"
+                                    title="Suspender"
+                                    class="default btn-info btn-sm-custom" 
+                                    value="<?php echo $this->datos[$i]['froNomFctura']; ?>"
+                                    data-id="<?php echo $this->datos[$i]['froNomFctura']; ?>" 
+                                    data-nom="<?php echo ucwords(strtolower($this->datos[$i]['froNomFctura'])); ?>">
+                                    <i class="fa fa-scissors fa-sm"><span> Suspender</span></i> 
+                                </button>
+                            </td>
+                        </tr>
+                        <?php
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+<script>
+    $(document).on('click', '#btncortar', function () {
+        cargadivconsulta('cargaSuspender', 'corte/' + $(this).val(), '');
+    });
+//    cargar el modal para el pago de la factura
+   $(document).on('click', '#btnMostrarDatosTabla', function () {
+        cargadivconsulta('CargaConsultaUsuarios', 'iniciomorosotabla/' , '');
+    });
+//    cargar el modal para el pago de la factura
+
+$(document).on("click", "#btnPagarFactura", function () {
+//            swal($(this).val());
+$('#modalFagaFactura').modal('show');
+cargadivconsulta('contenidomodal3', 'pagarfactura/' + $(this).val(), '');
+
+});
+          
+</script>
+<script>
+//    cargar el modal para el pago de la factura
+
+$(document).on("click", "#btnEditarFactura", function () {
+//            swal($(this).val());
+$('#modalFagaFactura').modal('show');
+cargadivconsulta('contenidomodal3', 'Editarfactura/' + $(this).val(), '');
+
+});
+         
+         
+</script>
+<!-- Modal pagar factura -->
+<div class="modal fade bd-example-modal-lg" tabindex="-1" id="modalFagaFactura" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div id="contenidomodal3">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style type="text/css" >
+
+    #btnPagarFactura{
+        width: 100px; height: 25px; border: 0;
+    }
+    #imprimir{
+        width: 28px; height: 25px; border: 0;
+    }
+
+
+
+</style>
+
+
+<div class="modal fade" tabindex="-1" id="modalEliminarServicio1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!--            <div class="modal-header">Mensaje de confirmacion<button class="close" data-dismiss="modal">&times;</button></div>-->
+            <div class="modal-body">
+                <h4>¿Desea imprimir la facturacion del barrio:$?</h4>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-warning " id="enviar">Si</a>
+                <a href="#" class="btn btn-danger" data-dismiss="modal">No</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+                $('#modalEliminarServicio1').on('show.bs.modal', function (event) {
+       var button = $(event.relatedTarget)
+       var recipent = button.data('id')
+       var nom = button.data('nom')
+       var modal = $(this);
+       modal.find('h4').text('¿Desea imprimir la facturacion del barrio: ' + nom + '?');
+       modal.find('#enviar').attr('href', 'generarUNUSUARIOPDF/' + recipent);
+   });               
+</script>

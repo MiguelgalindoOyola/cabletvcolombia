@@ -1,0 +1,86 @@
+<script src='<?php echo COMMON; ?>js/validar.js'></script>
+<script src="<?php echo COMMON; ?>/js/ajax.js" type="text/javascript"></script>
+<script src="<?php echo COMMON; ?>/js/jquery.js" type="text/javascript"></script>
+<script src="<?php echo $_layoutParams['ruta_js']; ?>script.js" type="text/javascript"></script>
+<script src='<?php echo COMMON; ?>js/validar.js'></script><div class="conainer">
+    <div id="divcarga">
+        <table  class="table table-bordered table-hover tab-custom-content table-borderless table-sm table-condensed" id="dataTable"  width="100%" cellspacing="0">
+            <thead>
+                <tr> 
+                    <th style="" class="col-sm-">Documento</th>
+                    <th style="" class="col-sm-">Nombres y Apellidos</th>
+                    <th style="" class="col-sm-">Telefono</th>  
+                    <th style="" class="col-sm-">Email</th>
+                    <th style="" class="col-sm-">Direccion</th>
+                    <th style="letter-spacing: 10px" class="col-sm-1">Opciones</th>   
+                </tr>
+            </thead>
+            <tbody class="table-condensed">
+                <?php for ($i = 0; $i < count($this->ConsultaClientesTab); $i++) { ?>
+                    <tr>
+                        <td ><?php echo ucwords(strtolower($this->ConsultaClientesTab[$i]['uosDocumento'])); ?></td>
+                        <td ><?php echo ucwords(strtolower($this->ConsultaClientesTab[$i]['Nombresyapellidos'])); ?></td>
+                        <td ><?php echo ucwords(strtolower($this->ConsultaClientesTab[$i]['uosTelefono'])); ?></td>
+                        <td ><?php echo ucwords(strtolower($this->ConsultaClientesTab[$i]['uosCorreo'])); ?></td>     
+                        <td ><?php echo ucwords(strtolower($this->ConsultaClientesTab[$i]['direccion'])); ?></td>   
+                        <td class="">
+
+                         
+                            <button  class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="SUSPENDER CONTRATO"                                        
+                                     value="<?php echo $this->ConsultaClientesTab[$i]['uosDocumento']; ?>" 
+                                     name="btnInstalcion" 
+                                     id="btnInstalcion">
+                                <i class="fa fa-pencil fa-sm"></i> Editar</button>
+                                
+                                   <button  class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="SUSPENDER CONTRATO"                                        
+                                     value="<?php echo $this->ConsultaClientesTab[$i]['uosDocumento']; ?>" 
+                                     name="btnhistorial" 
+                                     id="btnhistorial">
+                                <i class="fa fa-tablet fa-sm"></i>Historial</button>
+
+                        </td>
+                    </tr>
+                <?php } ?>
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<script >
+  $(document).on("click", "#btnInstalcion", function () {
+         $('#modalunico2').modal('show');
+        cargadivconsulta('contenidomodal2', 'Formulariousuario/' + $(this).val(), '');
+
+    });
+     $(document).on('click', '#btnhistorial', function () {
+    cargadivconsulta('divcarga', 'consultahistorial/'+$(this).val(), '');
+    });
+</script>
+<div class="modal fade bd-example-modal-lg" tabindex="-1" id="modalunico2" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div id="contenidomodal2">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bd-example-modal-lg" tabindex="-1" id="modalunico5" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+
+        <div class="modal-content">
+
+            <div class="modal-body">
+
+                <div id="contenidomodal5">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+//    
+

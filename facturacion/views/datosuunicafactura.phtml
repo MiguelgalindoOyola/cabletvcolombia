@@ -1,0 +1,256 @@
+<div class="container card-body card">
+    <style>
+
+        /* Estilos adicionales para la tabla responsive */
+        .table-responsive {
+            overflow-x: auto;
+        }
+        #tableWrapper {
+            display: none;
+        }
+        /* Otros estilos personalizados */
+        #dataTable {
+            font-size: 10px;
+        }
+
+        .table-condensed td,
+        .table-condensed th {
+            padding: 5px;
+        }
+        .form-control.select-id {
+            height: auto;
+        </style>
+
+        <script>
+            // Tu código JavaScript aquí
+            document.getElementById('toggleTableBtn').addEventListener('click', function() {
+              var tableWrapper = document.getElementById('tableWrapper');
+              if (tableWrapper.style.display === 'none') {
+                tableWrapper.style.display = 'block';
+              } else {
+                tableWrapper.style.display = 'none';
+              }
+            });
+        </script>
+        <button id="toggleTableBtn" class="btn btn-primary mb-3"> Facturas Realizadas - Mostrar/ocultar tabla</button>
+        <div id="tableWrapper" class="table-responsive">
+            <input type="hidden" id="txtContrato" name="txtContrato" value=""><?php echo $this->datosfacturas[1]['cosId']; ?>
+          
+            <table id="dataTable" class="table table-bordered table-hover tab-custom-content table-borderless table-sm">
+                <thead>
+                    <tr> 
+                        <th scope="col">N.</th>
+                        <th scope="col">Periodo</th>
+                        <th scope="col">Fecha</th>  
+                        <th scope="col">Fecha Vencimiento</th> 
+                        <th scope="col">Fecha de Pago</th> 
+                        <th scope="col">Descuentos</th>
+                        <th scope="col">Valor</th>
+                        <th scope="col">Observaciones</th>
+                        <th scope="col">Estado</th>
+                    </tr>
+                </thead>
+                <tbody class="table-condensed">
+                    <?php for ($l = 0; $l < count($this->datosfacturas); $l++) { ?>
+                        <tr>
+                            <?php
+                            if ($this->datosfacturas[$l]['froEstadoFactura'] == "PORPAGAR") {
+                                $COLOR = 'table-info';
+                            } else if ($this->datosfacturas[$l]['froEstadoFactura'] == "PAGADA") {
+                                $COLOR = 'table-success';
+                            } else if ($this->datosfacturas[$l]['froEstadoFactura'] == "VENCIDA_ASIGNADA") {
+                                $COLOR = 'table-danger';
+                            }
+                            ?>
+                            <td class="<?php echo $COLOR; ?>"><?php echo ucwords(strtolower($this->datosfacturas[$l]['froNomFctura'])); ?></td>
+                            <td class="<?php echo $COLOR; ?>"><?php echo ucwords(strtolower($this->datosfacturas[$l]['periodo'])); ?></td>
+                            <td class="<?php echo $COLOR; ?>"><?php echo ucwords(strtolower($this->datosfacturas[$l]['froFecha'])); ?></td>
+                            <td class="<?php echo $COLOR; ?>"><?php echo ucwords(strtolower($this->datosfacturas[$l]['froFechaVencimiento'])); ?></td>
+                            <td class="<?php echo $COLOR; ?>"><?php echo ucwords(strtolower($this->datosfacturas[$l]['froFechaPago'])); ?></td>
+                            <td class="<?php echo $COLOR; ?>"><?php echo ucwords(strtolower($this->datosfacturas[$l]['froDescuento'])); ?></td>
+                            <td class="<?php echo $COLOR; ?>"><?php echo ucwords(strtolower($this->datosfacturas[$l]['froTotalVenta'])); ?></td>
+                            <td class="<?php echo $COLOR; ?>"><?php echo ucwords(strtolower($this->datosfacturas[$l]['froObservaciones'])); ?></td>
+                            <td class="<?php echo $COLOR; ?>"><?php echo ucwords(strtolower($this->datosfacturas[$l]['froEstadoFactura'])); ?></td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>  
+        <script>
+           // Tu código JavaScript aquí
+           document.getElementById('toggleTableBtnn').addEventListener('click', function() {
+             var tableWrapper = document.getElementById('tableWrapperr');
+             if (tableWrapper.style.display === 'none') {
+               tableWrapper.style.display = 'block';
+             } else {
+               tableWrapper.style.display = 'none';
+             }
+           });
+        </script>
+        <button id="toggleTableBtnn" class="btn btn-primary mb-3"> Factura Por Cobrar - Mostrar/ocultar tabla</button>
+        <div id="tableWrapperr" class="table-responsive">
+
+            <table id="dataTable" class="table table-bordered table-hover tab-custom-content table-borderless table-sm">
+                <thead>
+                    <tr> 
+                        <th scope="col">Cod</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Descripcion</th>  
+                        <th scope="col">Valor</th> 
+
+                    </tr>
+                </thead>
+                <tbody class="table-condensed">
+                    <?php
+                    $valorfacturaporpagar = 0;
+                    for ($a = 0; $a < count($this->datos_facturapendiente); $a++) {
+                        ?>
+                        <tr>
+                            <td class=""><?php echo ucwords(strtolower($this->datos_facturapendiente[$a]['spfIdServicio'])); ?></td>
+                            <td class=""><?php echo ucwords(strtolower($this->datos_facturapendiente[$a]['sosNombre'])); ?></td>
+                            <td class=""><?php echo ucwords(strtolower($this->datos_facturapendiente[$a]['sosDescripcion'])); ?></td>
+                            <td class=""><?php echo ucwords(strtolower($this->datos_facturapendiente[$a]['spfValor'])); ?></td>
+                        </tr>
+                        <?php
+                        $valorfacturaporpagar = $this->datos_facturapendiente[$a]['spfValor'];
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div> 
+    </div>  
+    <style>
+        /* Estilos personalizados para el cuadro de selección */
+        .form-control.select-id {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            padding: 0.5rem;
+            height: auto;
+            line-height: 1.5;
+        }
+    </style>
+    <div class="container card-body card">
+        <div class="col-12 col-md-12 row ">
+            <div class="col-md-12 row justify-content-center">
+                <h4>Servicios a Facturar</h4>
+
+                <table id="tabla-productos" class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Valor</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td>
+                                <select class="form-control select-id" onchange="cargarDatosFila(this)">
+                                    <option value=""></option>
+                                    <?php for ($e = 0; $e < count($this->DatosServiciosfactura); $e++) { ?>
+                                        <option value="<?php echo $this->DatosServiciosfactura[$e]['sosId']; ?>"><?php echo $this->DatosServiciosfactura[$e]['sosNombre']; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </td>
+                            <td><input type="text" class="form-control nombre"></td>
+                            <td><input type="text" class="form-control descripcion"></td>
+                            <td><input type="text" class="form-control valor" onchange="calcularTotal()"></td>
+                            <td><button onclick="eliminarFila(this)" class="btn btn-danger">Quitar</button></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-6 d-flex justify-content-end form-group">
+                        <label class="form-control col-md-4">Total:  </label><!--  -->
+                        <input type="text" id="total" class="form-control col-md-8" readonly>
+                    </div>
+                    <div class="col-md-2">
+                        <button onclick="agregarFila()" class="btn btn-primary">Agregar Fila</button>
+                    </div>
+                </div>
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script>
+                  // Arreglo de datos provenientes de la base de datos
+                  var datosBaseDeDatos = <?php echo json_encode($this->DatosServiciosfactura); ?>;
+   // Variable para almacenar el valor acumulado
+            var valorFacturaPorPagar = <?php echo $valorfacturaporpagar; ?>;
+
+          function agregarFila() {
+                          var fila = '<tr>' +
+                        '<td>' +
+                        '<select class="form-control select-id" onchange="cargarDatosFila(this)">' +
+                        '<option value=""></option>';
+            for (var i = 0; i < datosBaseDeDatos.length; i++) {
+              fila += '<option value="' + datosBaseDeDatos[i].sosId + '">' + datosBaseDeDatos[i].sosNombre + '</option>';
+            }
+            fila += '</select>' +
+                    '</td>' +
+                    '<td><input type="text" class="form-control nombre"></td>' +
+                    '<td><input type="text" class="form-control descripcion"></td>' +
+                    '<td><input type="text" class="form-control valor" onchange="calcularTotal()"></td>' +
+                    '<td><button onclick="eliminarFila(this)" class="btn btn-danger">Quitar</button></td>' +
+                    '</tr>';
+            $('#tabla-productos tbody').append(fila);
+          }
+
+          function eliminarFila(btn) {
+            $(btn).closest('tr').remove();
+            calcularTotal();
+          }
+
+          function cargarDatosFila(select) {
+            var fila = $(select).closest('tr');
+            var id = $(select).val();
+
+            // Buscar el producto correspondiente en el arreglo
+            var producto = datosBaseDeDatos.find(function (p) {
+              return p.sosId == id;
+            });
+
+            if (producto) {
+              // Asignar los datos del producto a los campos de la fila
+              $(fila).find('.nombre').val(producto.sosNombre);
+              $(fila).find('.descripcion').val(producto.sosDescripcion);
+              $(fila).find('.valor').val(producto.sosValor);
+            } else {
+              // Limpiar los campos si no se encuentra el producto
+              $(fila).find('.nombre').val('');
+              $(fila).find('.descripcion').val('');
+              $(fila).find('.valor').val('');
+            }
+
+            calcularTotal();
+          }
+
+          function calcularTotal() {
+             var total = 0;
+                $('.valor').each(function() {
+                    var valor = parseFloat($(this).val()) || 0;
+                    total += valor;
+                });
+                total += valorFacturaPorPagar; // Sumar el valor acumulado
+                $('#total').val(total.toFixed(2));
+            }
+                </script>
+            </div>
+        </div>
+    </div> 
+    <div class="container card-body card">
+                <div class="col-12 col-md-12">
+                    <for class="form-inline justify-content-between">
+                        <div class="d-flex">
+                            <label for="cliente_numero_documento">Fecha de Vencimiento:</label>
+                            <input type="date" name="FechaVencimiento" id="FechaVencimiento" class="form-control ml-2">
+                        </div>
+                        <button type="submit" class="btn btn-success">Finalizar y Guardar</button>
+                    </for>
+                </div>
+            </div>
+
+

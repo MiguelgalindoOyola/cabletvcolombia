@@ -1,0 +1,71 @@
+
+<script src='<?php echo COMMON; ?>js/validar.js'></script>
+<div id="CargaformServicios">
+    
+    
+    <div class="card-header bg-lightblue border-success"> 
+        <h5 class="text-center "><?php echo $this->accion; ?></h5>
+    </div>
+    <form id="form1" method="post" enctype="multipart/form-data" action="<?php echo RUTA_URL . 'parametros/ActualizarServicio'; ?>">
+        <div class="card-body">
+            <input type="hidden" id="txtsosId" name="txtsosId" value="<?php echo $this->datos[0]['sosId'];?>">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="exampleInputDoc" class="">Codigo (auto)</label>
+                        <input name="codigoServicio" disabled class="form-control " value="<?php
+            echo $this->datos[0]['sosId'];
+            ?>" id="codigoServicio"   type="number " aria-describedby="nameHelp" placeholder="Codigo del Barrio Auto">
+                    </div>
+                    <div class="icon i col-md-6">
+                        <label for="exampleInputName">Nombre del Servicio </label>
+                        <input name="txtnombreservicio" class="form-control" value="<?php
+                        echo $this->datos[0]['sosNombre'];
+            ?>" id="txtnombreservicio" required  type="text" aria-describedby="nameHelp" placeholder="Ingrese el Nombre del Barrio">
+                    </div>                   
+                </div>
+                <div class="form-row">
+
+                    <div class="col-md-12">
+                        <label for="exampleInputName">Detalle del Servicio </label>
+                        <input name="txtdetalleservicio" required class="form-control" value="<?php
+                        echo $this->datos[0]['sosDescripcion'];
+            ?>" id="txtdetallebarrio " type="text" aria-describedby="nameHelp" placeholder="Detalle/Descripcion">
+                    </div>                   
+                </div>
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="exampleInputDoc" class="">Valor del Servicio</label>
+                        <input name="txtvalorservicio"  class="form-control " value="<?php
+                               echo $this->datos[0]['sosValor'];
+                               ?>" id="txtvalorservicio"   type="number" aria-describedby="nameHelp" placeholder="Ingresar el valor a cobrar por el servicio">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="exampleInputName">Fecha de Actualizacion </label>
+                        <input disabled name="txteFecha" class="form-control" value="<?php
+                               $date = date('d-m-y');
+                               echo $date;
+//                                echo $this->datos[0]['sosFechaActualizacion'];
+                               ?>" id="txteFecha" required  type="text" aria-describedby="nameHelp">
+                    </div>                   
+                </div>
+
+            </div>
+        </div>
+        <div class="alert alert-warning" >
+            <label for="exampleInputName">Objeto de la Modificacion</label>
+            <input name="txtModificacion" required class="form-control" value="" id="txtModificacion " type="text" aria-describedby="nameHelp" placeholder="Describa el objetivo de la modificacion a realizar">               
+        </div>
+
+        <div class="form-group card-footer bg-transparent border-success">
+            <div class="form-row">
+                <div class="col-md-6">
+                    <input type="submit" class="btn btn-success btn-block" value="Guardar">
+                </div>
+                <div class="col-md-6">
+                    <a class="btn btn-danger btn-block" href="<?php echo RUTA_URL . 'administracion/bienvenido'; ?>">Volver</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div> 

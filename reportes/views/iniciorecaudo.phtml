@@ -1,0 +1,289 @@
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"></script>
+<div class="container">
+    <div class="card-title col-md-12 center center-block text-center" >
+        <h2>RECAUDOS</h2>
+        <br>
+        <div class="row">
+            <form id="form3" method="post" enctype="multipart/form-data" action="<?php echo RUTA_URL . 'reportes/consultarecaudos'; ?>">
+                <div class="input-group center center-block text-center">
+<!--                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Selecciona Tipo de Consulta</option>
+                        <option value="PAGADA">Facturas Cobradas</option>
+                        <option value="VENCIDA_ASIGNADA">Facturas Vencidas</option>
+                        <option value="PORPAGAR">Facturas Por Pagar</option>
+                        <option value="TODO">Todo</option>
+                    </select>-->
+                    <span class="input-group-text">Seleciona Rango</span>
+                    <select class="form-select" name="FechaInicio" id="FechaInicio" aria-label="Default select example">
+                        <option selected>Selecciona Periodo Inicio</option>
+                        <?php
+                        for ($R = 0; $R < count($this->datosperiodos); $R++) {
+                            ?>
+                            <option value="<?php echo ucwords(strtolower($this->datosperiodos[$R]['perId'])); ?>"> <?php echo ucwords(strtolower($this->datosperiodos[$R]['periodo'])); ?></option>
+                        <?php } ?>
+                    </select>
+                    <span class="input-group-text">-</span>
+                    <select class="form-select" name="FechaFinal" id="FechaFinal" aria-label="Default select example">
+                        <option selected>Selecciona Periodo Fin</option>
+                        <?php
+                        for ($R = 0; $R < count($this->datosperiodos); $R++) {
+                            ?>
+                            <option value="<?php echo ucwords(strtolower($this->datosperiodos[$R]['perId'])); ?>"> <?php echo ucwords(strtolower($this->datosperiodos[$R]['periodo'])); ?></option>
+                        <?php } ?>
+                    </select>
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon1">   Consultar   </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card-body" id="divcargarecaudo">
+        <div class="row group">
+            <div id=""  class="text-center">
+                <table class="table table-bordered table-hover tab-custom-content table-borderless table-sm " id="dataTable"  >
+                    <thead>
+
+                        <tr> 
+                            <th scope="col" >Periodo</th>
+                            <th scope="col" >Recaudo</th>
+                            <th scope="col" >Facturas Vencidas</th>  
+                            <th scope="col" >Valor Total</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-condensed ">
+                        <?php
+                        for ($P = 0; $P < count($this->datospagos); $P++) {
+                            $sumatotal = 0;
+                            ?>
+
+                            <tr>
+                                <td scope="row" ><button class="btn btn-link " id="Periodo" value="<?php echo $this->datospagos[$P]['perId']; ?>"><?php echo ucwords(strtolower($this->datospagos[$P]['perMes'])); ?></button>
+                                </td>
+                                <td scope="row" ><?php
+                                    echo ucwords(strtolower($this->datospagos[$P]['froTotalVenta']));
+                                    $sumatotal = $this->datospagos[$P]['froTotalVenta'];
+                                    ?></td>
+
+                                <?php
+                                for ($P1 = 0; $P1 < count($this->datospagos1); $P1++) {
+                                    if ($this->datospagos1[$P1]['perMes'] == $this->datospagos[$P]['perMes']) {
+                                        ?>
+                                        <td scope="row" ><?php
+                                            echo ucwords(strtolower($this->datospagos1[$P1]['froTotalVenta']));
+                                            $sumatotal = $sumatotal + $this->datospagos1[$P1]['froTotalVenta'];
+                                            ?></td>
+                                        <td scope="row" ><?php echo $sumatotal; ?></td>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+            <div id=""  class="text-center"> <label style="">..</label></div>
+            <div id="divgrafica" style="width: 470px; height: 350px; " class="text-center">     <?php
+                $enero2 = 0;
+                $febrero2 = 0;
+                $marzo2 = 0;
+                $abril2 = 0;
+                $mayo2 = 0;
+                $junio2 = 0;
+                $julio2 = 0;
+                $agosto2 = 0;
+                $septiembre2 = 0;
+                $octubre2 = 0;
+                $noviembre2 = 0;
+                $diciembre2 = 0;
+                for ($i = 0; $i < count($this->datospagos2); $i++) {
+                    if ($this->datospagos[$i]['perMes'] == 'enero') {
+                        $enero2 = $this->datospagos2[$i]['froTotalVenta'];
+                    }if ($this->datospagos2[$i]['perMes'] == 'febrero') {
+                        $febrero2 = $this->datospagos2[$i]['froTotalVenta'];
+                    }if ($this->datospagos2[$i]['perMes'] == 'marzo') {
+                        $marzo2 = $this->datospagos2[$i]['froTotalVenta'];
+                    }if ($this->datospagos2[$i]['perMes'] == 'abril') {
+                        $abril2 = $this->datospagos2[$i]['froTotalVenta'];
+                    } if ($this->datospagos2[$i]['perMes'] == 'mayo') {
+                        $mayo2 = $this->datospagos2[$i]['froTotalVenta'];
+                    }if ($this->datospagos2[$i]['perMes'] == 'junio') {
+                        $junio2 = $this->datospagos2[$i]['froTotalVenta'];
+                    }if ($this->datospagos2[$i]['perMes'] == 'julio') {
+                        $julio2 = $this->datospagos2[$i]['froTotalVenta'];
+                    }if ($this->datospagos2[$i]['perMes'] == 'agosto') {
+                        $agosto2 = $this->datospagos2[$i]['froTotalVenta'];
+                    }if ($this->datospagos2[$i]['perMes'] == 'septiembre') {
+                        $septiembre2 = $this->datospagos2[$i]['froTotalVenta'];
+                    }if ($this->datospagos2[$i]['perMes'] == 'octubre') {
+                        $octubre2 = $this->datospagos2[$i]['froTotalVenta'];
+                    }if ($this->datospagos2[$i]['perMes'] == 'noviembre') {
+                        $noviembre2 = $this->datospagos2[$i]['froTotalVenta'];
+                    } if ($this->datospagos2[$i]['perMes'] == 'diciembre') {
+                        $diciembre2 = $this->datospagos2[$i]['froTotalVenta'];
+                    }
+                }
+                $enero = 0;
+                $febrero = 0;
+                $marzo = 0;
+                $abril = 0;
+                $mayo = 0;
+                $junio = 0;
+                $julio = 0;
+                $agosto = 0;
+                $septiembre = 0;
+                $octubre = 0;
+                $noviembre = 0;
+                $diciembre = 0;
+                for ($i = 0; $i < count($this->datospagos); $i++) {
+
+
+                    if ($this->datospagos[$i]['perMes'] == 'enero') {
+                        $enero = $this->datospagos[$i]['froTotalVenta'];
+                    }if ($this->datospagos[$i]['perMes'] == 'febrero') {
+                        $febrero = $this->datospagos[$i]['froTotalVenta'];
+                    }if ($this->datospagos[$i]['perMes'] == 'marzo') {
+                        $marzo = $this->datospagos[$i]['froTotalVenta'];
+                    }if ($this->datospagos[$i]['perMes'] == 'abril') {
+                        $abril = $this->datospagos[$i]['froTotalVenta'];
+                    } if ($this->datospagos[$i]['perMes'] == 'mayo') {
+                        $mayo = $this->datospagos[$i]['froTotalVenta'];
+                    }if ($this->datospagos[$i]['perMes'] == 'junio') {
+                        $junio = $this->datospagos[$i]['froTotalVenta'];
+                    }if ($this->datospagos[$i]['perMes'] == 'julio') {
+                        $julio = $this->datospagos[$i]['froTotalVenta'];
+                    }if ($this->datospagos[$i]['perMes'] == 'agosto') {
+                        $agosto = $this->datospagos[$i]['froTotalVenta'];
+                    }if ($this->datospagos[$i]['perMes'] == 'septiembre') {
+                        $septiembre = $this->datospagos[$i]['froTotalVenta'];
+                    }if ($this->datospagos[$i]['perMes'] == 'octubre') {
+                        $octubre = $this->datospagos[$i]['froTotalVenta'];
+                    }if ($this->datospagos[$i]['perMes'] == 'noviembre') {
+                        $noviembre = $this->datospagos[$i]['froTotalVenta'];
+                    } if ($this->datospagos[$i]['perMes'] == 'diciembre') {
+                        $diciembre = $this->datospagos[$i]['froTotalVenta'];
+                    }
+                }
+                $enero1 = 0;
+                $febrero1 = 0;
+                $marzo1 = 0;
+                $abril1 = 0;
+                $mayo1 = 0;
+                $junio1 = 0;
+                $julio1 = 0;
+                $agosto1 = 0;
+                $septiembre1 = 0;
+                $octubre1 = 0;
+                $noviembre1 = 0;
+                $diciembre1 = 0;
+                for ($i = 0; $i < count($this->datospagos1); $i++) {
+
+
+                    if ($this->datospagos[$i]['perMes'] == 'enero') {
+                        $enero1 = $this->datospagos1[$i]['froTotalVenta'];
+                    }if ($this->datospagos1[$i]['perMes'] == 'febrero') {
+                        $febrero1 = $this->datospagos1[$i]['froTotalVenta'];
+                    }if ($this->datospagos1[$i]['perMes'] == 'marzo') {
+                        $marzo1 = $this->datospagos1[$i]['froTotalVenta'];
+                    }if ($this->datospagos1[$i]['perMes'] == 'abril') {
+                        $abril1 = $this->datospagos1[$i]['froTotalVenta'];
+                    } if ($this->datospagos1[$i]['perMes'] == 'mayo') {
+                        $mayo1 = $this->datospagos1[$i]['froTotalVenta'];
+                    }if ($this->datospagos1[$i]['perMes'] == 'junio') {
+                        $junio1 = $this->datospagos1[$i]['froTotalVenta'];
+                    }if ($this->datospagos1[$i]['perMes'] == 'julio') {
+                        $julio1 = $this->datospagos1[$i]['froTotalVenta'];
+                    }if ($this->datospagos1[$i]['perMes'] == 'agosto') {
+                        $agosto1 = $this->datospagos1[$i]['froTotalVenta'];
+                    }if ($this->datospagos1[$i]['perMes'] == 'septiembre') {
+                        $septiembre1 = $this->datospagos1[$i]['froTotalVenta'];
+                    }if ($this->datospagos1[$i]['perMes'] == 'octubre') {
+                        $octubre1 = $this->datospagos1[$i]['froTotalVenta'];
+                    }if ($this->datospagos1[$i]['perMes'] == 'noviembre') {
+                        $noviembre1 = $this->datospagos1[$i]['froTotalVenta'];
+                    } if ($this->datospagos1[$i]['perMes'] == 'diciembre') {
+                        $diciembre1 = $this->datospagos1[$i]['froTotalVenta'];
+                    }
+                }
+
+
+// Valores con PHP. Estos podrían venir de una base de datos o de cualquier lugar del servidor
+                $etiquetas = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+                $datosVentas = [$enero, $febrero, $marzo, $abril, $mayo, $junio, $julio, $agosto, $septiembre, $octubre, $noviembre, $diciembre];
+                $datosVentas1 = [$enero1, $febrero1, $marzo1, $abril1, $mayo1, $junio1, $julio1, $agosto1, $septiembre1, $octubre1, $noviembre1, $diciembre1];
+
+                $datosVentas2 = [$enero2, $febrero2, $marzo2, $abril2, $mayo2, $junio2, $julio2, $agosto2, $septiembre2, $octubre2, $noviembre2, $diciembre2];
+                ?>
+
+                <h3>Reporte Grafico Facturacion</h3>
+
+                <canvas id="grafica"></canvas>
+                <script type="text/javascript">
+                    // Obtener una referencia al elemento canvas del DOM
+                    const $grafica = document.querySelector("#grafica");
+                    // Pasaamos las etiquetas desde PHP
+                    const etiquetas = <?php echo json_encode($etiquetas) ?>;
+                    // Podemos tener varios conjuntos de datos. Comencemos con uno
+                    const datosVentas2020 = {
+                        label: "Facturas Pagas",
+                        // Pasar los datos igualmente desde PHP
+                        data: <?php echo json_encode($datosVentas) ?>,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)', // Color de fondo
+                        borderColor: 'rgba(54, 162, 235, 1)', // Color del borde
+                        borderWidth: 1, // Ancho del borde
+                    };
+                    const datosVentas2022 = {
+                        label: "Facturas vencidas",
+                        // Pasar los datos igualmente desde PHP
+                        data: <?php echo json_encode($datosVentas1) ?>,
+                        backgroundColor: 'rgba(	240, 157, 100, 0.2)', // Color de fondo
+                        borderColor: 'rgba(240, 157, 100, 1)', // Color del borde
+                        borderWidth: 1, // Ancho del borde
+                    };
+                    const datosVentas2023 = {
+                        label: "Facturas Por Pagar",
+                        // Pasar los datos igualmente desde PHP
+                        data: <?php echo json_encode($datosVentas2) ?>,
+                    backgroundColor: 'rgba(100, 240, 157, 0.2)', // Color de fondo
+                    borderColor: 'rgba(100, 240, 1570, 1)', // Color del borde
+                    borderWidth: 1, // Ancho del borde
+                };
+                new Chart($grafica, {
+                    type: 'line', // Tipo de gráfica
+                    data: {
+                        labels: etiquetas,
+                        datasets: [
+                            datosVentas2020,
+                             datosVentas2022,
+                             datosVentas2023,
+                            // Aquí más datos...
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }],
+                        },
+                    }
+                });
+                    
+     $(document).on('click', '#Periodo', function () {
+    cargadivconsulta('cargadetalle', 'consultaperiodosboton/'+$(this).val(), '');
+});
+                </script>
+
+
+            </div>
+        </div>  
+
+    </div>
+
+</div>
+<div class="card-body">
+    <div class="row" id="cargadetalle">
+
+
+    </div>
+</div>

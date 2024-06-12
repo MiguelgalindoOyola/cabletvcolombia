@@ -1,0 +1,246 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.5/css/bootstrap-select.min.css" />
+<link rel="stylesheet" href="style.css" />
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.5/js/bootstrap-select.min.js"></script>
+<style type="text/css" media="screen">
+    <!--
+    .abs-center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 2vh;
+    }
+
+    .form {
+        width: 450px;
+    }
+    -->
+</style>
+<link href="<?php echo COMMON; ?>/sweetalert.css" rel="stylesheet" type="text/css"/>
+<script src="<?php echo COMMON; ?>/sweetalert.min.js" type="text/javascript"></script>
+<script src='<?php echo COMMON; ?>js/validar.js'></script>
+<script src="<?php echo $_layoutParams['ruta_js']; ?>script.js" type="text/javascript"></script>
+<script src="<?php echo COMMON; ?>/js/ajax.js" type="text/javascript"></script>
+<script src="<?php echo COMMON; ?>/js/jquery.js" type="text/javascript"></script>
+<script src='<?php echo COMMON; ?>js/validar.js'></script>
+<script src="<?php echo RUTA_URL; ?>public/cangrejoLayout/js/script.js" type="text/javascript"></script>
+<div class=" container-fluid">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <div class="card card-body container-fluid">
+            <div class="row">
+                <div class=" col-md-3">
+                    <div class="form-group">
+                        <button  type="button" 
+                                 class="btn btn-success col-12" 
+                                 title="Agregar Usuario" 
+                                 value="btnBuscar" 
+                                 name="btnBuscar" 
+                                 id="btnBuscar" >
+                            Regristrar Cliente
+                        </button> 
+                    </div>    </div>
+                <div class=" col-md-6">
+                    <div class="form-group">
+                        <select  
+                            id="cmbelemento" 
+                            name="cmbelemento" 
+                            class="selectpicker col-12"
+                            data-show-subtext="true" 
+                            data-live-search="true">
+                            <option class=""value="0000">Selecciones datos</option>
+                            <?php for ($i = 0; $i < count($this->ConsultaU); $i++) { ?> 
+                                <option   value="<?php echo $this->ConsultaU[$i]['uosDocumento'] ?>" class="text-capitalize" data-subtext=" <?php
+                                echo $this->ConsultaU[$i]['uosNombres'];
+                                " ";
+                                echo " " . $this->ConsultaU[$i]['uosApellidos'];
+                                ?>"><?php echo $this->ConsultaU[$i]['uosDocumento'] ?> </option>
+                                      <?php } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class=" col-md-3">
+
+                    <div class="form-group">
+                        <button  type="button" 
+                                 class="btn btn-success col-12" 
+                                 title="Agregar Usuario" 
+                                 value="btnBusca" 
+                                 name="btnBusca" 
+                                 id="btnBusca" >
+                            Buscar Cliente
+                        </button> 
+                    </div>
+                </div>
+
+            </div>
+            <div class="container">
+                <!-- small box -->
+                <!--                <div class="col-md-6"></div>-->
+                <div class="col-md-6">
+                    <div class=" small-box bg-warning " data-toggle="tooltip" data-placement="top" title="Genera listado con los datos de los usuarios incluyendo los que no tienen un contrato asignado">
+
+                        <div class="icon">
+                            <i class="ion ion-ios-cart"></i>
+                        </div>
+                        <a style="cursor:pointer;" class="small-box-footer" href= "<?php echo RUTA_URL; ?>facturacion/usuariossinsaldo">Imprimir Listado de los Usuarios General <i
+                                class="fas fa-print"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="small-box bg-warning" data-toggle="tooltip" data-placement="top" title="Genera un listado con los datos de los Usuarios con los valores de la ultima factura generada(Activa o Suspendida)">
+                        <div class="icon">
+                            <i class="ion ion-ios-cart"></i>
+                        </div>
+                        <a style="cursor:pointer;" class="small-box-footer" href= "<?php echo RUTA_URL; ?>facturacion/usuariosconsaldo">Imprimir Listado de los Usuarios con saldos General <i
+                                class="fas fa-print"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <!-- small box -->
+                <!--                <div class="col-md-6"></div>-->
+                <div class="col-md-6">
+                    <div class=" small-box bg-warning " data-toggle="tooltip" data-placement="top" title="Genera listado con los datos de los usuarios incluyendo los que no tienen un contrato asignado">
+
+                        <div class="icon">
+                            <i class="ion ion-ios-cart"></i>
+                        </div>
+                        <a style="cursor:pointer;" class="small-box-footer" href= "<?php echo RUTA_URL; ?>facturacion/usuariossinsaldoactivo">Imprimir Listado de los Usuarios Activos <i
+                                class="fas fa-print"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="small-box bg-warning" data-toggle="tooltip" data-placement="top" title="Genera un listado con los datos de los Usuarios con los valores de la ultima factura generada(Activa o Suspendida)">
+                        <div class="icon">
+                            <i class="ion ion-ios-cart"></i>
+                        </div>
+                        <a style="cursor:pointer;" class="small-box-footer" href= "<?php echo RUTA_URL; ?>facturacion/usuariosconsaldoactivo">Imprimir Listado de los Usuarios con saldos Activos<i
+                                class="fas fa-print"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="divcarga">
+
+                <table   style="" class="table table-sm border-width-2  table-condensed" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr> 
+                            <th style="" class="col-sm-">Documento</th>
+                            <th style="" class="col-sm-">Nombres y Apellidos</th>
+                            <th style="" class="col-sm-">Asignacion</th>  
+                            <th style="" class="col-sm-">Num Contrato</th>
+                            <th style="" class="col-sm-">Estado</th>
+                            <!--<th style="" class="col-sm-1">Opciones</th>-->   
+                        </tr>
+                    </thead>
+                    <tbody class="table-condensed">
+                        <?php for ($i = 0; $i < count($this->ConsultaClientesTab); $i++) { ?>
+                            <tr>
+                                <td ><?php echo ucwords(strtolower($this->ConsultaClientesTab[$i]['uosDocumento'])); ?></td>
+                                <td ><?php echo ucwords(strtolower($this->ConsultaClientesTab[$i]['uosNombres'])); ?><?php
+                                    echo ' ';
+                                    echo ucwords(strtolower($this->ConsultaClientesTab[$i]['uosApellidos']));
+                                    ?></td>
+                                <td ><?php echo ucwords(strtolower($this->ConsultaClientesTab[$i]['uosEstadoContrato'])); ?></td>
+                                <td ><?php echo ucwords(strtolower($this->ConsultaClientesTab[$i]['cosId'])); ?></td>
+                                <td class="alert <?php echo $this->ConsultaClientesTab[$i]['cosEstilo']; ?>"><?php echo ucwords(strtolower($this->ConsultaClientesTab[$i]['cosEstado'])); ?></td>                      
+    <!--                                <td class="form-row ">
+                                    <button  
+                                        class="default" title="Editar" value="<?php echo $this->ConsultaClientesTab[$i]['uosDocumento']; ?>" name="btnEditarServicio" id="btnEditarServicio"><i class="fa fa-pencil-square-o fa-0" ></i></button>
+                                    <button  
+                                        class="default" 
+                                        title="Novedades" 
+                                        value="<?php echo $this->ConsultaClientesTab[$i]['cosId']; ?>" 
+                                        name="btnNovedadesServicios" id="btnNovedadesServicios">
+                                        <i class="fa fa-bars fa-0" ></i></button>
+
+                                    <button  id="btneliminarcintrato"
+                                             class="danger" 
+                                             data-target="#modalEliminarServicio" 
+                                             data-toggle="modal" 
+                                             data-id="<?php echo $this->ConsultaClientesTab[$i]['uosDocumento']; ?>" 
+                                             data-nom="<?php echo ucwords(strtolower($this->ConsultaClientesTab[$i]['uosNombres'])); ?>">
+                                        <i class="fa fa fa-trash-o"></i>
+                                    </button>
+                                </td>-->
+                            </tr>
+                        <?php } ?>
+                        <?php for ($A = 0; $A < count($this->ConsultaClientesTab1); $A++) { ?>
+                            <tr>
+                                <td ><?php echo ucwords(strtolower($this->ConsultaClientesTab1[$A]['uosDocumento'])); ?></td>
+                                <td ><?php
+                                    echo ucwords(strtolower($this->ConsultaClientesTab1[$A]['uosNombres']));
+                                    echo ' ';
+                                    echo ucwords(strtolower($this->ConsultaClientesTab1[$A]['uosApellidos']));
+                                    ?></td>
+                                <td ><?php echo ucwords(strtolower($this->ConsultaClientesTab1[$A]['uosEstadoContrato'])); ?></td>
+                                <td class="alert alert-danger">Por definir</td>
+                                <td class="alert alert-danger">Por definir</td>                      
+    <!--                                <td class="form-row ">
+                                    <button  class="default btn-sm" title="Editar" value="<?php echo $this->ConsultaClientesTab1[$A]['uosDocumento']; ?>" name="btnEditarServicio" id="btnEditarServicio"><i class="fa fa-pencil-square-o fa-0" ></i></button>
+                                    <button  class="default btn-sm" title="Novedades" value="" name="btnNovedadesServicios" id="btnNovedadesServicios"><i class="fa fa-bars fa-0" ></i></button>
+
+                                    <button  id="btneliminarcintrato"
+                                             class="danger sm" 
+                                             data-target="#modalEliminarServicio" 
+                                             data-toggle="modal" 
+                                             data-id="<?php echo $this->ConsultaClientesTab[$i]['uosDocumento']; ?>" 
+                                             data-nom="<?php echo ucwords(strtolower($this->ConsultaClientesTab[$i]['uosNombres'])); ?>">
+                                        <i class="fa fa fa-trash-o"></i>
+                                    </button>
+                                </td>-->
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+
+            </div>
+        </div> 
+    </div>
+</div>
+<div clas="col-md-1"></div>
+<style type="text/css" >
+    #btneliminarcintrato{
+        width: 25px; height: 25px; border: 0
+    }
+    #btnEditarServicio{
+        width: 25px; height: 25px; border: 0;
+    }
+    #btnNovedadesServicios{
+        width: 25px; height: 25px; border: 0;
+    }
+
+
+</style>
+
+
+
+
+
+<script>
+//$(document).on('submit', '#formcate', function () {
+//    if ($('#txtnombre').val() != '') {
+//        data = $(this).serialize();
+//        cargadivconsulta('vista', 'setcategoria/', data);
+//    }
+//});
+    
+//     $(document).on("click", "#btnAgregarUsuario", function () {
+////         alert('asd');
+//        $('#exampleModal').modal('show');
+//        cargadivconsulta('modalgeneral', 'FormularioCliente/','');
+//
+//    });
+ 
+</script>
+
+
+
+
+
+
+
+

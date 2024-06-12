@@ -1,0 +1,84 @@
+
+<?php
+if ($_POST) {
+    print_r($_POST);
+    for ($i = 1; $i < count($_POST['cmbproducto']); $i++) {
+        echo "<br/>" . $_POST['cmbproducto'][$i];
+    }
+
+
+    foreach ($_POST['cmbproducto'] as $prod) {
+        echo "<br/>" . $prod;
+    }
+}
+?>
+
+<script src='<?php echo COMMON; ?>js/validar.js'></script>
+
+<form id="form1" method="post" enctype="multipart/form-data" action="<?php echo RUTA_URL . 'administracion/guardarProducto'; ?>">
+
+    
+                           
+    <!--<div class="col-md-1"></div>-->
+    <div class="container">
+        <div class="card " style="width:">
+            <div class="card-header"><?php echo $this->accion; ?></div> 
+            <div class="card-body">
+                <div class="form-group form-row col-md-12">
+                    <input class="form-control" type="hidden" id="txtusuario" name="txtusuario" id="txtusuario"spellcheck="Nombre del Producto" value="<?php echo Session::get('usuario'); ?>">
+                    <label class="col-md-2 align-items-center " for="exampleInputDoc">Categorias </label>
+                    <select class="form-control col-md-7" id="cmbCategoria" name="cmbCategoria" >
+                         <option value="0">-Seleccione-</option>
+                        <?php for ($i = 0; $i < count($this->datoscatedorias); $i++) { ?>                       
+                        <option value="<?php echo ucwords(strtolower($this->datoscatedorias[$i]['iasId'])); ?>"><?php echo ucwords(strtolower($this->datoscatedorias[$i]['iasNombre'])); ?></option>
+
+                        <?php } ?>  
+                    </select>
+                    <input class="form-control" type="hidden" id="cmbCategoria" name="cmbCategoria" id="txtusuario"spellcheck="2001" value="2001">
+                   
+                    <h6 id="FechaRegistro" class="form-control col-md-3 card-text bg-light" value="<?php echo date("Y-m-d"); ?>" style="max-width: 18rem;" for="exampleInputDoc">Fecha de Registro: <?php echo date("Y-m-d"); ?></h6>
+                </div>
+                <table id="tabla" class=" col-md-12 table table-bordered table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>                            
+                            <th>Marca</th>
+                            <th>Descripcion</th>
+
+                            <th><button type="button" class="btn btn-info btn-xs" name="agregarFila" id="agregarFila">
+                                    <samp class="glyphicon glyphicon-plus"></samp>
+                                </button></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr class="fila-base " style=" display:none">
+                            <td> <input class="form-control" type="text" id="tosNombre" name="tosNombre[]" spellcheck="Nombre del Producto"></td>
+                            <td> <input class="form-control" type="text" id="tosMarca" name="tosMarca[]" spellcheck="Marca del Producto"></td>
+                            <td> <input class="form-control" type="text" id="tosDescripcion" name="tosDescripcion[]" spellcheck="Descripcion breve "></td>
+                            <td class="eliminarFila"><button type="button" class=" btn btn-danger btn-xs glyphicon glyphicon-remove "></button></td>
+                        </tr>
+                        <tr class="" >
+                            <td> <input class="form-control" type="text" id="tosNombre" name="tosNombre[]" spellcheck="Nombre del Producto"></td>
+                            <td> <input class="form-control" type="text" id="tosMarca" name="tosMarca[]" spellcheck="Marca del Producto"></td>
+                            <td> <input class="form-control" type="text" id="tosDescripcion" name="tosDescripcion[]" spellcheck="Descripcion breve "></td>
+                            <td class="eliminarFila"><button type="button" class=" btn btn-danger btn-xs glyphicon glyphicon-remove "></button></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <div class="form-group col-md-12">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <input type="submit" class="btn btn-success btn-block" value="Guardar">
+                        </div>
+                        <div class="col-md-6">
+                            <a class="btn btn-danger btn-block" href="<?php echo RUTA_URL . 'administracion/productos'; ?>">Volver</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>       
+
+</form>

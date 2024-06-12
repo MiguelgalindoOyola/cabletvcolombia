@@ -1,0 +1,38 @@
+<script src='<?php echo COMMON; ?>js/validar.js'></script>
+
+
+<script src='<?php echo COMMON; ?>js/validar.js'></script>
+<div class=" col col-md-12 box card form-row white mb-1 ">
+    <br>
+    <div class=" col col-md-12 card-title  card bg-light"> <h5 class="text-center">Novedades Registradas</h5></div>
+    <div class="col col-md-12 card-body center-block ">            
+        <div class="col col-md-12 card bg-light text-dark">
+            <div class="card-body">
+
+
+                <table   style="" class="table table-sm border-width-2  table-condensed" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr> 
+                            <th style="" class="col-sm-">Nombre del Servicio</th>                            
+                            <th style="" class="col-sm-">Tipo de Modificacion</th>
+                            <th style="" class="col-sm-">Objeto/th>
+                            <th style="" class="col-sm-">Fecha</th> 
+
+                        </tr>
+                    </thead>
+                    <tbody class="table-condensed">
+                        <?php for ($i = 0; $i < count($this->datos2); $i++) { ?>
+                            <tr>
+                                <td ><?php echo ucwords(strtolower($this->datos2[$i]['sosNombre'])); ?></td>
+                                <td ><?php echo ucwords(strtolower($this->datos2[$i]['tipomodificacion'])); ?></td>
+                                <td ><?php echo ucwords(strtolower($this->datos2[$i]['objeto'])); ?></td>
+                                <td ><?php echo ucwords(strtolower($this->datos2[$i]['fecha'])); ?></td>
+
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

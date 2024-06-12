@@ -1,0 +1,58 @@
+<script src='<?php echo COMMON; ?>js/validar.js'></script>
+<div class="card card-register mx-auto mt-5">
+    <div class="card-header"><?php echo $this->accion; ?></div>
+    <div class="card-body">
+        <form id="form1" method="post" enctype="multipart/form-data" action="<?php echo RUTA_URL . 'administracion/guardarcliente'; ?>">
+            <input type="hidden" name="txtId" value="<?php if(empty($this->datos)){}else{  echo $this->datos[0]['resCod'];} ?>">
+            <div class="form-group">
+                <div class="form-row">
+                  <div class="col-md-6">
+                        <label for="exampleInputDoc">DOC/NIT</label>
+                        <input name="resCod" class="form-control" value="<?php if(empty($this->datos)){}else{ echo $this->datos[0]['resCod']; } ?>" id="exampleInputName" type="number" aria-describedby="nameHelp" placeholder="Doc/Nit">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="exampleInputName">Razon Social</label>
+                        <input name="txtRazonSocial" class="form-control" value="<?php if(empty($this->datos)){}else{ echo $this->datos[0]['resRasonSocial']; } ?>" id="exampleInputName" type="text" aria-describedby="nameHelp" placeholder="Ingrese Razon Social">
+                    </div>                   
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                     <div class="col-md-6">
+                        <label for="exampleInputDireccion">Direccion</label>
+                        <input name="txtDireccion" class="form-control" value="<?php if(empty($this->datos)){}else{ echo $this->datos[0]['resDireccion'];} ?>" id="exampleInputDireccion" type="text" aria-describedby="nameHelp" placeholder="Ingrese Direccion">
+                    </div>
+               
+                    <div class="col-md-6">
+                        <label for="exampleInputTelefono">Telefono</label>
+                        <input name="txtTelefono" class="form-control" value="<?php if(empty($this->datos)){}else{  echo $this->datos[0]['resTelefono'];} ?>" id="exampleInputTelefono" type="number" aria-describedby="AdressHelp" placeholder="Ingrese Telefono">
+                    </div>
+                     </div>
+            </div>      
+           
+              <div class="form-group"> 
+                  <div class="form-row">
+                  <div class="col-md-6">
+                        <label for="exampleInputEmail1">Email</label>
+                        <input name="txtEmail"  class="form-control " value=" <?php if(empty($this->datos)){}else{  echo $this->datos[0]['resEmail'];} ?>" id="exampleInputEmail1" type="email" placeholder="Ingrese Email" aria-describedby="AdressHelp" name="txtEmail">
+                    </div>
+                    <div class="col-md-6">
+                                    
+                      <label for="exampleInputDescripcion">Descripcion</label>
+                      <input name="txtDescripcion" class="form-control" value=" <?php if(empty($this->datos)){}else{  echo $this->datos[0]['resDescripcion'];} ?>" id="exampleInputDescripcion" type="text" placeholder="Ingrese Descripcion" aria-describedby="AdressHelp" name="txtdireccion">
+                    </div>
+                      </div>
+               </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <input type="submit" class="btn btn-success btn-block" value="Guardar">
+                    </div>
+                    <div class="col-md-6">
+                        <a class="btn btn-danger btn-block" href="<?php echo RUTA_URL . 'administracion/clientes'; ?>">Volver</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

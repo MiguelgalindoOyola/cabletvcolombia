@@ -1,0 +1,68 @@
+<div class=" "></div>
+<div id="vista" class="">
+    <div class="card mb-3 p-3 mb-2 bg-light text-dark">
+        <div class="card-header ">
+            <i class="fa fa-table"></i> <?php echo $this->metodo; ?></div>
+        <div class="card-body">
+            <button class="btn btn-success " style="margin-bottom: 9px;" id="btnAgregarProducto">Agregar</button>
+            <div class="">
+                <table class="table table table-sm table-condensed table-responsive-lg table-responsive-sm table-responsive-xl" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr> 
+                            <th>Codigo</th>
+                            <th>Nombre</th>                            
+                            <th>Marca</th>
+                            <th>Descripcion</th>
+                            <th>categoria</th>
+                            <th>Fecha de Registro</th>
+                            <th>Usuario</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="table-condensed">
+                        <?php for ($i = 0; $i < count($this->datosproducto); $i++) { ?>
+                            <tr>
+                                <td "><?php echo ucwords(strtolower($this->datosproducto[$i]['tosId'])); ?></td>
+                                <td><?php echo ucwords(strtolower($this->datosproducto[$i]['tosNombre'])); ?></td>
+                                <td><?php echo ucwords(strtolower($this->datosproducto[$i]['tosMarca'])); ?></td>
+                                <td><?php echo ucwords(strtolower($this->datosproducto[$i]['tosDescripcion'])); ?></td>
+                                <td><div style="display: none" "  tid="tosIdCategoria"><?php echo $this->datosproducto[$i]['tosIdCategoria']; ?></div><?php echo $this->datosproducto[$i]['iasNombre']; ?></td>
+                                <td><?php echo $this->datosproducto[$i]['tosFechaRegistro']; ?></td>
+                                <td><?php echo $this->datosproducto[$i]['tosIdUsuario']; ?></td>
+                                <td class="text-center ">
+                                                            <button  class="fa fa-pencil-square" style="width: 25px; height: 25px; border: 0;" title="Editar" value="<?php echo $this->datosproducto[$i]['tosId']; ?>"  id="btnEditarcategorias"></button>
+                                                            <button  class="fa fa-trash-o" style="width: 25px; height: 25px; border: 0;" title="Eliminar" data-target="#modalEliminarCategorias" data-toggle="modal" data-id="<?php echo $this->datosproducto[$i]['tosId']; ?>" data-nom="<?php echo ucwords(strtolower($this->datosproducto[$i]['tosNombre'])); ?>"></button>
+                                                        </td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<button class="default" onclick="myFunction()">Try it</button>
+<script>
+    document.getElementById('EDITAR').onclick = function(){
+    alert('Hey Alerta Wey!');
+    }
+    function myFunction() {
+  alert("I am an alert box!");
+}
+
+</script>
+<div class="modal fade" tabindex="-1" id="modalEliminarCategorias" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">Mensaje de confirmacion<button class="close" data-dismiss="modal">&times;</button></div>
+            <div class="modal-body">
+                <h4></h4>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-warning" id="enviar">Si</a>
+                <a href="#" class="btn btn-danger" data-dismiss="modal">No</a>
+            </div>
+        </div>
+    </div>
+</div>

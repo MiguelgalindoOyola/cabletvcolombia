@@ -1,0 +1,243 @@
+
+<script src='<?php echo COMMON; ?>js/validar.js'></script>
+<div id="CargaformServicios">
+    <!--    <div class="container-fluid card-header bg-lightblue border-success"> 
+            <h5 class="text-center "><?php echo $this->accion; ?></h5>
+        </div>-->
+
+    <form id="form3" method="post" enctype="multipart/form-data" action="<?php echo RUTA_URL . 'facturacion/GuardarabonoFactura'; ?>">
+        <div class="card-body">
+            <input type="hidden" id="txtcodFactura" name="txtcodFactura" value="<?php echo $this->datos[0]['froNomFctura']; ?>">
+            <div class="form-group">
+                <fieldset>
+                    <div class="container-fluid card">
+                        <div class="row ">
+                            <div class="container-fluid card-header bg-lightblue border-success"> 
+                                <h5 class="text-center "><?php echo $this->accion; ?> N. <?php echo $this->datos[0]['froNomFctura']; ?> </h5>
+                            </div>  
+                        </div>
+                    </div>
+                    <STYLE type="text/css">
+                        H4 { text-align: center}
+                    </STYLE>
+            </div>
+            <div class="container-fluid card">
+                <div class="row ">
+                    <div class="col-12 col-md-4">
+                        <div class="form-row">
+                            <label for="cliente_numero_documento" class="bmd-label-floating"> Numero de Contrato:  &nbsp;</label>
+                            <input type="text" name="txtcodigofactura" id="txtcodigofactura" value="<?php echo $this->datos[0]['froNomFctura']; ?>">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <div class="form-row">
+                            <label for="cliente_numero_documento" class="bmd-label-floating"> <?php echo $this->datos[0]['froContrato']; ?> &nbsp;</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                        <div class="form-row">
+                            <label for="cliente_numero_documento" class="bmd-label-floating"> Numero de documento:  &nbsp;</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <div class="form-row">
+                            <label for="cliente_numero_documento" class="bmd-label-floating"> <?php echo $this->datos[0]['uosDocumento']; ?> &nbsp;</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                        <div class="form-row">
+                            <label for="cliente_numero_documento" class="bmd-label-floating"> Nombre y Apellidos:  &nbsp;</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <div class="form-row">
+                            <label for="cliente_numero_documento" class="bmd-label-floating"> <?php echo $this->datos[0]['uosNombres']; ?> <?php
+                                echo ' ';
+                                echo $this->datos[0]['uosApellidos'];
+                                ?> &nbsp;</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                        <div class="form-row">
+                            <label for="cliente_numero_documento" class="bmd-label-floating"> Direccion:  &nbsp;</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <div class="form-row">
+                            <label for="cliente_numero_documento" class="bmd-label-floating"> <?php echo ucwords(strtolower($this->datos[0]['uosDireccion'])); ?><?php
+                                echo ' / ';
+                                echo ucwords(strtolower($this->datos[0]['banombre']));
+                                ?> &nbsp;</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                        <div class="form-row">
+                            <label for="cliente_numero_documento" class="bmd-label-floating"> Telefono:  &nbsp;</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <div class="form-row">
+                            <label for="cliente_numero_documento" class="bmd-label-floating"> <?php echo $this->datos[0]['uosTelefono']; ?>  &nbsp;</label>
+                        </div>
+                    </div>
+                </div>                
+
+                <div class=" row">
+                    <label style="text-align: center" class="col col-md-12 ">CONCEPTO</label>
+                    <table class="table table-sm table-hover border-success border-1 table-bordered" >
+
+                        <thead>
+                            <tr style="text-align: center"> 
+                                <th  >Codigo</th>
+                                <th  >Nombre</th>
+                                <th  >Valor</th>  
+
+                            </tr>
+                        </thead>
+                        <tbody class="table-condensed ">
+                            <?php for ($A = 0; $A < count($this->datos1); $A++) { ?>
+                                <tr style="text-align: center" >
+                                    <td scope="row" >  <?php echo ucwords(strtolower($this->datos1[$A]['fleCodigoServicio'])); ?></td>
+                                    <td scope="row" ><?php echo ucwords(strtolower($this->datos1[$A]['fleNombreServicio'])); ?></td>
+                                    <td scope="row" > <?php echo ucwords(strtolower($this->datos1[$A]['flePrecioVenta'])); ?></td>
+                                </tr>
+                            <?php } ?>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                        <div class="form-row">
+
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="form-row">
+                            <label for="cliente_numero_documento" class="bmd-label-floating"> Valor Sub total:  &nbsp;</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="form-row">
+                            <input type="text" id="caja2" placeholder="Precio 2" value="<?php echo $this->datos[0]['froTotalVenta']; ?>">
+<!--                            <input type="number" id="txt_campo_1" class="monto" onchange="sumar();" value="<?php echo $this->datos[0]['froTotalVenta']; ?>"/>-->
+                            <!--<label for="cliente_numero_documento" class="bmd-label-floating"> <?php echo $this->datos[0]['froTotalVenta']; ?>  &nbsp;</label>-->
+                        </div>
+                    </div>
+                </div>  
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                        <div class="form-row">
+
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="form-row">
+                            <label for="cliente_numero_documento" class="bmd-label-floating"> Valor Abono a Pagar:  &nbsp;</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="form-row">
+                            <input type="number" name="caja1" id="caja1" placeholder="Precio 1" value="0">
+                        </div>
+                    </div>
+                </div>  
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                        <div class="form-row">
+
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="form-row">
+                            <label for="cliente_numero_documento" class=" bmd-label-floating"> Saldo Pendiente:  &nbsp;</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="form-row">
+                            <input type="number" name="caja3" id="caja3" placeholder="Precio 3" value="<?php echo $this->datos[0]['froTotalVenta']; ?>">
+                        </div>
+                    </div>
+                </div> 
+                <br>
+                <div class="row">
+
+                    <div class="col-12 col-md-12">
+                        <div class="form-row">
+                            <input type="text"placeholder="Comentarios" class="form-control col col-md-12" name="txtcomentarios" id="txtcomentarios" maxlength="" value=""/>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">                   
+                  
+                    <div class="col-12 col-md-4">
+                        <div class="form-row">
+                            <label for="cliente_numero_documento" class="bmd-label-floating"> Seleccionar Fecha de Pago:  &nbsp;</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <div class="form-row">
+                            <input name="txtFechaPago" required class="form-control" value="" id="txtFechaPago " type="date" aria-describedby="nameHelp" >               
+
+                        </div>
+                    </div>
+                    <br>
+                </div>
+
+
+                <script>
+                
+ 
+        let precio1 = document.getElementById("caja1")
+        let precio2 = document.getElementById("caja2")
+        let precio3 = document.getElementById("caja3")
+        
+        precio1.addEventListener("change", () => {
+            precio3.value = parseFloat(precio2.value) - parseFloat(precio1.value)
+
+        })
+
+
+       //    cargar el modal para el pago de la factura
+
+      $(document).on("click", "#btnPagarFactura", function () {
+//            swal($(this).val());
+        $('#modalFagaFactura').modal('show');
+        cargadivconsulta('contenidomodal3', 'pagarfactura/' + $(this).val(), '');
+
+    });
+    function sumar()
+{
+  const txttotalpagar = document.getElementById('txttotalpagar');
+  let subtotal = 0;
+  [ ...document.getElementsByClassName( "monto" ) ].forEach( function ( element ) {
+    if(element.value !== '') {
+      subtotal += parseFloat(element.value);
+    }
+  });
+  txttotalpagar.value = subtotal;
+}
+       
+                </script>
+                <br>
+            </div>
+            <div class="form-group card-footer bg-transparent border-success">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <a class="btn btn-danger btn-block" href="<?php echo RUTA_URL . 'ordenes/ordenes'; ?>">Volver</a>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="submit" class="btn btn-raised btn-info col-md-12 "><i class="far fa-save"></i> &nbsp; Guardar</button>
+
+                    </div>
+                </div>
+            </div>
+    </form>
+</div> 

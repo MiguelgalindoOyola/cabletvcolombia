@@ -1,0 +1,18 @@
+{
+    "source sans pro": {
+        "italic": "C:\\xampp\\htdocs\\CABLETVCOLOMBIA\\facturacion\\views\\dompdf\\vendor\\dompdf\\dompdf\/lib\/fonts\/source_sans_pro_italic_27672a92dcedb2218abd2dadee4fe950",
+        "300": "C:\\xampp\\htdocs\\CABLETVCOLOMBIA\\facturacion\\views\\dompdf\\vendor\\dompdf\\dompdf\/lib\/fonts\/source_sans_pro_300_dbbdd64c03e29f61c9033b77e28cbe3e",
+        "normal": "C:\\xampp\\htdocs\\CABLETVCOLOMBIA\\facturacion\\views\\dompdf\\vendor\\dompdf\\dompdf\/lib\/fonts\/source_sans_pro_normal_a457a0c6f86469b4a65db96256674d7c",
+        "bold": "source_sans_pro_bold_cc1ea6f6b63a94074b2e903a95fedc64"
+    },
+    "font awesome 5 brands": {
+        "normal": "font_awesome_5_brands_normal_9bee40713ce23717e2c956f394cd4b0f"
+    },
+    "font awesome 5 free": {
+        "normal": "C:\\xampp\\htdocs\\CABLETVCOLOMBIA\\facturacion\\views\\dompdf\\vendor\\dompdf\\dompdf\/lib\/fonts\/font_awesome_5_free_normal_73c1911acc952c11eb2c62d504235ed4",
+        "900": "font_awesome_5_free_900_0178cb729f4af182adcd684084856731"
+    },
+    "fontawesome": {
+        "normal": "fontawesome_normal_0361031b50b4d9a0c67e9f73776e15ae"
+    }
+}

@@ -1,0 +1,55 @@
+<div id="vista">
+    <div class="card mb-3 p-3 mb-2 bg-light text-dark">
+        <div class="card-header ">
+            <i class="fa fa-table"></i> <?php echo $this->metodo; ?></div>
+        <div class="card-body">
+            <button class="btn btn-success" style="margin-bottom: 9px;" id="btnAgregarProveedores">Agregar</button>
+            <div class="">
+                <table class="table table table-sm  table-condensed" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr> <th>Nit/Cedula</th>
+                            <th>Razon Social</th>                            
+                            <th>Direccion</th>
+                            <th>Telefono</th>
+                            <th>Email</th>
+                            <th>Descripcion</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody class="table-condensed">
+                        <?php for ($i = 0; $i < count($this->datosproveedores); $i++) { ?>
+                            <tr>
+                                <td "><?php echo ucwords(strtolower($this->datosproveedores[$i]['resCod'])); ?></td>
+                                <td><?php echo ucwords(strtolower($this->datosproveedores[$i]['resRasonSocial'])); ?></td>
+                                <td><?php echo ucwords(strtolower($this->datosproveedores[$i]['resDireccion'])); ?></td>
+                                <td><?php echo $this->datosproveedores[$i]['resTelefono']; ?></td>
+                                <td><?php echo $this->datosproveedores[$i]['resEmail']; ?></td>
+                                <td><?php echo $this->datosproveedores[$i]['resDescripcion']; ?></td>
+                                <td class="text-center">
+                                    <button  class="btn btn-warning btn-sm" style="width: 25px; height: 25px;" title="Editar" value="<?php echo $this->datosproveedores[$i]['resCod']; ?>"  id="btnEditarproveedores"><i class="fa fa-pencil-square-o fa-0" ></i></button>
+                                    <button  class="btn btn-danger btn-sm" style="width: 25px; height: 25px;" title="Eliminar" data-target="#modalEliminarMedicos" data-toggle="modal" data-id="<?php echo $this->datosproveedores[$i]['resCod']; ?>" data-nom="<?php echo ucwords(strtolower($this->datosproveedores[$i]['resRasonSocial'])); ?>"><i  class="fa fa-0 fa-times "></i></button>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="modalEliminarMedicos" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">Mensaje de confirmacion<button class="close" data-dismiss="modal">&times;</button></div>
+            <div class="modal-body">
+                <h4>¿Esta seguro que desea eliminar este medico?</h4>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-warning" id="enviar">Si</a>
+                <a href="#" class="btn btn-danger" data-dismiss="modal">No</a>
+            </div>
+        </div>
+    </div>
+</div>
+  

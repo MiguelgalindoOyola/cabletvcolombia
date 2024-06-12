@@ -1,0 +1,97 @@
+<?php if (Session::get('autenticado')) { ?>
+<script>
+     $(".nav-link").on('click', function() {
+         $(".nav-link").removeClass('active');
+         $(this).addClass('active');
+     })
+ </script>
+ <div class="modal fade bd-example-modal-lg" tabindex="-1" id="modalunico5" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+
+        <div class="modal-content">
+
+            <div class="modal-body">
+
+                <div id="contenidomodal5">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+    <!-- Modal -->
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" id="modalunico" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="contenidomodal1">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+     <!-- Modal -->
+   
+    
+    <div class="modal fade bs-example-modal-lg" id="modalgeneral" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="contenidomodal">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="MODALAcciones"  role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg bg-gradient-danger"><h3 class="bg-transparent">Mensaje de codnfirmacion</h3><button class="close" data-dismiss="modal">&times;</button></div>
+                <div class="modal-body">
+                    <h4></h4>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-warning" id="enviar">Si</a>
+                    <a href="#" class="btn btn-danger" data-dismiss="modal">No</a>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+        <div class="container">
+            <div class="text-center">
+                <small>Copyright © 2020</small>
+            </div>
+        </div>
+ 
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+    </a>
+<?php } ?>
+<script src="<?php echo COMMON; ?>js/ajax.js"></script>
+<script src="<?php echo COMMON; ?>js/pnotify.custom.min.js"></script>
+<script src="<?php echo $_layoutParams['ruta_js']; ?>script.js" type="text/javascript"></script>
+<script src="<?php echo COMMON; ?>vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="<?php echo COMMON; ?>vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="<?php echo COMMON; ?>vendor/datatables/jquery.dataTables.js"></script>
+<script src="<?php echo COMMON; ?>vendor/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="<?php echo COMMON; ?>vendor/datatables/dataTables.bootstrap4.js"></script>
+<script src="<?php echo COMMON; ?>js/sb-admin.min.js"></script>
+<script src="<?php echo COMMON; ?>js/sb-admin-datatables.min.js"></script>
+<?php echo LIB_VALIDATOR; ?>
+<script src='<?php echo COMMON; ?>js/validar.js'></script>
+</div>
+
+</body>
+</html>

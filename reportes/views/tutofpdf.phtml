@@ -1,0 +1,86 @@
+<?php
+
+//include_once './fpdf/fpdf.php';
+require 'fpdf/fpdf.php';
+$fpdf = new FPDF();
+$fpdf->AddPage(); //SE CREA UNA PAGINA
+///ENCABEZADO
+class pdf extends FPDF{
+    public function Header() {
+        $this->SetFont('Courier', 'B', 12);
+        $this->Write(5, 'centro educativo colonia la paz');
+    }
+    public function Footer() {
+        $this->SetFont('Courier', 'B', 12);
+        $this->SetY(-15);
+        $this->Write(5, 'San Miguel Salvador');
+        $this->SetX(-40);
+        $this->Write(5, 'CodeMago');
+    }
+}
+$fpdf = new pdf();
+$fpdf->AddPage('portrait', 'letter');
+$fpdf->SetFont('Arial', 'B', 14);
+
+$fpdf->SetY(20);
+$fpdf->Cell(0, 5, "listado de estudiantes matriculados",0,0,'C'); //ANCHO, ALTO, (EN CENTIMETROS)
+
+
+$fpdf->AddPage('portrait', 'letter'); //SE CREA UNA PAGINA
+$fpdf->SetFont('Arial', '', 12); //TIPO DE LETRA Y TAMAÑO
+$fpdf->SetY(20);
+$fpdf->Cell(30, 5, "HOLA MUNDO"); //ANCHO, ALTO, (EN CENTIMETROS)
+
+$fpdf->SetFont('arial', '', '14');
+$fpdf->Cell(75, 5, utf8_decode('estalinea esta en aral tañalo 14'));
+$fpdf->Ln();
+$fpdf->SetFont('helvetica', 'b', '12');
+$fpdf->Write(5, utf8_decode('estalinea esta en aral tañalo 14'));
+$fpdf->Ln();
+$fpdf->SetFont('courier', 'bi', '12');
+$fpdf->Write(5, utf8_decode('estalinea esta en aral tañalo 14'));
+$fpdf->Ln();
+$fpdf->SetFont('times', 'b', '12');
+$fpdf->Write(5, utf8_decode('estalinea esta en aral tañalo 14'));
+$fpdf->Ln();
+$fpdf->SetFont('symbol', 'b', '12');
+$fpdf->Write(5, utf8_decode('estalinea esta en aral tañalo 14'));
+$fpdf->Ln();
+$fpdf->SetFont('courier', 'b', '12');
+$fpdf->Write(5, utf8_decode('estalinea esta en aral tañalo 14'));
+
+//metodo cell crea una celde para escribir contedido 
+//CELL - ancho, alto. texto. bordes, ?, alineacion, rellenar color, link
+$fpdf->Ln();
+$fpdf->AddPage('portrait', 'letter'); //SE CREA UNA PAGINA
+
+$fpdf->SetFont('arial', 'B', 15);
+$fpdf->SetY(20);
+
+$fpdf->Write(5, utf8_decode('EMPLEADOS REGISTRADOS EN EL PORTAL'));
+$fpdf->Ln(10);
+
+$fpdf->SetFont('arial', 'B', 10);
+
+$fpdf->SetFillColor(55,89,78);
+$fpdf->Cell(25, 5, 'DUI', 1, 0, 'C', true);
+$fpdf->Cell(50, 5, 'NOMBRE COMPLETO', 1, 0, 'C', FALSE);
+$fpdf->Cell(100, 5, 'DIRECCION', 1, 0, 'C', FALSE);
+$fpdf->Ln();
+
+$fpdf->Cell(25, 5, '1075', 1, 0, FALSE);
+$fpdf->Cell(50, 5, 'MIGUEL GALINDO', 1, 0, FALSE);
+$fpdf->Cell(100, 5, 'NEIVA HUILA', 1, 0, FALSE);
+// SE CREA OTRA PAGINA 
+
+
+$fpdf->AddPage('portrait', 'letter'); //(lanscape - horizontal), (portrait - vertical)parametros retrato //tamaño hoja
+$fpdf->SetY(20);
+$fpdf->Write(5, 'hola mundo otra vez'); // texto rapido
+
+$fpdf->AddPage('PORTRAIT', 'LEGAL');
+$fpdf->SetY(20);
+$fpdf->Write(5, utf8_decode('DATOS PAGINA ÑÑ'));
+
+$fpdf->Output('I', 'NOMBREARCHIVO.PDF'); //recibe el parametro I<Se muestra en el navegador, D-descargar, f-guarda delntro del servidor
+?>

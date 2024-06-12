@@ -1,0 +1,134 @@
+<script src='<?php echo COMMON; ?>js/validar.js'></script>
+<script src="<?php echo COMMON; ?>/js/ajax.js" type="text/javascript"></script>
+<script src="<?php echo COMMON; ?>/js/jquery.js" type="text/javascript"></script>
+<script src="<?php echo $_layoutParams['ruta_js']; ?>script.js" type="text/javascript"></script>
+<script src='<?php echo COMMON; ?>js/validar.js'></script>
+<div id="divcarga">
+    <div class="card-body container">
+        <input type="hidden" id="txtsosId" name="txtsosId" value="<?php echo $this->datos[0]['Codigo']; ?>">
+            <div class="form-group">
+                <fieldset>
+                    <div class="container-fluid card">
+                        <div class="row ">
+                            <div class="container-fluid card-header bg-lightblue border-success"> 
+                                <h5 class="text-center "><?php echo $this->accion; ?></h5>
+                            </div>  </div>
+
+                    </div>
+                    <STYLE type="text/css">
+                        H4 { text-align: center}
+                    </STYLE>
+            </div>
+        <div class="container card-body card">
+            <div class="col-12 col-md-12 row ">
+                <div class="col-md-6">
+                    <label for="cliente_numero_documento" class="bmd-label-floating"> Datos del Usuario:  &nbsp;</label>
+                    <p class="card row text-truncate line-clamp-2 text-sm text-black col-md-12"> 
+
+                        <span><strong>Nit: </strong><?php echo $this->datosCliente[0]['uosDocumento']; ?></span>
+                        <span><strong>Nombres & Apellidos:</strong>  <?php echo $this->datosCliente[0]['uosNombres']; ?>  <?php
+                            echo ' ';
+                            echo $this->datosCliente[0]['uosApellidos'];
+                            ?></span>                        
+                        <span><strong>Direccion: </strong><?php echo ucwords(strtolower($this->datosCliente[0]['uosDireccion'])); ?><?php
+                            echo ' - Barrio: ';
+                            echo ucwords(strtolower($this->datosCliente[0]['banombre']));
+                            ?></span>                       
+                        <span><strong>Telefono: </strong><?php
+                            echo $this->datosCliente[0]['uosTelefono'];
+                            ?></span>           
+                        <span><strong>Correo: </strong> <?php
+                            echo $this->datosCliente[0]['uosCorreo'];
+                            ?></span>
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <label for="cliente_numero_documento" class="bmd-label-floating"> Datos del Servicio Contratado:  &nbsp;</label>
+                    <div class="card text-truncate line-clamp-2 text-sm text-black col-md-12 "> 
+                        <span><strong>Num Cto: </strong><?php echo $this->datosCliente[0]['cosId']; ?> </span>
+
+                        <span><strong>Servicio Contratado:  </strong><?php echo $this->datosCliente[0]['sosNombre']; ?>  </span>
+
+                        <span><strong>valor: </strong><?php echo ucwords(strtolower($this->datosCliente[0]['uosDireccion'])); ?></span>
+
+                        <span><strong>Fecha de Inicio: </strong><?php echo ucwords(strtolower($this->datosCliente[0]['cosFechainici'])); ?></span>
+
+                        <span><strong>Fecha de Final: </strong><?php echo ucwords(strtolower($this->datosCliente[0]['cosFechafinal'])); ?></span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container card-body card ">
+            <div class="col-12 col-md-4">
+                <div class="form-row">
+                    <label for="cliente_numero_documento" class="bmd-label-floating"> Ordenes Realizadas:  &nbsp;</label>
+                </div>
+            </div>
+            <div class="col-12 col-md-12 row">    
+                <?php for ($q = 0; $q < count($this->datosordenes); $q++) { ?>
+
+                    <div class="card text-truncate line-clamp-2 text-sm text-black col-md-6"> 
+                        <span><strong>Codigo: </strong><?php echo ucwords(strtolower($this->datosordenes[$q]['sosnombre'])); ?></span>
+                        <span><strong>Nombre del Servicio: </strong><?php echo ucwords(strtolower($this->datosordenes[$q]['orsTipoServicio'])); ?> </span>
+                        <span><strong>Fecha asignada: </strong><?php echo ucwords(strtolower($this->datosordenes[$q]['FechaGenerada'])); ?></span>
+                        <span><strong>Fecha Finalizada: </strong><?php echo ucwords(strtolower($this->datosordenes[$q]['fechaFinalizada'])); ?></span>
+
+                    </div>
+
+
+                <?php } ?>
+            </div>
+        </div>
+        <div class="container card-body card ">
+            <div class="col-12 col-md-4">
+                <div class="form-row">
+                    <label for="cliente_numero_documento" class="bmd-label-floating"> Facturacion Realizada:  &nbsp;</label>
+                </div>
+            </div>
+            <table class="table table-bordered table-hover tab-custom-content table-borderless table-sm " id="dataTable"  >
+                <thead>
+
+                    <tr> 
+                        <th scope="col" >N.</th>
+                        <th scope="col" >Periodo</th>
+                        <th scope="col" >Fecha</th>  
+                        <th scope="col" >Fecha Vencimiento</th> 
+                        <th scope="col" >Fecha de Pago</th> 
+                        <th scope="col" >Descuentos</th>
+                        <th scope="col" >valor</th>
+                        <th scope="col" >Observaciones</th>
+                        <th scope="col" >Estado</th>
+                    </tr>
+                </thead>
+                <tbody class="table-condensed ">
+                    <?php for ($l = 0; $l < count($this->datosfacturas); $l++) { ?>
+                        <tr>
+                            <?php
+                            if ($this->datosfacturas[$l]['froEstadoFactura'] == "PORPAGAR") {
+                                $COLOR = 'table-info';
+                            } else if ($this->datosfacturas[$l]['froEstadoFactura'] == "PAGADA") {
+                                $COLOR = 'table-success';
+                            } else if ($this->datosfacturas[$l]['froEstadoFactura'] == "VENCIDA_ASIGNADA") {
+                                $COLOR = 'table-danger';
+                            }
+                            ?>
+                            <td class="<?php echo $COLOR; ?>" scope="row" ><?php echo ucwords(strtolower($this->datosfacturas[$l]['froNomFctura'])); ?></td>
+                            <td class="<?php echo $COLOR; ?>" scope="row" ><?php echo ucwords(strtolower($this->datosfacturas[$l]['periodo'])); ?></td>
+                            <td class="<?php echo $COLOR; ?>" scope="row" ><?php echo ucwords(strtolower($this->datosfacturas[$l]['froFecha'])); ?></td>
+                            <td class="<?php echo $COLOR; ?>" scope="row" ><?php echo ucwords(strtolower($this->datosfacturas[$l]['froFechaVencimiento'])); ?></td>
+                            <td class="<?php echo $COLOR; ?>" scope="row" ><?php echo ucwords(strtolower($this->datosfacturas[$l]['froFechaPago'])); ?></td>
+                            <td class="<?php echo $COLOR; ?>" scope="row" ><?php echo ucwords(strtolower($this->datosfacturas[$l]['froDescuento'])); ?></td>
+                            <td class="<?php echo $COLOR; ?>" scope="row" ><?php echo ucwords(strtolower($this->datosfacturas[$l]['froTotalVenta'])); ?></td>
+                            <td class="<?php echo $COLOR; ?>" scope="row" ><?php echo ucwords(strtolower($this->datosfacturas[$l]['froObservaciones'])); ?></td>
+                            <td class="<?php echo $COLOR; ?>" scope="row" > <?php echo ucwords(strtolower($this->datosfacturas[$l]['froEstadoFactura'])); ?></td>
+                            <?php ?>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>      
+</div>

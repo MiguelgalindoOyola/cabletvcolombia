@@ -1,0 +1,170 @@
+<style type="text/css" media="screen">
+    <!--
+    .abs-center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 2vh;
+    }
+
+    .form {
+        width: 450px;
+    }
+    -->
+</style>
+<script src="<?php echo $_layoutParams['ruta_js']; ?>script.js" type="text/javascript"></script>
+<script src="<?php echo COMMON; ?>/js/ajax.js" type="text/javascript"></script>
+<script src="<?php echo COMMON; ?>/js/jquery.js" type="text/javascript"></script>
+<script src='<?php echo COMMON; ?>js/validar.js'></script>
+<div id="vista" class="container form-group align-content-center border-success">
+
+    <div class="abs-center form-row">
+
+        <div id="CargaformServicios"class="card border-info mb-2 " style="">
+            <div class="card-header bg-lightblue border-success"> 
+                <h5 class="text-center "><?php echo $this->accion; ?></h5>
+            </div>
+            <form id="form1" method="post" enctype="multipart/form-data" action="<?php echo RUTA_URL . 'parametros/GuardarServicios'; ?>">
+                <div class="card-body">
+                    <?php
+                    $valor = $this->ConsultaulServicio[0]['sosId'];
+                    $total = $valor + 1;
+                    ?>
+                    <input type="hidden" name="txtsosId" value="">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label for="exampleInputDoc" class="">Codigo (auto)</label>
+                                <input name="codigoServicio" disabled class="form-control " value="<?php
+                                if (empty($this->datos)) {
+                                    echo $total;
+                                } else {
+                                    echo $this->datos[0]['baid'];
+                                }
+                                ?>" id="codigoServicio"   type="number " aria-describedby="nameHelp" placeholder="Codigo del Barrio Auto">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="exampleInputName">Nombre </label>
+                                <input name="txtnombreservicio" class="form-control" value="" id="txtnombreservicio" required  type="text" aria-describedby="nameHelp" placeholder="Ingrese el Nombre del Barrio">
+                            </div>                   
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="col-md-12">
+                                <label for="exampleInputName">Detalle del Servicio </label>
+                                <input name="txtdetalleservicio" required class="form-control" value="" id="txtdetalleservicio " type="text" aria-describedby="nameHelp" placeholder="Detalle/Descripcion">
+                            </div>                   
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label for="exampleInputDoc" class="">Valor del Servicio</label>
+                                <input name="txtvalorservicio"  class="form-control " value="" id="txtvalorservicio"   type="number" aria-describedby="nameHelp" placeholder="Ingresar el valor a cobrar por el servicio">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="exampleInputName">Fecha de Actualizacion </label>
+                                <input name="txteFecha" class="form-control" value="" id="txteFecha" required  type="date" aria-describedby="nameHelp">
+                            </div>                   
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group card-footer bg-transparent border-success">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <input type="submit" class="btn btn-success btn-block" value="Guardar">
+                        </div>
+                        <div class="col-md-6">
+                            <a class="btn btn-danger btn-block" href="<?php echo RUTA_URL . 'administracion/bienvenido'; ?>">Volver</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div> 
+    </div>
+
+</div>
+<br>
+<div id="" class="container col col-md-10">
+    <div class=" col col-md-12 box card form-row white mb-1 ">
+        <br>
+        <div class=" col col-md-12 card-title  card bg-light"> <h5 class="text-center">Servicios Registrados</h5></div>
+        <div class="col col-md-12 card-body center-block ">            
+            <div class="col col-md-12 card bg-light text-dark">
+                <div class="card-body">
+                    <table   style="" class="table table-sm border-width-2  table-condensed" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr> 
+                                <th style="" class="col-sm-">Codigo</th>
+                                <th style="" class="col-sm-">Nombre</th>                            
+                                <th style="" class="col-sm-">Detalle del Servicio</th>
+                                <th style="" class="col-sm-">Valor Asignado</th>
+                                <th style="" class="col-sm-">Fecha de Actualizacion</th>
+                                <th style="" class="col-sm-1">Accion</th>   
+                            </tr>
+                        </thead>
+                        <tbody class="table-condensed">
+                            <?php for ($i = 0; $i < count($this->ConsultaServicio); $i++) { ?>
+                                <tr>
+                                    <td ><?php echo ucwords(strtolower($this->ConsultaServicio[$i]['sosId'])); ?></td>
+                                    <td ><?php echo ucwords(strtolower($this->ConsultaServicio[$i]['sosNombre'])); ?></td>
+                                    <td ><?php echo ucwords(strtolower($this->ConsultaServicio[$i]['sosDescripcion'])); ?></td>
+                                    <?php
+                                    $valor = $this->ConsultaServicio[$i]['sosValor'];
+                                    $formato = number_format($valor, 2);
+                                    ?>
+                                    <td ><?php echo '$ ', $formato; ?></td>
+                                    <td ><?php echo ucwords(strtolower($this->ConsultaServicio[$i]['sosFechaActualizacion'])); ?></td>
+                                    <td class="form-row ">
+                                        <button  class="default" title="Editar" value="<?php echo $this->ConsultaServicio[$i]['sosId']; ?>" name="btnEditarServicio" id="btnEditarServicio"><i class="fa fa-pencil-square-o fa-0" ></i></button>
+                                        <button  class="default" title="Novedades" value="<?php echo $this->ConsultaServicio[$i]['sosId']; ?>" name="btnNovedadesServicios" id="btnNovedadesServicios"><i class="fa fa-bars fa-0" ></i></button>
+
+                                        <button  id="btneliminar"
+                                            class="btn btn-danger btn-sm " 
+                                                 data-target="#modalEliminarServicio" 
+                                                 data-toggle="modal" 
+                                                 data-id="<?php echo $this->ConsultaServicio[$i]['sosId']; ?>" 
+                                                 data-nom="<?php echo ucwords(strtolower($this->ConsultaServicio[$i]['sosNombre'])); ?>">
+                                            <i class="fa fa fa-trash-o fa-0"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="modalEliminarServicio" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">Mensaje de confirmacion<button class="close" data-dismiss="modal">&times;</button></div>
+            <div class="modal-body">
+                <h4>¿Esta seguro que desea eliminar este servicio:?</h4>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-warning" id="enviar">Si</a>
+                <a href="#" class="btn btn-danger" data-dismiss="modal">No</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--            <button id="SD">MIGUEL</button>-->
+<style type="text/css" >
+    #btneliminar{
+        width: 25px; height: 25px; border: 0
+    }
+    #btnEditarServicio{
+        width: 25px; height: 25px; border: 0;
+    }
+    #btnNovedadesServicios{
+        width: 22px; height: 23px; border: 0;
+    }
+
+</style>
+
+
+<!-- comment -->

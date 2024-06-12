@@ -1,0 +1,250 @@
+
+<script src='<?php echo COMMON; ?>js/validar.js'></script>
+
+<!--    <div class="container-fluid card-header bg-lightblue border-success"> 
+        <h5 class="text-center "><?php echo $this->accion; ?></h5>
+    </div>-->
+
+<form id="form3" method="post" enctype="multipart/form-data" action="<?php echo RUTA_URL . 'ordenes/UPDATEFINALIZARORDENVARIAS'; ?>">
+    <div class="card-body">
+        <input type="hidden" id="txtsosId" name="txtsosId" value="<?php echo $this->datos[0]['Codigo']; ?>">
+        <div class="form-group">
+            <fieldset>
+                <div class="container-fluid card">
+                    <div class="row ">
+                        <div class="container-fluid card-header bg-lightblue border-success"> 
+                            <h5 class="text-center "><?php echo $this->accion; ?></h5>
+                        </div>  </div>
+
+                </div>
+                <STYLE type="text/css">
+                    H4 { text-align: center}
+                </STYLE>
+                <div class="container-fluid card"  >
+                    <div class="row alert-success" >
+                        <div class="col-12 col-md-12" >
+                            <div class="form-row center-block" >
+                                <h4 class="col-12 col-md-12" align='center'>Orden del Servicio: <?php echo $this->datos[0]['Codigo']; ?>  </h4>
+                                <input type="hidden" name="TXTIDSERVICIO" value="<?php
+                                if (empty($this->datos)) {
+                                    
+                                } else {
+                                    echo $this->datos[0]['Codigo'];
+                                }
+                                ?>">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="container-fluid card">
+            <div class="row ">
+                <div class="col-12 col-md-12">
+                    <div class="text-center ">
+                        <label for="cliente_numero_documento" class="bmd-label-floating"> Contrato N°: &nbsp;</label>
+                        <input type="hidden" id="TXTIDCONTRATO" name="TXTIDCONTRATO" value="<?php echo $this->datos[0]['IdContrato']; ?>">
+                        <label for="cliente_numero_documento" class="bmd-label-floating"> <?php echo $this->datos[0]['IdContrato']; ?> &nbsp;</label>
+                    </div>
+                </div>
+            </div>
+            <?php for ($D = 0; $D < count($this->consulta_servicio_por_contrato); $D++) { ?>
+                <?php if ($this->datos[0]['IdContrato'] == $this->consulta_servicio_por_contrato[$D]['cosId']) {
+                    ?>
+                    <?php
+                    ?>
+                    <div class="row">
+                        <div class="col-12 col-md-4">
+                            <div class="form-row">
+                                <label for="cliente_numero_documento" class="bmd-label-floating"> Datos Servicio Contratado:  &nbsp;</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-8">
+                            <p class="text-truncate line-clamp-2 text-sm text-black"> 
+                                <?php echo ucwords(strtolower($this->consulta_servicio_por_contrato[$D]['sosNombre'])); ?> 
+                                <br>
+                                <?php
+                                $valor = $this->consulta_servicio_por_contrato[$D]['sosValor'];
+                                $formato = number_format($valor, 2);
+                                ?>
+                                <?php echo '$ ', $formato; ?> 
+                                <br>
+                                <?php echo ucwords(strtolower($this->consulta_servicio_por_contrato[$D]['cosFechainici'])); ?>
+                                <br> 
+                                <?php
+                                echo $this->datos[0]['uosTelefono'];
+                                ?>                               
+                            </p>
+
+                        </div>
+                    </div>
+                    <?php
+                }
+            }
+            ?>
+        </div>
+
+        <div class="container-fluid card">
+            <div class="row">
+                <div class="col-12 col-md-4">
+                    <div class="form-row">
+                        <label for="cliente_numero_documento" class="bmd-label-floating"> Datos del Usuario:  &nbsp;</label>
+                        <input type="hidden" name="txtCedula" value="<?php
+                        if (empty($this->datos)) {
+                            
+                        } else {
+                            echo $this->datos[0]['uosDocumento'];
+                        }
+                        ?>">
+                    </div>
+                </div>
+                <div class="col-12 col-md-8">                 
+                    <p class="text-truncate line-clamp-2 text-sm text-black"> 
+                        <?php echo $this->datos[0]['uosDocumento']; ?> 
+                        <br>
+                        <?php echo $this->datos[0]['uosNombres']; ?>  <?php
+                        echo ' ';
+                        echo $this->datos[0]['uosApellidos'];
+                        ?>
+                        <br>
+                        <?php echo ucwords(strtolower($this->datos[0]['uosDireccion'])); ?><?php
+                        echo ' - Barrio: ';
+                        echo ucwords(strtolower($this->datos[0]['banombre']));
+                        ?>
+                        <br> 
+                        <?php
+                        echo $this->datos[0]['uosTelefono'];
+                        ?>
+                        <br>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <?php if ($this->fac_mora > 0) {
+            ?>
+            <div class="container-fluid card">
+                <?php if ($this->fac_mora[0]['froEstadoFactura'] == 'PORPAGAR') { ?>
+                    <div class="row alert-danger">
+                        <div class="col-12 col-md-4">
+                            <div class="form-row">
+                                <label for="cliente_numero_documento" class="bmd-label-floating"> Detalle Factura En Mora:  &nbsp;</label>
+                            </div>
+                        </div>
+                    <?php } elseif ($this->fac_mora[0]['froEstadoFactura'] == 'PAGADA') { ?>
+                        <div class="row alert-success">
+                            <div class="col-12 col-md-4">
+                                <div class="form-row">
+                                    <label for="cliente_numero_documento" class="bmd-label-floating"> Detalle Factura Al Dia:  &nbsp;</label>
+                                </div>
+                            </div>
+                        <?php } ?>
+
+
+                        <div class="col-12 col-md-8">
+                            <div class="form-row ">
+                                <input type="text" id="TXTNUMFACTURASUSPENDIDA" name="TXTNUMFACTURASUSPENDIDA" value="<?php echo $this->fac_mora[0]['froNomFctura']; ?>">
+                                <input type="hidden" id="TXTNUMFACTURASUSPENDIDA" name="TXTNUMFACTURASUSPENDIDA" value="<?php echo $this->fac_mora[0]['froNomFctura']; ?>">
+                                <input type="hidden" id="txtvalordelservicio" name="txtvalordelservicio" value="<?php echo $this->fac_mora[0]['Periodo']; ?>">
+                                <input type="hidden" id="txtvalordelservicio" name="txtvalordelservicio" value="<?php echo $this->fac_mora[0]['froTotalVenta']; ?>">
+                                <p class="text-truncate line-clamp-2 text-sm text-black"> 
+                                    <?php echo $this->fac_mora[0]['froNomFctura']; ?>  
+                                    <br>
+                                    <?php echo $this->fac_mora[0]['Periodo']; ?>  
+                                    <br>
+                                    <?php echo $this->fac_mora[0]['froFecha']; ?>  
+                                    <br>
+                                    <?php
+                                    $valor3 = $this->fac_mora[0]['froTotalVenta'];
+                                    $formato3 = number_format($valor3, 2);
+                                    ?>
+                                    <?php echo '$ ', $formato3; ?> 
+
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            } else {
+                
+            }
+            ?>
+
+            <div class="container-fluid card">
+                <div class="row alert-info">
+                    <div class="col-12 col-md-4">
+                        <div class="form-row">
+                            <label for="cliente_numero_documento" class="bmd-label-floating"> Detalle del Procedimiento a Realizar:  &nbsp;</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <div class="form-row ">
+                            <input type="hidden" id="txtidservicioarealziar" name="txtidservicioarealziar" value="<?php echo $this->datos[0]['sosId']; ?>">
+                            <input type="hidden" id="txtvalordelservicio" name="txtvalordelservicio" value="<?php echo $this->datos[0]['sosValor']; ?>">
+                            <input type="hidden" id="txtvalordelservicio" name="txtvalordelservicio" value="<?php echo $this->datos[0]['sosValor']; ?>">
+                            <p class="text-truncate line-clamp-2 text-sm text-black"> 
+                                <?php echo $this->datos[0]['sosnombre']; ?>  
+                                <br>
+                                <?php echo $this->datos[0]['sosdescripcion']; ?>  
+                                <br>
+                                <?php echo $this->datos[0]['FechaGenerada']; ?>  
+                                <br>
+                                <?php
+                                $valor2 = $this->datos[0]['sosValor'];
+                                $formato2 = number_format($valor2, 2);
+                                ?>
+                                <?php echo '$ ', $formato2; ?> 
+
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid card">
+                <br>
+                <div class="group">
+                    <div class="alert alert-warning" >
+                        <label for="exampleInputName">Observaciones </label>
+                        <input name="TXTOBSERVACIONSINSTALACION" required class="form-control" value="" id="TXTOBSERVACIONSINSTALACION " type="text" aria-describedby="nameHelp" placeholder="Describa las novedades presentadas al realizar la instalacion del servicio">               
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid card">
+                <br>
+                <div class="row">
+                    <br>
+                    <br>
+                    <div class="col-12 col-md-4">
+                        <div class="form-row">
+                            <label for="cliente_numero_documento" class="bmd-label-floating"> Seleccionar Fecha:  &nbsp;</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <div class="form-row">
+                            <input name="TXTFECHAINICIOCONTRATO" required class="form-control" value="" id="TXTFECHAINICIOCONTRATO " type="datetime-local" aria-describedby="nameHelp" placeholder="Describa las novedades presentadas al realizar la instalacion del servicio">               
+
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            </div>
+            </fieldset>
+    <!--  <button type="submit" class="btn btn-raised btn-info btn-sm"><i class="far fa-save"></i> &nbsp; Guardar</button>-->
+        </div>
+
+
+        <div class="form-group card-footer bg-transparent border-success">
+            <div class="form-row">
+                <div class="col-md-6">
+                    <a class="btn btn-danger btn-block" href="<?php echo RUTA_URL . 'ordenes/ordenes'; ?>">Volver</a>
+                </div>
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-raised btn-info btn-sm col-md-12"><i class="far fa-save"></i> &nbsp; Guardar</button>
+
+                </div>
+            </div>
+        </div>
+</form>
+</div> 
+</div>   

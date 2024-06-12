@@ -1,0 +1,64 @@
+<div id="vista">
+    <div class="card mb-3 p-3 mb-2 bg-light text-dark">
+        <div class="card-header ">
+            <i class="fa fa-table"></i> Proveedores</div>
+        <div class="card-body">
+            <button class="default" onclick="myFunction()">Try it</button>
+<script>
+    document.getElementById('EDITAR').onclick = function(){
+    alert('Hey Alerta Wey!');
+    function myFunction() {
+  alert("I am an alert box!");
+}
+
+</script>
+            <button class="btn btn-success" style="margin-bottom: 9px;" id="btnAgregarProveedores">Agregar</button>
+            <div class="">
+                <table class="table table table-sm  table-condensed" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr> <th>Codigo</th>
+                            <th>Nombre</th>                            
+                            <th>Presentacion</th>
+                            <th>Unidad de Medida</th>
+                            <th>Categoria</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody class="table-condensed">
+                        <?php for ($i = 0; $i < count($this->datosproductos); $i++) { ?>
+                            <tr>
+                                <td "><?php echo ucwords(strtolower($this->datosproductos[$i]['tosId'])); ?></td>
+                                <td><?php echo ucwords(strtolower($this->datosproductos[$i]['etosNombre'])); ?></td>
+                                <td><?php echo ucwords(strtolower($this->datosproductos[$i]['etosPresentacion'])); ?></td>
+                                <td><?php echo $this->datosproductos[$i]['etosUnidadMedida']; ?></td>
+                                <td><?php echo $this->datosproductos[$i]['etosIdCategoria']; ?></td>                                
+                                <td class="text-center">
+                                    <button  class="btn btn-warning btn-sm" style="width: 25px; height: 25px;" title="Editar" value="<?php echo $this->datosproductos[$i]['resCod']; ?>"  id="btnEditarproveedores"><i class="fa fa-pencil-square-o fa-0" ></i></button>
+                                    <button  class="btn btn-danger btn-sm" style="width: 25px; height: 25px;" title="Eliminar" data-target="#modalEliminarMedicos" data-toggle="modal" data-id="<?php echo $this->datosproductos[$i]['resCod']; ?>" data-nom="<?php echo ucwords(strtolower($this->datosproductos[$i]['resRasonSocial'])); ?>"><i  class="fa fa-0 fa-times "></i></button>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" tabindex="-1" id="modalEliminarMedicos" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">Mensaje de confirmacion<button class="close" data-dismiss="modal">&times;</button></div>
+            <div class="modal-body">
+                <h4></h4>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-warning" id="enviar">Si</a>
+                <a href="#" class="btn btn-danger" data-dismiss="modal">No</a>
+            </div>
+        </div>
+    </div>
+</div>
+  

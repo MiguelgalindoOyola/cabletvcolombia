@@ -1,0 +1,241 @@
+
+<!--<script src="<?php echo $_layoutParams['ruta_js']; ?>script.js" type="text/javascript"></script>-->
+<script src="<?php echo COMMON; ?>/js/ajax.js" type="text/javascript"></script>
+<script src="<?php echo COMMON; ?>/js/jquery.js" type="text/javascript"></script>
+<script src='<?php echo COMMON; ?>js/validar.js'></script>
+<div id="CargaGENERAR" class="container">
+
+
+    <?PHP
+    if ($this->Conusulta_si_hay_facturas_activas[0]['total'] <= 0) {
+        ?> 
+
+        <form id="form3" method="post" enctype="multipart/form-data" action="<?php echo RUTA_URL . 'facturacion/GenerarFacturas'; ?>">
+            <div class="card-body">
+                <fieldset>
+                    <input type="hidden" id="txtsosId" name="txtsosId" value="<?php echo $this->datos[0]['Codigo']; ?>">
+                    <div class="form-group">
+                        <STYLE type="text/css">
+                            H4 { text-align: center}
+                        </STYLE>
+                        <div class="container-fluid card"  >
+                            <div class="row alert-success" >
+                                <div class="col-12 col-md-12" >
+                                    <div class="form-row center-block" >
+                                        <h4 class="col-12 col-md-12" align='center'>Generar Facturacion:   </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid card">
+                        <div class="row ">
+                            <div class="col-12 col-md-4">
+                                <div class="form-row">
+                                    <label for="Periodo" class="bmd-label-floating"> Periodo:  &nbsp;</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <?PHP
+                                $now = new DateTime();
+                                $dia = $now->format('n');
+
+                                if ($dia < 10) {
+                                    $dia1 = $now->format('n');
+                                    $año = $now->format('Y');
+                                    $TOTAL = $año . '-' . '0' . $dia1;
+                                } else {
+                                    $dia1 = $now->format('n');
+                                    $año = $now->format('Y');
+                                    $TOTAL = $año . '-' . $dia1;
+                                }
+                                ?>
+
+                                <div class=" input-group ">
+
+                                    <select class="custom-select" id="txtPeriodo" name="txtPeriodo">
+                                        <?php for ($i = 0; $i < count($this->ConsultaPeriodosFacturados); $i++) { ?> 
+
+                                            <?php if ($this->ConsultaPeriodosFacturados[$i]['perEstado'] == 'a') { ?>  
+                                                <option disabled="disabled" class="alert alert-danger" value="<?php echo $this->ConsultaPeriodosFacturados[$i]['perId'] ?>"><?php echo $this->ConsultaPeriodosFacturados[$i]['perMes'] ?> </option>
+                                            <?php } else { ?>
+                                                <option class="alert alert-default-info" value="<?php echo $this->ConsultaPeriodosFacturados[$i]['perId'] ?>"><?php echo $this->ConsultaPeriodosFacturados[$i]['perMes'] ?> </option>
+
+                                            <?php } ?>
+                                        <?php } ?>
+                                    </select>
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="inputGroupSelect01"><?php echo $año; ?></label>
+                                    </div>
+                                </div>                                
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <div class="form-row">
+                                    <label for="Fecha de Facturacion" class="bmd-label-floating"> Fecha de Facturacion:  &nbsp;</label>
+                                </div>
+                            </div>
+                            <?php $fcha = date("Y-m-d"); ?>
+                            <div class="col-12 col-md-8">
+                                <div class="form-row">
+                                    <input type="date" required class="form-control" name="dateFechaFacturacion" id="dateFechaFacturacion" maxlength="30" value="<?php echo $fcha; ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <div class="form-row">
+                                    <label for="Fecha de Vencimiento" class="bmd-label-floating"> Fecha de Vencimiento:  &nbsp;</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <div class="form-row">
+                                    <input type="date" required class="form-control" min="<?php echo $fcha; ?>" name="dateFechaVencimiento" id="dateFechaVencimiento" maxlength="30" value="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="form-group card-footer bg-transparent border-success">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <a class="btn btn-danger btn-block" href="<?php echo RUTA_URL . 'facturacion/facturacion'; ?>">Volver</a>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="submit" class="btn btn-success btn-block"><i class="far fa-save"></i> &nbsp; Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    <?PHP } else {
+        ?>
+
+        <div class="card text-center">
+            <div class="card-header">
+                <h2>Se debe cerrar el ciclo</h2>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">¿Porque?</h5>
+                <p class="card-text">Se debe realizar el cierre el ciclo del periodo anterior de facturación, para que se pueda generar las ordenes de suspensión y preparar las facturas no pagas para el nuevo periodo</p>
+                <button class="btn btn-primary" id="btnCerrarCiclo">Adelante! Estoy Listo!</button>
+            </div>
+
+        </div>
+
+        <script>
+           //    cargar el modal para el pago de la factura
+
+          $(document).on("click", "#btnCerrarCiclo", function () {
+    //            swal($(this).val());
+            cargadivconsulta('CargaGENERAR', 'CerrarCiclo/' , '');
+
+        });
+                                                                                                                   
+        </script>
+    <?PHP }
+    ?>
+
+
+    <div class="">
+
+        <div class="" style="text-align: center">
+            <!-- small box -->
+            <div class="small-box bg-info">
+                <div class="inner center-block " style="text-align: center">
+                    <h4 id="totalCompras"><?php echo $this->Consulta_Facturas_Periodo_Actual[0]['total']; ?></h4>
+                    <?php
+                    if ($this->Consulta_Facturas_Periodo_Actual[0]['total'] == 0) {
+                        ?>
+
+                        <H4 class="text-warning">!NO SE HA GENERADO LA FACTURACION PARA EL PERIODO ACTUAL!!</H4>
+                    <?php } else {
+                        ?>
+
+                        <H4>Total Facturación  Periodo! <?php echo $this->Consulta_Facturas_Periodo_Actual[0]['perMes']; ?> </H4>
+                        <?php
+                    }
+                    ?>
+
+                </div>
+                <div class="icon">
+                    <i class="ion ion-clipboard"></i>
+                </div>
+
+                <a href="<?php echo RUTA_URL . 'facturacion/generarPDF'; ?>" class="nav-link">Mas Info <i
+                        class="fas fa-arrow-circle-right">
+                    </i></a>
+            </div>
+        </div>
+    </div> 
+
+
+    <div class="container-fluid">
+        <div class="row " style="text-align: center">
+
+            <?php if ($this->Consulta_Facturas_PorPagar_PorBarrios) { ?>
+                <?php for ($R = 0; $R < count($this->Consulta_Facturas_PorPagar_PorBarrios); $R++) { ?> 
+                    <div class="col-lg-2">
+                        <!-- small box -->
+                        <div class="small-box bg-green ">
+                            <div class="inner">
+                                <h4 style="text-align: center" id="totalCompras"><?php echo ucwords(strtolower($this->Consulta_Facturas_PorPagar_PorBarrios[$R]['cantidad_facturas_barrio'])) ?></h4>
+                                <p style="text-align: center"><?php echo ucwords(strtolower($this->Consulta_Facturas_PorPagar_PorBarrios[$R]['banombre'])) ?></p>
+                            </div>
+                            <div  style="cursor:pointer;"  class="small-box-footer">Imprimir 
+                                <button  
+                                    class="btn btn-danger btn-sm " 
+                                    data-target="#modalEliminarServicio1" 
+                                    data-toggle="modal" 
+                                    data-id="<?php echo $this->Consulta_Facturas_PorPagar_PorBarrios[$R]['baid']; ?>" 
+                                    data-nom="<?php echo ucwords(strtolower($this->Consulta_Facturas_PorPagar_PorBarrios[$R]['banombre'])); ?>">
+                                    <i class="fa fa-arrow-circle-right fa-sm"></i>
+                                </button>
+                            </div>
+
+
+                        </div>
+                    </div>
+                <?php }
+                ?>
+            <?php } else { ?>
+                <div class="col-md-12" style="text-align: center" >
+                    <H4 class="text-warning" >!NO HAY FACTURACION DISPONIBLE PARA PAGOS!</H4> 
+                </div>
+
+
+            <?php } ?>
+
+
+
+        </div> <!-- ./row Tarjetas Informativas -->
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="modalEliminarServicio1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">Mensaje de confirmacion<button class="close" data-dismiss="modal">&times;</button></div>
+            <div class="modal-body">
+                <h4>¿Desea imprimir la facturacion del barrio:$?</h4>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-warning" id="enviar">Si</a>
+                <a href="#" class="btn btn-danger" data-dismiss="modal">No</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+                $('#modalEliminarServicio1').on('show.bs.modal', function (event) {
+       var button = $(event.relatedTarget)
+       var recipent = button.data('id')
+       var nom = button.data('nom')
+       var modal = $(this);
+       modal.find('h4').text('¿Desea imprimir la facturacion del barrio: ' + nom + '?');
+       modal.find('#enviar').attr('href', 'generarPDF/' + recipent);
+   });               
+</script>

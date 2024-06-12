@@ -1,0 +1,199 @@
+<link href="<?php echo COMMON; ?>/sweetalert.css" rel="stylesheet" type="text/css"/>
+<script src="<?php echo COMMON; ?>/sweetalert.min.js" type="text/javascript"></script>
+<script src='<?php echo COMMON; ?>js/validar.js'></script>
+
+<script src="<?php echo COMMON; ?>/js/ajax.js" type="text/javascript"></script>
+<script src="<?php echo COMMON; ?>/js/jquery.js" type="text/javascript"></script>
+<script src='<?php echo COMMON; ?>js/validar.js'></script>
+<script src="<?php echo $_layoutParams['ruta_js']; ?>script.js" type="text/javascript"></script>
+
+<div class="conainer container-fluid">
+
+    <div class="alert alert-success center-block center text-center" role="alert">
+        <h4>Registrar Pagos</h4> 
+    </div>
+
+    <div id="divcarga" class="table-responsive">
+
+        <table style="" class="table table-bordered table-hover tab-custom-content table-borderless table-sm " id="dataTable" width="" cellspacing="">
+            <thead>
+                <tr class="text-center"> 
+                    <th style="" class="col-sm-">FACTURA</th>
+                    <th style="" class="col-sm-">CTO</th>
+                    <th style="" class="col-sm-">NIT</th>
+                    <th style="" class="col-sm-">NOMBRES & APELLIDOS</th>
+                    <th style="" class="col-sm-">PERIODO</th>  
+                    <th style="" class="col-sm-">VALOR A PAGAR</th>
+                    <th style="" class="col-sm-">OPCION</th>   
+                </tr>
+            </thead>
+            <tbody class="table-condensed">
+                <?php
+                for ($i = 0; $i < count($this->Consulta_Facturas_PorPagar); $i++) {
+                    ?>
+                    <?php
+//                    $fecha = new DateTime('now', new DateTimeZone('America/Bogota'));
+//
+//                    $fechaactual = $fecha->format('Y-m-d');
+//                    if ($this->Consulta_Facturas_PorPagar[$i]['froFechaVencimiento'] < $fechaactual) {
+                    ?>
+                    <tr class="aler alert-default-warning">
+                        <td class = "text-center" ><?php echo ucwords(strtolower($this->Consulta_Facturas_PorPagar[$i]['froNomFctura'])); ?></td>
+                        <td class="text-center"><?php echo ucwords(strtolower($this->Consulta_Facturas_PorPagar[$i]['froContrato'])); ?></td>
+                        <td class="text-center"><?php echo ucwords(strtolower($this->Consulta_Facturas_PorPagar[$i]['uosDocumento'])); ?></td>
+                        <td  ><?php echo ucwords(strtolower($this->Consulta_Facturas_PorPagar[$i]['uosNombres'])); ?><?php
+                            echo ' ';
+                            echo ucwords(strtolower($this->Consulta_Facturas_PorPagar[$i]['uosApellidos']));
+                            ?></td>
+                        <td class="text-center"><?php echo ucwords(strtolower($this->Consulta_Facturas_PorPagar[$i]['perMes'])); ?> </td>
+
+                        <td class="alert  text-center" >
+                            <?php
+                            echo ucwords(strtolower($this->Consulta_Facturas_PorPagar[$i]['froTotalVenta']));
+                            ?></td>
+
+                        <td class="text-center" > 
+                            <?php
+                            if ($this->Consulta_Facturas_PorPagar[$i]['froEstadoFactura'] == 'PAGADA') {
+                                ?>
+                    <h7>PAGADA</h7>
+                    <?php
+                } if ($this->Consulta_Facturas_PorPagar[$i]['froEstadoFactura'] == 'PORPAGAR') {
+                    ?> 
+                    <button  
+                        type="button"                               
+                        class="default bg-success 
+                        title="Pagar Factura" 
+                        value="<?php echo $this->Consulta_Facturas_PorPagar[$i]['froNomFctura']; ?>" 
+                        name="btnPagarFactura" 
+                        id="btnPagarFactura">
+                        <i class="fa fa-money" aria-hidden="true" ></i>
+                    </button>
+                    <button  
+                        type="button"                               
+                        class="default bg-gradient
+                        title="Abono a Factura" 
+                        value="<?php echo $this->Consulta_Facturas_PorPagar[$i]['froNomFctura']; ?>" 
+                        name="btnAbonarFactura" 
+                        id="btnAbonarFactura">
+                        <i class="fa  fa-handshake-o" aria-hidden="true" ></i>
+                    </button>
+                    <button   id="imprimir"
+                              class="default btn-info " 
+                              data-target="#modalEliminarServicio1" 
+                              data-toggle="modal" 
+                              data-id="<?php echo $this->Consulta_Facturas_PorPagar[$i]['froNomFctura']; ?>" 
+                              data-nom="<?php echo ucwords(strtolower($this->Consulta_Facturas_PorPagar[$i]['froNomFctura'])); ?>">
+                        <i class="fa fa-print fa-sm"></i>
+                    </button>
+                <?php }
+                ?> 
+
+
+                </td>
+
+                </tr>
+
+
+
+                <?php
+            }
+            ?>
+
+            </tbody>
+        </table>
+        <script>
+       //    cargar el modal para el pago de la factura
+
+      $(document).on("click", "#btnAbonarFactura", function () {
+//            swal($(this).val());
+        $('#modalFagaFactura').modal('show');
+        cargadivconsulta('contenidomodal3', 'abonarfactura/' + $(this).val(), '');
+
+    });
+          
+        </script>
+
+        <script>
+    //    cargar el modal para el abono de la factura
+
+   $(document).on("click", "#btnPagarFactura", function () {
+//            swal($(this).val());
+     $('#modalFagaFactura').modal('show');
+     cargadivconsulta('contenidomodal3', 'pagarfactura/' + $(this).val(), '');
+
+ });
+          
+        </script>
+        <script>
+      //    cargar el modal para el pago de la factura
+
+     $(document).on("click", "#btnEditarFactura", function () {
+//            swal($(this).val());
+       $('#modalFagaFactura').modal('show');
+       cargadivconsulta('contenidomodal3', 'Editarfactura/' + $(this).val(), '');
+
+   });
+          
+        </script>
+        <!-- Modal pagar factura -->
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" id="modalFagaFactura" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+
+                <div class="modal-content">
+
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <div id="contenidomodal3">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <style type="text/css" >
+
+            #btnPagarFactura{
+                width: 100px; height: 25px; border: 0;
+            }
+            #imprimir{
+                width: 28px; height: 25px; border: 0;
+            }
+
+            #btnAbonarFactura{
+                width: 50px; height: 25px; border: 0;
+            }
+            #btnEditarFactura{
+                width: 28px; height: 25px; border: 0;
+            }
+        </style>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="modalEliminarServicio1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!--            <div class="modal-header">Mensaje de confirmacion<button class="close" data-dismiss="modal">&times;</button></div>-->
+            <div class="modal-body">
+                <h4>¿Desea imprimir la facturacion del barrio:$?</h4>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-warning " id="enviar">Si</a>
+                <a href="#" class="btn btn-danger" data-dismiss="modal">No</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+                $('#modalEliminarServicio1').on('show.bs.modal', function (event) {
+       var button = $(event.relatedTarget)
+       var recipent = button.data('id')
+       var nom = button.data('nom')
+       var modal = $(this);
+       modal.find('h4').text('¿Desea imprimir la facturacion del barrio: ' + nom + '?');
+       modal.find('#enviar').attr('href', 'generarUNUSUARIOPDF/' + recipent);
+   });               
+</script>

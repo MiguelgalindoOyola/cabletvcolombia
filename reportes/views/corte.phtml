@@ -1,0 +1,168 @@
+
+<script src='<?php echo COMMON; ?>js/validar.js'></script>
+<form id="form4" method="post" enctype="multipart/form-data" action="<?php echo RUTA_URL . 'reportes/GuardarOrdenCorte'; ?>">
+    <div class="conainer">
+        <div class="card  text-center mx-auto" style="width: 50rem;">
+            <div class="card-body sm">
+                <fieldset>
+                    <div class="form-group">
+
+                        <div class="container-fluid card">
+                            <div class="row ">
+                                <div class="container-fluid card-header bg-lightblue border-success"> 
+                                    <h5 class="text-center "><?php echo $this->accion; ?>  </h5>
+                                </div>  
+                            </div>
+                        </div>
+                        <STYLE type="text/css">
+                            H4 { text-align: center}
+                        </STYLE>
+                    </div>
+                    <div class="container-fluid card">
+                        <div class="row ">
+                            <div class="col-12 col-md-4">
+                                <div class="form-row">
+                                    <label for="cliente_numero_documento" class="bmd-label-floating"> Numero de Contrato:  &nbsp;</label>                                   
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <div class="form-row">
+                                    <label for="cliente_numero_documento" class="bmd-label-floating"> <?php echo $this->datos[0]['froContrato']; ?> &nbsp;</label>
+                                    <input type="hidden" name="txtNumContrato" id="txtNumContrato" value="<?php echo $this->datos[0]['froContrato']; ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <div class="form-row">
+                                    <label for="cliente_numero_documento" class="bmd-label-floating"> Numero de documento:  &nbsp;</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <div class="form-row">
+                                    <label for="cliente_numero_documento" class="bmd-label-floating"> <?php echo $this->datos[0]['uosDocumento']; ?> &nbsp;</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <div class="form-row">
+                                    <label for="cliente_numero_documento" class="bmd-label-floating"> Nombre y Apellidos:  &nbsp;</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <div class="form-row">
+                                    <label for="cliente_numero_documento" class="bmd-label-floating"> <?php echo $this->datos[0]['NOMBRES']; ?> <?php ?> &nbsp;</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <div class="form-row">
+                                    <label for="cliente_numero_documento" class="bmd-label-floating"> Direccion:  &nbsp;</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <div class="form-row">
+                                    <label for="cliente_numero_documento" class="bmd-label-floating"> <?php echo ucwords(strtolower($this->datos[0]['DIRECCION'])); ?>                                    &nbsp;</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <div class="form-row">
+                                    <label for="cliente_numero_documento" class="bmd-label-floating"> Telefono:  &nbsp;</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <div class="form-row">
+                                    <label for="cliente_numero_documento" class="bmd-label-floating"> <?php echo $this->datos[0]['uosTelefono']; ?>  &nbsp;</label>
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <div class="form-row">
+                                    <label for="cliente_numero_documento" class="bmd-label-floating"> Num Factura:  &nbsp;</label>
+                                    <input type="hidden" name="txtNumeroFactura" id="txtNumeroFactura" value="<?php echo $this->datos[0]['froNomFctura']; ?>">
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <div class="form-row">
+
+                                    <label for="cliente_numero_documento" class="bmd-label-floating"> <?php echo $this->datos[0]['froNomFctura']; ?> &nbsp;</label>
+
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <div class="form-row">
+                                    <label for="cliente_numero_documento" class="bmd-label-floating"> Valor Deuda:  &nbsp;</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <div class="form-row">
+                                    <?php
+                                    $valor = $this->datos[0]['froTotalVenta'];
+                                    $formato = number_format($valor, 2);
+                                    ?>
+                                    <label for="cliente_numero_documento" class="bmd-label-floating"> <?php echo '$ ', $formato; ?>&nbsp;</label>
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <div class="form-row">
+                                    <label for="cliente_numero_documento" class="bmd-label-floating"> Tipo de Corte:  &nbsp;</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <div class="form-row">
+                                    <select class="form-select form-select-sm" name="SelectServicio" id="SelectServicio" aria-label="Default select example">
+                                        <option selected>Selecciona Opcion</option>
+                                        <?php for ($i = 0; $i < count($this->datosServicios); $i++) { ?>
+                                            <option value="<?php echo $this->datosServicios[$i]['sosId']; ?>"><?php echo $this->datosServicios[$i]['sosNombre']; ?></option>
+                                        <?php } ?>
+                                    </select>
+
+
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <div class="form-row">
+                                    <label for="cliente_numero_documento" class="bmd-label-floating"> Fecha:  &nbsp;</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <div class="form-row">
+                                    <?php
+                                    date_default_timezone_set('America/Bogota'); // Establecer la zona horaria de Colombia
+                                    $DateAndTime = date("Y-m-d\TH:i");
+                                    ?>
+                                    <input type="datetime-local" required class="form-control" name="dateFechaFacturacion" id="dateFechaFacturacion" maxlength="30" value="<?php echo $DateAndTime; ?>">    </div>
+                            </div>
+                        </div>
+
+                        <br>
+                        </fieldset>
+                    </div> 
+                    <div class="form-group card-footer bg-transparent border-success">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <a class="btn btn-danger btn-block" href="<?php echo RUTA_URL . 'ordenes/ordenes'; ?>">Volver</a>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-raised btn-info col-md-12 "><i class="far fa-save"></i> &nbsp; Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+            </div> 
+        </div>
+    </div>
+
+</form>
+</div> 
+</div>

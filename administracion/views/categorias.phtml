@@ -1,0 +1,133 @@
+<div id="vista">
+    <div class="container-fluid border-o small">
+        <script src='<?php echo COMMON; ?>js/validar.js'></script>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-title center-block card bg-light"> <h5 class="text-center"><?php echo $this->accion; ?></h5></div>
+
+                    <div class="card-body card card-register mx-auto mt-5">
+                        <form id="form1" method="post" enctype="multipart/form-data" action="<?php echo RUTA_URL . 'administracion/guardarcategoria'; ?>">
+                            <input type="hidden" name="txtId" value="<?php
+                            if (empty($this->datos)) {
+                                
+                            } else {
+                                echo $this->datos[0]['iasId'];
+                            }
+                            ?>">
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <label for="exampleInputDoc" class="">Codigo</label>
+                                        <input name="iasId" class="form-control " value="<?php
+                                        if (empty($this->datos)) {
+                                            
+                                        } else {
+                                            echo $this->datos[0]['iasId'];
+                                        }
+                                        ?>" id="exampleInputName"  type="number" aria-describedby="nameHelp" placeholder="Codigo">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleInputName">Nombre </label>
+                                        <input name="iasNombre" class="form-control" value="<?php
+                                        if (empty($this->datos)) {
+                                            
+                                        } else {
+                                            echo $this->datos[0]['iasNombre'];
+                                        }
+                                        ?>" id="exampleInputName " type="text" aria-describedby="nameHelp" placeholder="Ingrese el Nombre">
+                                    </div>                   
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <label for="exampleInputDireccion">Descripcion</label>
+                                        <input name="iasDescripcion" class="form-control" value="<?php
+                                        if (empty($this->datos)) {
+                                            
+                                        } else {
+                                            echo $this->datos[0]['iasDescripcion'];
+                                        }
+                                        ?>" id="exampleInputDireccion" type="text" aria-describedby="nameHelp" placeholder="Descripcion">
+                                    </div>
+
+
+                                </div>
+                            </div>      
+
+
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <input type="submit" class="btn btn-success btn-block" value="Guardar">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a class="btn btn-danger btn-block" href="<?php echo RUTA_URL . 'administracion/categorias'; ?>">Volver</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-sm-8">
+
+                <div class="card">
+                    <div class="card-title center-block card bg-light"> <h5 class="text-center">Categorias Registradas</h5></div>
+                    <div class="card-body center-block ">
+
+                        <div id="vista">
+                            <div class="card mb-3 p-3 mb-2 bg-light text-dark">
+                                <div class="card-body">
+
+                                    <div class="">
+                                        <table   style="width: 100%;" class=" table table table-sm  table-condensed" id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr> 
+                                                    <th style="width: 10%;" class="col-sm-">Codigo</th>
+                                                    <th style="width: 30%;" class="col-sm-">Nombre</th>                            
+                                                    <th style="width: 40%;" class="col-sm-">Descripcion</th>
+                                                     <th style="width: 10%;" class="col-sm-1"></th>   
+                                                </tr>
+                                            </thead>
+
+                                            <tbody class="table-condensed">
+                                                <?php for ($i = 0; $i < count($this->datoscategorias); $i++) { ?>
+                                                    <tr>
+                                                        <td ><?php echo ucwords(strtolower($this->datoscategorias[$i]['iasId'])); ?></td>
+                                                        <td ><?php echo ucwords(strtolower($this->datoscategorias[$i]['iasNombre'])); ?></td>
+                                                        <td ><?php echo ucwords(strtolower($this->datoscategorias[$i]['iasDescripcion'])); ?></td>
+                                                        <td class="text-center ">
+                                                            <button  class="fa fa-pencil-square" style="width: 25px; height: 25px; border: 0;" title="Editar" value="<?php echo $this->datoscategorias[$i]['iasId']; ?>"  id="btnEditarcategorias"></button>
+                                                            <button  class="fa fa-trash-o" style="width: 25px; height: 25px; border: 0;" title="Eliminar" data-target="#modalEliminarCategorias" data-toggle="modal" data-id="<?php echo $this->datoscategorias[$i]['iasId']; ?>" data-nom="<?php echo ucwords(strtolower($this->datoscategorias[$i]['iasNombre'])); ?>"></button>
+                                                        </td>
+                                                    </tr>
+                                                <?php } ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" tabindex="-1" id="modalEliminarCategorias" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">Mensaje de confirmacion<button class="close" data-dismiss="modal">&times;</button></div>
+                                    <div class="modal-body">
+                                        <h4></h4>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="#" class="btn btn-warning" id="enviar">Si</a>
+                                        <a href="#" class="btn btn-danger" data-dismiss="modal">No</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

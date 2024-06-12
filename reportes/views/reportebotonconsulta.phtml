@@ -1,0 +1,35 @@
+<script src='<?php echo COMMON; ?>js/validar.js'></script>
+<div class="container">
+    <table class="table table-bordered table-hover tab-custom-content table-borderless table-sm " id="dataTable"  >
+        <thead>
+
+            <tr> 
+                <th scope="col" >Cto</th>
+                <th scope="col" >Nit</th>
+                <th scope="col" >Nombres & Apellidos</th>
+                <th scope="col" >Direccion</th>  
+                <th scope="col" >No Fac</th>
+                <th scope="col" >Fecha</th>
+                <th scope="col" >valor</th>
+                <th scope="col" >Estado</th>
+            </tr>
+        </thead>
+        <tbody class="table-condensed ">
+            <?php
+            for ($h = 0; $h < count($this->datosrecaudo); $h++) {
+                $sumatotal = 0;
+                ?>
+
+                <tr>
+                    <td scope="row" ><?php echo ucwords(strtolower($this->datosrecaudo[$h]['cosId'])); ?></td>
+                    <td scope="row" ><?php echo ucwords(strtolower($this->datosrecaudo[$h]['uosDocumento'])); ?></td>
+                    <td scope="row" ><?php echo ucwords(strtolower($this->datosrecaudo[$h]['NOMBRES'])); ?></td>
+                    <td scope="row" ><?php echo ucwords(strtolower($this->datosrecaudo[$h]['DIRECCION'])); ?></td>
+                    <td scope="row" ><?php echo ucwords(strtolower($this->datosrecaudo[$h]['froNomFctura'])); ?></td>
+                    <td scope="row" ><?php echo ucwords(strtolower($this->datosrecaudo[$h]['froFechaPago'])); ?></td>               
+                    <td scope="row" ><?php echo ucwords(strtolower($this->datosrecaudo[$h]['froTotalVenta'])); ?></td>
+                <td scope="row" ><?php echo ucwords(strtolower($this->datosrecaudo[$h]['froEstadoFactura'])); ?></td></tr>
+            <?php } ?>
+        </tbody>
+    </table>
+</div>

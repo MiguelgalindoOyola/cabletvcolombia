@@ -1,0 +1,45 @@
+<div class="card-header bg-success border-success"> 
+    <h5 class="text-center "><?php echo $this->accion; ?></h5>
+</div>
+<form id="form1" method="post" enctype="multipart/form-data" action="<?php echo RUTA_URL . 'parametros/ActualizarBarrio'; ?>">
+    <div class="card-body">
+
+        <div class="form-group">
+            <div class="form-row">
+                <div class="col-md-6">
+                    <label for="exampleInputDoc" class="">Codigo</label>
+                    <input name="codigobarrio" disabled class="form-control " value="<?php
+                    echo $this->datos[0]['baid'];
+                    ?>" id="codigobarrio"   type="number " aria-describedby="nameHelp" placeholder="Codigo del Barrio Auto">
+                </div>
+                <input name="IDbARRIO"  id="IDbARRIO" class="form-control " value="<?php echo $this->datos[0]['baid'];?>" id="codigobarrio" type="hidden">
+                <div class="col-md-6">
+                    <label for="exampleInputName">Nombre </label>
+                    <input name="txtnombrebarrio" class="form-control" value="<?php
+                           echo $this->datos[0]['banombre'];
+                    ?>" id="txtnombrebarrio" required  type="text" aria-describedby="nameHelp" placeholder="Ingrese el Nombre del Barrio">
+                </div>                   
+            </div>
+        </div>
+        <div class="form-row">
+
+            <div class="col-md-12">
+                <label for="exampleInputName">Detalle </label>
+                <input name="txtdetallebarrio" required class="form-control" value="<?php
+                    echo $this->datos[0]['badetalle'];
+                    ?>" id="txtdetallebarrio " type="text" aria-describedby="nameHelp" placeholder="Detalle/Descripcion">
+            </div>                   
+        </div>
+    </div>
+    <div class="form-group card-footer bg-transparent border-success">
+        <div class="form-row">
+            <div class="col-md-6">
+                <input type="submit" class="btn btn-primary btn-block" value="Guardar">
+            </div>
+            <div class="col-md-6">
+                <a class="btn btn-danger btn-block" href="<?php echo RUTA_URL . 'parametros/barrios'; ?>">Volver</a>
+            </div>
+        </div>
+    </div>
+</form>
+</div> 

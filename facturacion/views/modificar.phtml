@@ -1,0 +1,64 @@
+<script src='<?php echo COMMON; ?>js/validar.js'></script>
+<div>
+
+    <div class="card card-blue">
+        <div class="card-header bg-lightblue border-success"> 
+            <h3 class="text-center "><?php echo $this->accion; ?></h3>
+        </div>
+        <div class=" card-body">
+            <form id="form1" method="post" enctype="multipart/form-data" action="<?php echo RUTA_URL . 'humanos/GuardarCliente1'; ?>">
+
+                <fieldset>
+                    <legend><i class="far fa-address-card"></i> &nbsp; Información Personalsdsd Cliente</legend>
+                    <div class="container-fluid">
+
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <div class="form-row">
+
+                                    <label for="cliente_numero_documento" class="bmd-label-floating"> Valor Inicial <i class="fab fa-font-awesome-alt"></i> &nbsp;</label>
+                                    <input type="number" id="txt_campo_1" class="monto" onchange="sumar();" />
+
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="form-group">
+                                    <label for="cliente_apellido" class="bmd-label-floating">Valor Adicion : <i class="fab fa-font-awesome-alt"></i> &nbsp;</label>
+                                    <input type="number" id="txt_campo_2" class="monto" onchange="sumar();" />
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="form-group">
+                                    <label for="cliente_apellido" class="bmd-label-floating">Valor total : <i class="fab fa-font-awesome-alt"></i> &nbsp;</label>
+                                    <input type="number" id="total" value="0" readonly/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <script>
+                
+                function sumar()
+{
+  const $total = document.getElementById('total');
+  let subtotal = 0;
+  [ ...document.getElementsByClassName( "monto" ) ].forEach( function ( element ) {
+    if(element.value !== '') {
+      subtotal += parseFloat(element.value);
+    }
+  });
+  $total.value = subtotal;
+}
+                </script>
+                <p class="text-center" style="margin-top: 40px;">
+                    <button type="reset" class="btn btn-raised btn-secondary btn-sm"><i class="fas fa-paint-roller"></i> &nbsp; LIMPIAR</button>
+                    &nbsp; &nbsp;
+                    <button type="submit" class="btn btn-raised btn-info btn-sm"><i class="far fa-save"></i> &nbsp; GUARDAR</button>
+                </p>
+                <p class="text-center">
+                    <small>Los campos marcados con &nbsp; <i class="fab fa-font-awesome-alt"></i> &nbsp; son obligatorios</small>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>

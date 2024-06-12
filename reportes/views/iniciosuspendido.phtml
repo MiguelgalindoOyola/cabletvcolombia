@@ -1,0 +1,156 @@
+<link href="<?php echo COMMON; ?>/sweetalert.css" rel="stylesheet" type="text/css"/>
+<script src="<?php echo COMMON; ?>/sweetalert.min.js" type="text/javascript"></script>
+<script src='<?php echo COMMON; ?>js/validar.js'></script>
+
+<script src="<?php echo COMMON; ?>/js/ajax.js" type="text/javascript"></script>
+<script src="<?php echo COMMON; ?>/js/jquery.js" type="text/javascript"></script>
+<script src='<?php echo COMMON; ?>js/validar.js'></script>
+<script src="<?php echo $_layoutParams['ruta_js']; ?>script.js" type="text/javascript"></script>
+
+<div id="cargaSuspender"class="conainer container-fluid">
+    <div class="col-md-12 row" >
+        <div  class=" col-md-10 alert alert-success center-block center text-center" role="alert">
+            <h4>Reporte Usuarios Suspendidos</h4> 
+<!--            <a href= "<?php echo RUTA_URL; ?>reportes/reportemorosos">reportemorosos  </a>-->
+        </div>
+        <div class="col-md-2">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+                <div class="inner">
+                    <h4>Cantidad Usuarios Suspendidos
+                        <i
+                            class="fa fa-bars"></i>  
+                            <?php
+                            echo $this->cantidadSuspendidos[0]['Cantidad'];
+                            ?>
+                    </h4>
+
+                </div>
+                <div class="icon">
+                    <i class="ion ion-ios-cart"></i>
+                </div>
+                <a style="cursor:pointer;" class="small-box-footer" href= "<?php echo RUTA_URL; ?>reportes/reportesuspendidospdf">Imprimir <i
+                        class="fas fa-print"></i></a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="">
+        <table   style="width: 100%;" class=" table table-bordered table-hover tab-custom-content table-borderless table-sm  table-condensed" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+                <tr> 
+                    <th style="" class="col-sm-">NIT</th>
+                    <th style="" class="col-sm-">NOMBRES & APELLIDOS</th>
+                    <th style="" class="col-sm-">DIRECCION</th>
+                    <th style="" class="col-sm-">CTO</th>
+                    <th style="" class="col-sm-">FECHA/INICIO</th>  
+                    <th style="" class="col-sm-">FECHA/FINAL</th> 
+                    <th style="" class="col-sm-">N/FACT</th>
+                    <th style="" class="col-sm-">DEUDA</th>   
+                    <th style="" class="col-sm-">OPCION</th>   
+                </tr>
+            </thead>
+            <tbody class="table-condensed">
+                <?php
+                for ($i = 0; $i < count($this->datos); $i++) {
+                    if($this->datos[$i]['cosEstado']=='SUSPENDIDO'){
+                    ?>
+                    <tr>
+                        <td class = "text-center" ><?php echo ucwords(strtolower($this->datos[$i]['uosDocumento'])); ?></td>
+                        <td class="text-center"><?php echo ucwords(strtolower($this->datos[$i]['NOMBRES'])); ?></td>
+                        <td class="text-center"><?php echo ucwords(strtolower($this->datos[$i]['DIRECCION'])); ?></td>
+                        <td class="text-center"><?php echo ucwords(strtolower($this->datos[$i]['froContrato'])); ?></td>
+                        <td class="text-center"><?php echo ucwords(strtolower($this->datos[$i]['cosFechainici'])); ?> </td>
+                        <td class="text-center"><?php echo ucwords(strtolower($this->datos[$i]['cosFechafinal'])); ?> </td>                        
+                        <td class="text-center"><?php echo ucwords(strtolower($this->datos[$i]['froNomFctura'])); ?> </td>
+
+                        <?php
+                        $valor = $this->datos[$i]['VALORDEUDA'];
+                        $formato = number_format($valor, 2);
+                        ?>
+                        <td><?php echo '$ ', $formato; ?></td>
+                        <td>
+
+                            <button  id="btnActivar"
+                                     class="btn btn-danger btn-sm " 
+                                     data-target="#modalActivar" 
+                                     data-toggle="modal" 
+                                     value="<?php echo $this->datos[$i]['froNomFctura']; ?>"
+                                     data-id="<?php echo $this->datos[$i]['froNomFctura']; ?>" 
+                                     data-contra="<?php echo $this->datos[$i]['froContrato']; ?>" 
+                                     data-factura="<?php echo '$ ', $formato; ?>" 
+                                     data-nom="<?php echo ucwords(strtolower($this->datos[$i]['froNomFctura'])); ?>">
+                                ACTIVAR USUARIO
+                            </button>
+
+
+
+                    </tr>
+                    <?php
+                    }
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="modalActivar" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!--            <div class="modal-header">Mensaje de confirmacion<button class="close" data-dismiss="modal">&times;</button></div>-->
+            <div class="modal-body card center center-block">
+                <h2 class="text-danger">NOTIFICACION</h2>
+               
+                <h3>Notas para tener en cuenta</h3>
+                <br>
+                <h41></h41>
+                <h42></h42>
+                <h43></h43>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-warning " id="enviar">Confirmar</a>
+                <a href="#" class="btn btn-danger" data-dismiss="modal">Cancelar</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+                $('#modalActivar').on('show.bs.modal', function (event) {
+       var button = $(event.relatedTarget)
+       var recipent = button.data('id')
+       var factura= button.data('factura')
+       var contra= button.data('contra')
+       var nom = button.data('nom')
+       var modal = $(this);
+       var datos=[contra,factura];
+       
+        
+       modal.find('h41').text('Se activara la factura por el valor : ' + factura );
+       modal.find('h42').text('Se Generara la orden de activacion para el Contrato: ' + datos[0]  );
+       modal.find('h43').text('Se realizara un cargo por reconexion en la proxima facturacion.' );
+      
+       modal.find('#enviar').attr('href', 'accionactivar/' + recipent);
+      
+   });               
+</script>   
+
+
+
+
+<style type="text/css" >
+
+    #btnPagarFactura{
+        width: 100px; height: 25px; border: 0;
+    }
+    #btncredito{
+        width: 50px; height: 25px; border: 0;
+    }
+
+
+    #btnpagar{
+        width: 50px; height: 25px; border: 0;
+    }
+</style>
+
+

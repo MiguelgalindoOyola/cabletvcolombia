@@ -1,0 +1,108 @@
+<script src='<?php echo COMMON; ?>js/validar.js'></script>
+<div>
+    
+    <div class="card card-blue">
+        <div class="card-header bg-lightblue border-success"> 
+            <h3 class="text-center "><?php echo $this->accion; ?></h3>
+        </div>
+        <div class=" card-body">
+            <form id="form1" method="post" enctype="multipart/form-data" action="<?php echo RUTA_URL . 'humanos/GuardarCliente1'; ?>">
+
+                <fieldset>
+                    <legend><i class="far fa-address-card"></i> &nbsp; Información Personalsdsd Cliente</legend>
+                    <div class="container-fluid">
+
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <div class="form-row">
+                                    <input type="hidden"  name="TXTDOCantiguo" id="TXTDOCantiguo"  value="<?php echo ucwords(strtolower($this->datosCliente[0]['uosDocumento'])); ?>">
+                                    <label for="cliente_numero_documento" class="bmd-label-floating"> Numero de documento: <i class="fab fa-font-awesome-alt"></i> &nbsp;</label>
+                                    <input type="text" required class="form-control" name="TXTDOC" id="TXTDOC" maxlength="30" value="<?php echo ucwords(strtolower($this->datosCliente[0]['uosDocumento'])); ?>">
+                                    
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="form-group">
+                                    <label for="cliente_nombre" class="bmd-label-floating">Nombres:  <i class="fab fa-font-awesome-alt"></i> &nbsp;</label>
+                                    <input type="text" required class="form-control" name="TXTNOMCLIENTE" id="TXTNOMCLIENTE" maxlength="35" value="<?php echo ucwords(strtolower($this->datosCliente[0]['uosNombres'])); ?>">
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="form-group">
+                                    <label for="cliente_apellido" class="bmd-label-floating">Apellidos : <i class="fab fa-font-awesome-alt"></i> &nbsp;</label>
+                                    <input type="text"  required class="form-control" name="TXTAPELLIDO" id="TXTAPELLIDO" maxlength="35" value="<?php echo ucwords(strtolower($this->datosCliente[0]['uosApellidos'])); ?>"> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend><i class="fas fa-map-marked-alt"></i> &nbsp; Información de residencia</legend>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <div class="form-group">
+                                    <label for="cliente_provincia" class="bmd-label-floating">Municipio: <i class="fab fa-font-awesome-alt"></i> &nbsp;</label>
+                                    <input type="text"  required class="form-control" name="TXTMUNICIPIO" id="TXTMUNICIPIO" maxlength="30" value=" <?php echo ucwords(strtolower($this->datosCliente[0]['uosMunicipio'])); ?>">
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="form-group">
+                                    <label for="cliente_ciudad" class="bmd-label-floating">Direccion:<i class="fab fa-font-awesome-alt"></i> &nbsp;</label>
+                                    <input type="text"  required class="form-control" name="TXTDIRECCION" id="TXTDIRECCION" maxlength="30" value="<?php echo ucwords(strtolower($this->datosCliente[0]['uosDireccion'])); ?>">
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="form-group">
+
+                                    <label for="cliente_direccion" class="bmd-label-floating">Barrio:<i class="fab fa-font-awesome-alt"></i> &nbsp;</label>
+
+                                    <select class="selectpicker select-info col-12"  id="CBBarrio" name="CBBarrio">
+                                        <option  value="<?php echo $this->datosCliente[0]['baid'] ?>" selected> <?php echo $this->datosCliente[0]['banombre'] ?> </option>    
+                                        
+                                        <?php for ($i = 0; $i < count($this->ConsultaDatosBarrio); $i++) { ?> 
+                                            <option  
+                                                value="<?php echo $this->ConsultaDatosBarrio[$i]['baid'] ?>">
+                                                    <?php echo $this->ConsultaDatosBarrio[$i]['banombre'] ?> 
+                                            </option>
+                                        <?php } ?>
+
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend><i class="far fa-address-book"></i> &nbsp; Información de contacto</legend>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="cliente_telefono" class="bmd-label-floating">Teléfono: <i class="fab fa-font-awesome-alt"></i> &nbsp;</label>
+                                    <input type="text"  required class="form-control" name="TXTTELEFONO" id="TXTTELEFONO" maxlength="20" value="<?php echo ucwords(strtolower($this->datosCliente[0]['uosTelefono'])); ?>">
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="cliente_email" class="bmd-label-floating">Email: </label>
+                                    <input type="email" class="form-control" required name="TXTCORREO" id="TXTCORREO" maxlength="50" value="<?php echo ucwords(strtolower($this->datosCliente[0]['uosCorreo'])); ?>">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset> 
+
+                <p class="text-center" style="margin-top: 40px;">
+                    <button type="reset" class="btn btn-raised btn-secondary btn-sm"><i class="fas fa-paint-roller"></i> &nbsp; LIMPIAR</button>
+                    &nbsp; &nbsp;
+                    <button type="submit" class="btn btn-raised btn-info btn-sm"><i class="far fa-save"></i> &nbsp; GUARDAR</button>
+                </p>
+                <p class="text-center">
+                    <small>Los campos marcados con &nbsp; <i class="fab fa-font-awesome-alt"></i> &nbsp; son obligatorios</small>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>

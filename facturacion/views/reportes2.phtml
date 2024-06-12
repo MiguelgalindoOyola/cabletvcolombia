@@ -1,0 +1,116 @@
+<?php
+ob_start();
+//$nombreImagen = "logo.png";
+//$imagenBase64 = "data:image/png;base64," . base64_encode(file_get_contents($nombreImagen));
+?>
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <link rel='icon' href='<?php echo COMMON; ?>img/icono.ico'>
+<a href="../common/img/icono.ico"></a>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<title><?php echo $this->title; ?></title>
+<!--!-- Google Font: Source Sans Pro -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" > 
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="<?php echo COMMON; ?>assets/plugins/fontawesome-free/css/all.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="<?php echo COMMON; ?>assets/dist/css/adminlte.min.css">
+
+
+<!-- jQuery -->
+<script src="<?php echo COMMON; ?>assets/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="<?php echo COMMON; ?>assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="<?php echo COMMON; ?>assets/dist/js/adminlte.min.js"></script>
+<script src="<?php echo COMMON; ?>js/jquery.js"></script>
+<link href="<?php echo COMMON; ?>vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="<?php echo COMMON; ?>vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="<?php echo COMMON; ?>vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+<link href="<?php echo COMMON; ?>css/sb-admin.css" rel="stylesheet">
+<link href="<?php echo COMMON; ?>css/pnotify.custom.min.css" rel="stylesheet">
+<link href='<?php echo COMMON; ?>formvalidation/dist/css/bootstrapValidator.css' rel='stylesheet'><script src='<?php echo COMMON; ?>formvalidation/dist/js/bootstrapValidator.js'></script><script src='<?php echo COMMON; ?>formvalidation/dist/js/language/es_CL.js'></script>
+</head>
+<body>
+
+    <table   style="" class="table table-sm border-width-2  table-condensed" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+            <tr> 
+                <th style="" class="col-sm-">Documento</th>
+                <th style="" class="col-sm-">Nombres y Apellidos</th>
+                <th style="" class="col-sm-">Asignacion</th>  
+                <th style="" class="col-sm-">Num Contrato</th>
+                <th style="" class="col-sm-">Estado</th>
+                <th style="" class="col-sm-1">Opciones</th>   
+            </tr>
+        </thead>
+        <tbody class="table-condensed">
+            <?php for ($i = 0; $i < count($this->ConsultaClientesTab); $i++) { ?>
+                <tr>
+                    <td ><?php echo ucwords(strtolower($this->ConsultaClientesTab[$i]['uosDocumento'])); ?></td>
+                    <td ><?php echo ucwords(strtolower($this->ConsultaClientesTab[$i]['uosNombres'])); ?><?php
+                        echo ' ';
+                        echo ucwords(strtolower($this->ConsultaClientesTab[$i]['uosApellidos']));
+                        ?></td>
+                    <td ><?php echo ucwords(strtolower($this->ConsultaClientesTab[$i]['uosEstadoContrato'])); ?></td>
+                    <td ><?php echo ucwords(strtolower($this->ConsultaClientesTab[$i]['cosId'])); ?></td>
+                    <td class="alert <?php echo $this->ConsultaClientesTab[$i]['cosEstilo']; ?>"><?php echo ucwords(strtolower($this->ConsultaClientesTab[$i]['cosEstado'])); ?></td>                      
+                    <td> 
+                        <img src='./logo.png'/>
+                    </td>   
+    <!--        <img src="logo.png" alt=""/>-->
+                </tr>
+            <?php } ?>
+            <?php for ($A = 0; $A < count($this->ConsultaClientesTab1); $A++) { ?>
+                <tr>
+                    <td ><?php echo ucwords(strtolower($this->ConsultaClientesTab1[$A]['uosDocumento'])); ?></td>
+                    <td ><?php
+                        echo ucwords(strtolower($this->ConsultaClientesTab1[$A]['uosNombres']));
+                        echo ' ';
+                        echo ucwords(strtolower($this->ConsultaClientesTab1[$A]['uosApellidos']));
+                        ?></td>
+                    <td ><?php echo ucwords(strtolower($this->ConsultaClientesTab1[$A]['uosEstadoContrato'])); ?></td>
+                    <td class="alert alert-danger">Por definir</td>
+                    <td class="alert alert-danger">Por definir</td>                      
+                    <td> 
+                        <img src='logo.png'/>
+                    </td>    
+                </tr>
+            <?php } ?>
+        </tbody>
+
+    </table>
+</body>
+
+<?php
+Session::acceso("General");
+$html = ob_get_clean();
+//echo $html;
+
+require_once 'dompdf/autoload.inc.php';
+
+use Dompdf\Adapter\CPDF;
+use Dompdf\Dompdf;
+use Dompdf\Exception;
+
+$dompdf = new Dompdf();
+
+$options = $dompdf->getOptions();
+$options->set(array('isRemoteEnabled' => true));
+$dompdf->setOptions($options);
+
+$dompdf->loadHtml($html);
+$dompdf->setPaper('letter');
+//$dompdf->setPaper('A4', 'landscape');
+
+$dompdf->render();
+
+$dompdf->stream("archivo_pdf", array("Attachment" => false));
+?>

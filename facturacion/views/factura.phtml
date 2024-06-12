@@ -1,0 +1,402 @@
+<?php
+
+//ob_start();
+//$nombre =$this->datosfacturamaestro[0]['banombre'];
+include_once 'fpdf/fpdf.php';
+ob_start();
+
+//    $pdf = new FPDF();
+//    $pdf->AddPage();
+//    $pdf->SetFont('Arial','B',16);
+//    $pdf->Cell(40,10, $this->datosfacturamaestro[0]['banombre'] );
+//    $pdf->Output();
+//    ob_end_flush();;
+
+class PDF_MC_Table extends FPDF {
+
+    var $widths;
+    var $aligns;
+
+    function SetWidths($w) {
+        //Set the array of column widths
+        $this->widths = $w;
+    }
+
+    function SetAligns($a) {
+        //Set the array of column alignments
+        $this->aligns = $a;
+    }
+
+    function Row($data) {
+        //Calculate the height of the row
+        $nb = 0;
+        for ($i = 0; $i < count($data); $i++)
+            $nb = max($nb, $this->NbLines($this->widths[$i], $data[$i]));
+        $h = 0.5 * $nb;
+        //Issue a page break first if needed
+        $this->CheckPageBreak($h);
+        //Draw the cells of the row
+        for ($i = 0; $i < count($data); $i++) {
+            $w = $this->widths[$i];
+            $a = isset($this->aligns[$i]) ? $this->aligns[$i] : 'C';
+            //Save the current position
+            $x = $this->GetX();
+            $y = $this->GetY();
+            //Draw the border
+            $this->Rect($x, $y, $w, 1);
+            //Print the text
+            $this->MultiCell($w, 0.5, $data[$i], 0, $a);
+            //Put the position to the right of the cell
+            $this->SetXY($x + $w, $y);
+        }
+        //Go to the next line
+        $this->Ln($h);
+    }
+
+    function CheckPageBreak($h) {
+        //If the height h would cause an overflow, add a new page immediately
+        if ($this->GetY() + $h > $this->PageBreakTrigger)
+            $this->AddPage($this->CurOrientation);
+    }
+
+    function NbLines($w, $txt) {
+        //Computes the number of lines a MultiCell of width w will take
+        $cw = &$this->CurrentFont['cw'];
+        if ($w == 0)
+            $w = $this->w - $this->rMargin - $this->x;
+        $wmax = ($w - 2 * $this->cMargin) * 1000 / $this->FontSize;
+        $s = str_replace("\r", '', $txt);
+        $nb = strlen($s);
+        if ($nb > 0 and $s[$nb - 1] == "\n")
+            $nb--;
+        $sep = -1;
+        $i = 0;
+        $j = 0;
+        $l = 0;
+        $nl = 1;
+        while ($i < $nb) {
+            $c = $s[$i];
+            if ($c == "\n") {
+                $i++;
+                $sep = -1;
+                $j = $i;
+                $l = 0;
+                $nl++;
+                continue;
+            }
+            if ($c == ' ')
+                $sep = $i;
+            $l += $cw[$c];
+            if ($l > $wmax) {
+                if ($sep == -1) {
+                    if ($i == $j)
+                        $i++;
+                } else
+                    $i = $sep + 1;
+                $sep = -1;
+                $j = $i;
+                $l = 0;
+                $nl++;
+            } else
+                $i++;
+        }
+        return $nl;
+    }
+
+}
+
+class PDF extends FPDF {
+
+    var $B;
+    var $I;
+    var $U;
+    var $HREF;
+
+    function WriteHTML($html) {
+        // Intérprete de HTML
+        $html = str_replace("\n", ' ', $html);
+        $a = preg_split('/<(.*)>/U', $html, -1, PREG_SPLIT_DELIM_CAPTURE);
+        foreach ($a as $i => $e) {
+            if ($i % 2 == 0) {
+                // Text
+                if ($this->HREF)
+                    $this->PutLink($this->HREF, $e);
+                else
+                    $this->Write(5, $e);
+            } else {
+                // Etiqueta
+                if ($e[0] == '/')
+                    $this->CloseTag(strtoupper(substr($e, 1)));
+                else {
+                    // Extraer atributos
+                    $a2 = explode(' ', $e);
+                    $tag = strtoupper(array_shift($a2));
+                    $attr = array();
+                    foreach ($a2 as $v) {
+                        if (preg_match('/([^=]*)=["\']?([^"\']*)/', $v, $a3))
+                            $attr[strtoupper($a3[1])] = $a3[2];
+                    }
+                    $this->OpenTag($tag, $attr);
+                }
+            }
+        }
+    }
+
+    function OpenTag($tag, $attr) {
+        // Etiqueta de apertura
+        if ($tag == 'B' || $tag == 'I' || $tag == 'U')
+            $this->SetStyle($tag, true);
+        if ($tag == 'A')
+            $this->HREF = $attr['HREF'];
+        if ($tag == 'BR')
+            $this->Ln(5);
+    }
+
+    function CloseTag($tag) {
+        // Etiqueta de cierre
+        if ($tag == 'B' || $tag == 'I' || $tag == 'U')
+            $this->SetStyle($tag, false);
+        if ($tag == 'A')
+            $this->HREF = '';
+    }
+
+    function SetStyle($tag, $enable) {
+        // Modificar estilo y escoger la fuente correspondiente
+        $this->$tag += ($enable ? 1 : -1);
+        $style = '';
+        foreach (array('B', 'I', 'U') as $s) {
+            if ($this->$s > 0)
+                $style .= $s;
+        }
+        $this->SetFont('', $style);
+    }
+
+    function PutLink($URL, $txt) {
+        // Escribir un hiper-enlace
+        $this->SetTextColor(0, 0, 255);
+        $this->SetStyle('U', true);
+        $this->Write(5, $txt, $URL);
+        $this->SetStyle('U', false);
+        $this->SetTextColor(0);
+    }
+
+}
+
+//INICIA EL CICLO
+$pdf = new PDF_MC_Table('P', 'cm', array(23, 28));
+
+for ($A = 0; $A < count($this->datosfacturamaestro); $A++) {
+    $pdf->AddPage();
+    $pdf->SetLeftMargin(1);
+    $pdf->SetRightMargin(1);
+    $pdf->SetFont('Arial', 'B', 9);
+    $pdf->MultiCell(4, 2, $pdf->Image(COMMON . 'img/logoversion3.png', 1, 1, 4, 2, 'png'), 1, 'C', 0);
+    $pdf->Ln(-2);
+    $pdf->Cell(4);
+    $pdf->Cell(4.7, 2, '', 1, 'C', 0);
+    $pdf->Cell(-4.7);
+    $pdf->MultiCell(4.7, 0.5, utf8_decode('ASOCIACIÓN COMUNITARIA DE TELEVISION
+NIT. 900.139.856-7
+COLOMBIA HUILA'), 0, 'C', 0);
+
+    $pdf->Ln(-2);
+    $pdf->Cell(8.7);
+    $pdf->Cell(4, 2, '', 1, 'C', 0);
+    $pdf->Cell(-4);
+
+    $pdf->MultiCell(4, 0.5, utf8_decode('FACTURA DE VENTA
+NO. ' . $this->datosfacturamaestro[$A]['froNomFctura'] . '
+CONTRATO:' . $this->datosfacturamaestro[$A]['cosId']), 0, 'C', 0);
+    $pdf->Ln(-1.5);
+    $pdf->Cell(13);
+    $pdf->MultiCell(3.5, 2, $pdf->Image(COMMON . 'img/logoversion3.png', 14, 1, 3.5, 2, 'PNG'), 1, 'C', 0);
+
+    $pdf->Ln(-2);
+    $pdf->Cell(16.5);
+    $pdf->Cell(5, 2, '', 1, 'C', 0);
+    $pdf->Cell(-5);
+    $pdf->MultiCell(5, 0.5, utf8_decode('FACTURA DE VENTA
+NO. ' . $this->datosfacturamaestro[$A]['froNomFctura'] . '
+CONTRATO:' . $this->datosfacturamaestro[$A]['cosId']), 0, 'C', 0);
+
+//Datos del cliente izquierda
+    $pdf->Ln(0.5);
+    $pdf->Cell(12.7, 0.5, '', 1, '', 0);
+    $pdf->Cell(-12.7);
+    $pdf->SetFont('Arial', 'B', 8);
+    $pdf->Cell(1.5, 0.5, 'NOMBRE:', 1, '', 1);
+    $pdf->SetFont('Arial', '', 9);
+    $pdf->MultiCell(7, 0.5, utf8_decode($this->datosfacturamaestro[$A]['Nombresyapellidos']), 0, '', 0);
+
+    $pdf->Ln(-0.5);
+    $pdf->Cell(7.2);
+    $pdf->SetFont('Arial', 'B', 9);
+    $pdf->Cell(0.8, 0.5, '               NIT:', 0, '', 1);
+    $pdf->SetFont('Arial', '', 9);
+    $pdf->MultiCell(4.7, 0.5, utf8_decode('              ' . $this->datosfacturamaestro[$A]['uosDocumento']), 0, '', 0);
+
+
+    $pdf->Cell(12.7, 0.5, '', 1, '', 0);
+    $pdf->Cell(-12.7);
+    $pdf->SetFont('Arial', 'B', 9);
+    $pdf->Cell(1.4, 0.5, 'BARRIO:', 0, '', 1);
+    $pdf->SetFont('Arial', '', 9);
+    $pdf->MultiCell(3, 0.5, utf8_decode($this->datosfacturamaestro[$A]['banombre']), 0, '', 0);
+
+    $pdf->Ln(-0.5);
+    $pdf->Cell(4.1);
+    $pdf->SetFont('Arial', 'B', 9);
+    $pdf->Cell(1.8, 0.5, 'DIRECCION:', 0, ' ', 1);
+    $pdf->SetFont('Arial', '', 9);
+    $pdf->MultiCell(4, 0.5, ' ' . utf8_decode($this->datosfacturamaestro[$A]['uosDireccion']), 0, '', 0);
+
+    $pdf->Ln(-0.5);
+    $pdf->Cell(10);
+    $pdf->SetFont('Arial', 'B', 9);
+    $pdf->Cell(1.6, 0.5, 'ESTRATO:', 0, '', 1);
+    $pdf->SetFont('Arial', '', 9);
+    $pdf->MultiCell(1, 0.5, utf8_decode(' '), 0, '', 0);
+
+//------
+
+    $pdf->SetFillColor(173, 212, 255);
+
+    $pdf->MultiCell(10, 0.5, 'CONCEPTO:', 1, 'C', 1);
+
+    $pdf->Ln(-0.5);
+    $pdf->Cell(9.7);
+    $pdf->SetFillColor(173, 212, 255);
+    $pdf->MultiCell(3, 0.5, 'VALOR:', 1, 'C', 1);
+
+//datos del cliente derecha
+    $pdf->Ln(-1.5);
+    $pdf->Cell(13);
+    $pdf->Cell(8.5, 0.5, '', 1, 'C', 0);
+    $pdf->Cell(-8.5);
+    $pdf->MultiCell(8.5, 0.5, 'NOMBRE: ' . utf8_decode($this->datosfacturamaestro[$A]['Nombresyapellidos']), 1, 'C', 0);
+
+    $pdf->Cell(13);
+    $pdf->Cell(8.5, 0.5, '', 1, 'C', 0);
+    $pdf->Cell(-8.5);
+    $pdf->MultiCell(8.5, 0.5, 'DIRECCION: ' . utf8_decode($this->datosfacturamaestro[$A]['uosDireccion']) . '/' . ($this->datosfacturamaestro[$A]['banombre']), 1, 'C', 0);
+
+
+    $pdf->Cell(13);
+    $pdf->SetFillColor(173, 212, 255);
+    $pdf->MultiCell(6, 0.5, 'CONCEPTO:', 1, 'C', 1);
+
+    $pdf->Ln(-0.5);
+    $pdf->Cell(19);
+    $pdf->SetFillColor(173, 212, 255);
+    $pdf->MultiCell(2.5, 0.5, 'VALOR:', 1, 'C', 1);
+
+
+    $pdf->SetWidths(array(9.7, 3, 0.3, 6, 2.5));
+
+    $contador = 0;
+    $totalPrecioVenta2 = 0;
+    $VALORDESCUENTO = 0;
+    $valortotalfacturamaestrp = 0;
+    for ($AD = 0; $AD < count($this->datosfacturadetalle); $AD++) {
+        if ($this->datosfacturamaestro[$A]['froNomFctura'] == $this->datosfacturadetalle[$AD]['fleIdFactura']) {
+            $pdf->Row(array($this->datosfacturadetalle[$AD]['fleNombreServicio'], '$' . $formato1 = number_format($this->datosfacturadetalle[$AD]['flePrecioVenta']), '', $this->datosfacturadetalle[$AD]['fleNombreServicio'], '$' . $formato1 = number_format($this->datosfacturadetalle[$AD]['flePrecioVenta'])));
+            $contador++;
+            $totalPrecioVenta2 += $this->datosfacturadetalle[$AD]['flePrecioVenta'];
+        }
+    }
+    $valortotalfacturamaestrp = $this->datosfacturamaestro[$A]['froTotalVenta'];
+    
+    $VALORDESCUENTO =$totalPrecioVenta2-$valortotalfacturamaestrp;
+
+    if ($VALORDESCUENTO >= 1) {
+        $pdf->Row(array('ABONO O AJUSTE A FACTURA', '-$' . $formato1 = number_format($VALORDESCUENTO ), '', 'ABONO O AJUSTE', '-$' . $formato1 = number_format($VALORDESCUENTO)));
+        $contador++;
+    }
+
+    if ($this->datosfacturamaestro[$A]['froTotalVenta'] >= 29000) {
+        $contador += 3;
+    }
+    if ($this->datosfacturamaestro[$A]['froTotalVenta'] <= 28000) {
+        $contador += 1;
+    }
+
+// Completar las filas restantes hasta llegar a un total de 8
+    while ($contador < 7) {
+        $pdf->Row(array(' ', ' ', '', ' ', ' '));
+        $contador++;
+    }
+
+    if ($this->datosfacturamaestro[$A]['froTotalVenta'] <= 28000) {
+        $pdf->Row(array('GRACIAS POR SU PAGO OPORTUNO', ' ', '', ' ', ' '));
+    }
+
+    if ($this->datosfacturamaestro[$A]['froTotalVenta'] >= 29000) {
+        $pdf->SetFont('Arial', 'B', 11);
+        $pdf->SetFillColor(150, 50, 0);
+        $pdf->SetDrawColor(0, 0, 255);
+        $pdf->SetTextColor(230, 67, 72);
+
+        $pdf->Row(array(utf8_decode('¡AVISO DE SUSPENSIÓN!'), ' ', '', utf8_decode('¡AVISO DE SUSPENSIÓN!'), ''));
+        $pdf->SetFillColor(0, 0, 0);
+        $pdf->SetDrawColor(0, 0, 0);
+        $pdf->SetTextColor(0, 0, 0);
+
+        $pdf->SetFont('Arial', '', 10);
+        $pdf->SetFillColor(150, 50, 0);
+        $pdf->SetDrawColor(0, 0, 255);
+        $pdf->SetTextColor(16, 11, 10);
+
+        $pdf->Row(array(utf8_decode('Se informa que su servicio será suspendido por falta de pago en la fecha de corte correspondiente'), ' ', '', '', ''));
+        $pdf->SetFillColor(0, 0, 0);
+        $pdf->SetDrawColor(0, 0, 0);
+        $pdf->SetTextColor(0, 0, 0);
+    }
+    $pdf->SetFont('Arial', 'B', 9);
+
+    $pdf->SetFillColor(173, 212, 255);
+    $pdf->MultiCell(5.8, 1.5, 'ULTIMO PERIODO: ' . $this->datosfacturamaestro[$A]['Concepto'], 1, 'C', 1);
+
+    $pdf->Ln(-1.5);
+    $pdf->Cell(5.8);
+    if ($this->datosfacturamaestro[$A]['froTotalVenta'] >= 30000 and $this->datosfacturamaestro[$A]['froTotalVenta'] <= 31000) {
+        $pdf->MultiCell(4, 0.7, 'PAGUE HASTA: ' . $this->datosfacturamaestro[$A]['froFechaVencimiento'], 1, 'C', 1);
+    }if ($this->datosfacturamaestro[$A]['froTotalVenta'] >= 32000) {
+        $pdf->MultiCell(4, 0.7, 'PAGUE HASTA: ' . 'INMEDIATO ', 1, 'C', 1);
+    } if ($this->datosfacturamaestro[$A]['froTotalVenta'] <= 29000) {
+        $pdf->MultiCell(4, 0.7, 'PAGUE HASTA: ' . $this->datosfacturamaestro[$A]['froFechaVencimiento'], 1, 'C', 1);
+    }
+
+
+    $pdf->Ln(-1.4);
+    $pdf->Cell(9.7);
+    $pdf->MultiCell(3, 1.3, 'SALDO A PAGAR', 1, 'C', 1);
+
+//--------------------------------
+    $pdf->SetFillColor(173, 212, 255);
+
+    if ($this->datosfacturamaestro[$A]['froTotalVenta'] >= 30000 and $this->datosfacturamaestro[$A]['froTotalVenta'] <= 31000) {
+        $pdf->MultiCell(9.7, 0.5, 'SUSPENCION A PARTIR DE: ' . $this->datosfacturamaestro[$A]['froFechaVencimiento'], 1, 'C', 1);
+    }
+    if ($this->datosfacturamaestro[$A]['froTotalVenta'] >= 32000) {
+        $pdf->MultiCell(9.7, 0.5, 'SUSPENCION A PARTIR DE: ' . 'INMEDIATO ', 1, 'C', 1);
+    } if ($this->datosfacturamaestro[$A]['froTotalVenta'] <= 29000) {
+        $pdf->MultiCell(9.7, 0.5, 'SUSPENCION A PARTIR DE: ' . $this->datosfacturamaestro[$A]['froFechaVencimiento'], 1, 'C', 1);
+    }
+    $pdf->Ln(-0.5);
+    $pdf->Cell(9.7);
+    $pdf->MultiCell(3, 0.5, '$' . $formato1 = number_format($this->datosfacturamaestro[$A]['froTotalVenta']), 1, 'C', 1);
+//--------------------------------
+    $pdf->Ln(-1.8);
+    $pdf->Cell(13);
+    $pdf->SetFillColor(173, 212, 255);
+    $pdf->MultiCell(4.5, 0.9, 'ULTIMO PERIODO: ' . $this->datosfacturamaestro[$A]['Concepto'], 1, 'C', 1);
+
+    $pdf->Ln(-1.8);
+    $pdf->Cell(17.5);
+    $pdf->MultiCell(4, 0.9, 'SALDO A PAGAR: ' . '$' . $formato = number_format($this->datosfacturamaestro[$A]['froTotalVenta'],), 1, 'C', 1);
+}
+
+$pdf->Output();
+ob_end_flush();
+//TERMINA CICLO//
+?>
