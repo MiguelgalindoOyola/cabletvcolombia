@@ -84,7 +84,7 @@
                             <div class="col-12 col-md-4">
                                 <div class="form-row">
                                     <label for="cliente_numero_documento" class="bmd-label-floating"> Num Factura:  &nbsp;</label>
-                                    <input type="hidden" name="txtNumeroFactura" id="txtNumeroFactura" value="<?php echo $this->datos[0]['froNomFctura']; ?>">
+                                     <input type="hidden" name="txtNumeroFactura" id="txtNumeroFactura" value="<?php echo $this->datos[0]['froNomFctura']; ?>">
                                 </div>
                             </div>
                             <div class="col-12 col-md-8">
@@ -121,9 +121,9 @@
                                 <div class="form-row">
                                     <select class="form-select form-select-sm" name="SelectServicio" id="SelectServicio" aria-label="Default select example">
                                         <option selected>Selecciona Opcion</option>
-                                        <?php for ($i = 0; $i < count($this->datosServicios); $i++) { ?>
-                                            <option value="<?php echo $this->datosServicios[$i]['sosId']; ?>"><?php echo $this->datosServicios[$i]['sosNombre']; ?></option>
-                                        <?php } ?>
+                                        <?php for ($i = 0; $i < count($this->datosServicios); $i++) {?>
+                                        <option value="<?php echo $this->datosServicios[$i]['sosId']; ?>"><?php echo $this->datosServicios[$i]['sosNombre']; ?></option>
+                                      <?php } ?>
                                     </select>
 
 
@@ -138,11 +138,9 @@
                             </div>
                             <div class="col-12 col-md-8">
                                 <div class="form-row">
-                                    <?php
-                                    date_default_timezone_set('America/Bogota'); // Establecer la zona horaria de Colombia
-                                    $DateAndTime = date("Y-m-d\TH:i");
-                                    ?>
-                                    <input type="datetime-local" required class="form-control" name="dateFechaFacturacion" id="dateFechaFacturacion" maxlength="30" value="<?php echo $DateAndTime; ?>">    </div>
+
+                                    <input type="datetime-local" required class="form-control" name="dateFechaFacturacion" id="dateFechaFacturacion" maxlength="30" value="<?php echo $DateAndTime2; ?>">
+                                </div>
                             </div>
                         </div>
 

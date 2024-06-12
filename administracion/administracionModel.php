@@ -23,39 +23,39 @@ class administracionModel extends Model {
 
     function Consulta_Activos() {
 
-        $sql = $this->_db->query("SELECT COUNT(cosId) AS total FROM Contrartos WHERE cosEstado='ACTIVO'");
+        $sql = $this->_db->query("SELECT COUNT(cosId) AS total FROM contrartos WHERE cosEstado='ACTIVO'");
         return $sql->fetchall();
     }
 
     function Consulta_total() {
 
-        $sql = $this->_db->query("SELECT COUNT(`cosId`) AS total FROM Contrartos WHERE cosEstado='ACTIVO' OR cosEstado='SUSPENDIDO' OR cosEstado='P'");
+        $sql = $this->_db->query("SELECT COUNT(`cosId`) AS total FROM contrartos WHERE cosEstado='ACTIVO' OR cosEstado='SUSPENDIDO' OR cosEstado='P'");
         return $sql->fetchall();
     }
 
     function Consulta_pendiente() {
 
-        $sql = $this->_db->query("SELECT COUNT(`cosId`) AS total FROM Contrartos WHERE cosEstado='P'");
+        $sql = $this->_db->query("SELECT COUNT(`cosId`) AS total FROM contrartos WHERE cosEstado='P'");
         return $sql->fetchall();
     }
 
     function consulta_consolidado_ventas() {
 
-        $sql = $this->_db->query("SELECT perMes, (CASE WHEN SUM(froTotalVenta)='O' THEN '0' ELSE SUM(froTotalVenta) END) AS froTotalVenta  FROM facturacion_maestro INNER JOIN tbperiodos ON facturacion_maestro.froPeriodo=tbperiodos.perId WHERE PerAno='2023' AND froEstadoFactura='PAGADA' GROUP BY perMes
+        $sql = $this->_db->query("SELECT perMes, (CASE WHEN SUM(froTotalVenta)='O' THEN '0' ELSE SUM(froTotalVenta) END) AS froTotalVenta  FROM facturacion_maestro INNER JOIN tbperiodos ON facturacion_maestro.froPeriodo=tbperiodos.perId WHERE PerAno='2024' AND froEstadoFactura='PAGADA' GROUP BY perMes
 ");
         return $sql->fetchall();
     }
 
     function consulta_consolidado_PORPAGAR() {
 
-        $sql = $this->_db->query("SELECT perMes, (CASE WHEN SUM(froTotalVenta)='O' THEN '0' ELSE SUM(froTotalVenta) END) AS froTotalVenta  FROM facturacion_maestro INNER JOIN tbperiodos ON facturacion_maestro.froPeriodo=tbperiodos.perId WHERE PerAno='2023' AND froEstadoFactura='PORPAGAR' GROUP BY perMes
+        $sql = $this->_db->query("SELECT perMes, (CASE WHEN SUM(froTotalVenta)='O' THEN '0' ELSE SUM(froTotalVenta) END) AS froTotalVenta  FROM facturacion_maestro INNER JOIN tbperiodos ON facturacion_maestro.froPeriodo=tbperiodos.perId WHERE PerAno='2024' AND froEstadoFactura='PORPAGAR' GROUP BY perMes
 ");
         return $sql->fetchall();
     }
 
     function consulta_consolidado_vencida() {
 
-        $sql = $this->_db->query("SELECT perMes, (CASE WHEN SUM(froTotalVenta)='O' THEN '0' ELSE SUM(froTotalVenta) END) AS froTotalVenta  FROM facturacion_maestro INNER JOIN tbperiodos ON facturacion_maestro.froPeriodo=tbperiodos.perId WHERE PerAno='2023' AND froEstadoFactura='VENCIDA_ASIGNADA' GROUP BY perMes
+        $sql = $this->_db->query("SELECT perMes, (CASE WHEN SUM(froTotalVenta)='O' THEN '0' ELSE SUM(froTotalVenta) END) AS froTotalVenta  FROM facturacion_maestro INNER JOIN tbperiodos ON facturacion_maestro.froPeriodo=tbperiodos.perId WHERE PerAno='2024' AND froEstadoFactura='VENCIDA_ASIGNADA' GROUP BY perMes
 ");
         return $sql->fetchall();
     }
@@ -75,7 +75,7 @@ class administracionModel extends Model {
     }
 
     function CONSULTA_SUSPENDIDOS() {
-        $sql = $this->_db->query("SELECT COUNT(cosEstado) AS SUPENDIDOS FROM `contrartos` WHERE cosEstado='SUSPENDIDO'");
+        $sql = $this->_db->query("SELECT COUNT(cosEstado) AS SUPENDIDOS FROM contrartos WHERE cosEstado='SUSPENDIDO'");
         return $sql->fetchall();
     }
 

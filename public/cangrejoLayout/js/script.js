@@ -1,13 +1,6 @@
 var RUTA_URL = "http://localhost/CABLETVCOLOMBIA/";
 $(document).ready(function () {
 
-    //    carga consulta usuario
-    $(document).on('click', '#btncontultausuario', function () {
-        var selectValue = $('#cmDocumento').val();
-        cargadivconsulta('divcargadatosusuario', 'consultausuariounicafactura/' + selectValue, '');
-    });
-
-   
     $(document).on("click", "#btnEditarCliente", function () {
         $('#modalunico5').modal('show');
         cargadivconsulta('contenidomodal5', 'Formulariousuario/' + $(this).val(), '');

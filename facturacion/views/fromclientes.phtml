@@ -1,146 +1,146 @@
 
 <script src='<?php echo COMMON; ?>js/validar.js'></script>
 <div class="conainer">
-    <form id="form1" method="post" enctype="multipart/form-data" action="<?php echo RUTA_URL . 'facturacion/GuardarContrato'; ?>">
-        <div class="card-header bg-lightblue border-success"> 
-            <h3 class="text-center "><?php echo $this->accion; ?></h3>
+   <form id="form1" method="post" enctype="multipart/form-data" action="<?php echo RUTA_URL . 'facturacion/GuardarContrato'; ?>">
+    <div class="card-header bg-lightblue border-success"> 
+        <h3 class="text-center "><?php echo $this->accion; ?></h3>
+    </div>
+    <fieldset>
+        <legend><i class="far fa-address-card"></i> &nbsp; Información Personal Cliente</legend>
+        <div class="container-fluid">
+         
+            <div class="row">
+                <div class="col-12 col-md-4">
+                    <div class="form-row">
+
+                        <label for="cliente_numero_documento" class="bmd-label-floating"> Numero de documento: <?php echo $this->datos[0]['uosDocumento']; ?> <i class="fab fa-font-awesome-alt"></i> &nbsp;</label>
+                        <input type="hidden" name="txtCedula" value="<?php
+                        if (empty($this->datos)) {
+                            
+                        } else {
+                            echo $this->datos[0]['uosDocumento'];
+                        }
+                        ?>">
+                     <!--<input type="text" pattern="[a-zA-Z0-9-]{7,30}" class="form-control" name="TXTDOC" id="TXTDOC" maxlength="30" value="<?php echo $this->datos[0]['uosDocumento']; ?>">-->
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="form-group">
+                        <label for="cliente_nombre" class="bmd-label-floating">Nombres: <?php echo $this->datos[0]['uosNombres']; ?> <i class="fab fa-font-awesome-alt"></i> &nbsp;</label>
+                        <!--<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,35}" class="form-control" name="cliente_nombre_reg" id="cliente_nombre" maxlength="35">-->
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="form-group">
+                        <label for="cliente_apellido" class="bmd-label-floating">Apellidos :<?php echo $this->datos[0]['uosApellidos']; ?> <i class="fab fa-font-awesome-alt"></i> &nbsp;</label>
+<!--                        <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,35}" class="form-control" name="cliente_apellido_reg" id="cliente_apellido" maxlength="35">-->
+                    </div>
+                </div>
+            </div>
         </div>
-        <fieldset>
-            <legend><i class="far fa-address-card"></i> &nbsp; Información Personal Cliente</legend>
-            <div class="container-fluid">
-
-                <div class="row">
-                    <div class="col-12 col-md-4">
-                        <div class="form-row">
-
-                            <label for="cliente_numero_documento" class="bmd-label-floating"> Numero de documento: <?php echo $this->datos[0]['uosDocumento']; ?> <i class="fab fa-font-awesome-alt"></i> &nbsp;</label>
-                            <input type="hidden" name="txtCedula" value="<?php
-                            if (empty($this->datos)) {
-                                
-                            } else {
-                                echo $this->datos[0]['uosDocumento'];
-                            }
-                            ?>">
-                         <!--<input type="text" pattern="[a-zA-Z0-9-]{7,30}" class="form-control" name="TXTDOC" id="TXTDOC" maxlength="30" value="<?php echo $this->datos[0]['uosDocumento']; ?>">-->
-                        </div>
+    </fieldset>
+    <fieldset>
+        <legend><i class="fas fa-map-marked-alt"></i> &nbsp; Información de residencia</legend>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 col-md-4">
+                    <div class="form-group">
+                        <label for="cliente_provincia" class="bmd-label-floating">Municipio: Colombia Huila <i class="fab fa-font-awesome-alt"></i> &nbsp;</label>
+                        <!--<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,30}" class="form-control" name="cliente_provincia_reg" id="cliente_provincia" maxlength="30">-->
                     </div>
-                    <div class="col-12 col-md-4">
-                        <div class="form-group">
-                            <label for="cliente_nombre" class="bmd-label-floating">Nombres: <?php echo $this->datos[0]['uosNombres']; ?> <i class="fab fa-font-awesome-alt"></i> &nbsp;</label>
-                            <!--<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,35}" class="form-control" name="cliente_nombre_reg" id="cliente_nombre" maxlength="35">-->
-                        </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="form-group">
+                        <label for="cliente_ciudad" class="bmd-label-floating">Direccion: <?php echo $this->datos[0]['uosDireccion']; ?> <i class="fab fa-font-awesome-alt"></i> &nbsp;</label>
+                        <!--<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,30}" class="form-control" name="cliente_ciudad_reg" id="cliente_ciudad" maxlength="30">-->
                     </div>
-                    <div class="col-12 col-md-4">
-                        <div class="form-group">
-                            <label for="cliente_apellido" class="bmd-label-floating">Apellidos :<?php echo $this->datos[0]['uosApellidos']; ?> <i class="fab fa-font-awesome-alt"></i> &nbsp;</label>
-    <!--                        <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,35}" class="form-control" name="cliente_apellido_reg" id="cliente_apellido" maxlength="35">-->
-                        </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="form-group">
+                        <label for="cliente_direccion" class="bmd-label-floating">Barrio: <?php echo $this->datos[0]['banombre']; ?> <i class="fab fa-font-awesome-alt"></i> &nbsp;</label>
+                        <!--<input type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{4,70}" class="form-control" name="cliente_direccion_reg" id="cliente_direccion" maxlength="70">-->
                     </div>
                 </div>
             </div>
-        </fieldset>
-        <fieldset>
-            <legend><i class="fas fa-map-marked-alt"></i> &nbsp; Información de residencia</legend>
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12 col-md-4">
-                        <div class="form-group">
-                            <label for="cliente_provincia" class="bmd-label-floating">Municipio: Colombia Huila <i class="fab fa-font-awesome-alt"></i> &nbsp;</label>
-                            <!--<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,30}" class="form-control" name="cliente_provincia_reg" id="cliente_provincia" maxlength="30">-->
-                        </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend><i class="far fa-address-book"></i> &nbsp; Información de contacto</legend>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label for="cliente_telefono" class="bmd-label-floating">Teléfono: <?php echo $this->datos[0]['uosTelefono']; ?> <i class="fab fa-font-awesome-alt"></i> &nbsp;</label>
+                        <!--<input type="text" pattern="[0-9()+]{8,20}" class="form-control" name="cliente_telefono_reg" id="cliente_telefono" maxlength="20">-->
                     </div>
-                    <div class="col-12 col-md-4">
-                        <div class="form-group">
-                            <label for="cliente_ciudad" class="bmd-label-floating">Direccion: <?php echo $this->datos[0]['uosDireccion']; ?> <i class="fab fa-font-awesome-alt"></i> &nbsp;</label>
-                            <!--<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,30}" class="form-control" name="cliente_ciudad_reg" id="cliente_ciudad" maxlength="30">-->
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <div class="form-group">
-                            <label for="cliente_direccion" class="bmd-label-floating">Barrio: <?php echo $this->datos[0]['banombre']; ?> <i class="fab fa-font-awesome-alt"></i> &nbsp;</label>
-                            <!--<input type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{4,70}" class="form-control" name="cliente_direccion_reg" id="cliente_direccion" maxlength="70">-->
-                        </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label for="cliente_email" class="bmd-label-floating">Email: <?php echo $this->datos[0]['uosCorreo']; ?></label>
+                        <!--<input type="email" class="form-control" name="cliente_email_reg" id="cliente_email" maxlength="50">-->
                     </div>
                 </div>
             </div>
-        </fieldset>
-        <fieldset>
-            <legend><i class="far fa-address-book"></i> &nbsp; Información de contacto</legend>
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12 col-md-6">
-                        <div class="form-group">
-                            <label for="cliente_telefono" class="bmd-label-floating">Teléfono: <?php echo $this->datos[0]['uosTelefono']; ?> <i class="fab fa-font-awesome-alt"></i> &nbsp;</label>
-                            <!--<input type="text" pattern="[0-9()+]{8,20}" class="form-control" name="cliente_telefono_reg" id="cliente_telefono" maxlength="20">-->
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="form-group">
-                            <label for="cliente_email" class="bmd-label-floating">Email: <?php echo $this->datos[0]['uosCorreo']; ?></label>
-                            <!--<input type="email" class="form-control" name="cliente_email_reg" id="cliente_email" maxlength="50">-->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </fieldset>
-        <fieldset>
-            <legend><i class="far fa-address-book"></i> &nbsp; Información de Contrato</legend>
-            <div class="container-fluid">
-                <div class="row">
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend><i class="far fa-address-book"></i> &nbsp; Información de Contrato</legend>
+        <div class="container-fluid">
+            <div class="row">
 
 
-                    <div class="col-12 col-md-4">
-                        <div class="form-group">
-                            <label for="cliente_telefono" class="bmd-label-floating">Numero de Contrato:  <i class="fab fa-font-awesome-alt"></i> &nbsp;</label>
-                            <input type="text"  class="form-control" name="txtContrato" id="txtContrato" maxlength="20" value="<?php
-                            $valor = $this->UltCONTRATO[0]['cosId'];
-                            $total = $valor + 1;
-                            echo $total;
-                            ?>">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <div class="form-group">
-                            <input type="hidden" name="txtServicio" id="txtServicio" value="<?php
-                            if (empty($this->Servicio)) {
-                                
-                            } else {
-                                echo $this->Servicio[0]['sosId'];
-                            }
-                            ?>">
-                            <label for="cliente_email" class="bmd-label-floating">Servicio:</label>
-                            <input type="text" class="form-control" name="cliente_email_reg" id="cliente_email" maxlength="50" value="<?php echo $this->Servicio[0]['sosNombre']; ?>">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <div class="form-group">
-                            <?php
-                            $valor = $this->Servicio[0]['sosValor'];
-                            $formato = number_format($valor, 2);
-                            ?>
-                            <input type="hidden" name="txtValor" value="<?php echo $this->Servicio[0]['sosValor']; ?>">
-                            <label for="cliente_email" class="bmd-label-floating">Valor del Servicio por Mes:</label>
-                            <input type="text" class="form-control" name="cliente_email_reg" id="cliente_email" maxlength="50" value="<?php echo '$ ', $formato; ?>">
-                        </div>
+                <div class="col-12 col-md-4">
+                    <div class="form-group">
+                        <label for="cliente_telefono" class="bmd-label-floating">Numero de Contrato:  <i class="fab fa-font-awesome-alt"></i> &nbsp;</label>
+                        <input type="text"  class="form-control" name="txtContrato" id="txtContrato" maxlength="20" value="<?php
+                        $valor = $this->UltCONTRATO[0]['cosId'];
+                        $total = $valor + 1;
+                        echo $total;
+                        ?>">
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-12 col-md-6">
-                        <div class="form-group">
-                            <label for="cliente_telefono" class="bmd-label-floating">Fecha de Registro:  <i class="fab fa-font-awesome-alt"></i> &nbsp;</label>
-                            <input type="datetime-local" pattern="" class="form-control" name="txtFechaRegistro" id="txtFechaRegistro">
-                        </div>
+                <div class="col-12 col-md-4">
+                    <div class="form-group">
+                        <input type="hidden" name="txtServicio" id="txtServicio" value="<?php
+                        if (empty($this->Servicio)) {
+                            
+                        } else {
+                            echo $this->Servicio[0]['sosId'];
+                        }
+                        ?>">
+                        <label for="cliente_email" class="bmd-label-floating">Servicio:</label>
+                        <input type="text" class="form-control" name="cliente_email_reg" id="cliente_email" maxlength="50" value="<?php echo $this->Servicio[0]['sosNombre']; ?>">
                     </div>
-                    <div class="col-12 col-md-6">
-                        <div class="form-group">
-                            <label for="cliente_email" class="bmd-label-floating">Puntos de Conexion: </label>
-                            <input type="text" class="form-control" name="txtPuntos" id="txtPuntos" maxlength="50">
-                        </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="form-group">
+                        <?php
+                        $valor = $this->Servicio[0]['sosValor'];
+                        $formato = number_format($valor, 2);
+                        ?>
+                        <input type="hidden" name="txtValor" value="<?php echo $this->Servicio[0]['sosValor']; ?>">
+                        <label for="cliente_email" class="bmd-label-floating">Valor del Servicio por Mes:</label>
+                        <input type="text" class="form-control" name="cliente_email_reg" id="cliente_email" maxlength="50" value="<?php echo '$ ', $formato; ?>">
                     </div>
                 </div>
             </div>
-        </fieldset>
-        <p class="text-center" style="margin-top: 40px;">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label for="cliente_telefono" class="bmd-label-floating">Fecha de Registro:  <i class="fab fa-font-awesome-alt"></i> &nbsp;</label>
+                        <input type="datetime-local" pattern="" class="form-control" name="txtFechaRegistro" id="txtFechaRegistro">
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label for="cliente_email" class="bmd-label-floating">Puntos de Conexion: </label>
+                        <input type="text" class="form-control" name="txtPuntos" id="txtPuntos" maxlength="50">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+<p class="text-center" style="margin-top: 40px;">
             <button type="reset" class="btn btn-raised btn-secondary btn-sm"><i class="fas fa-paint-roller"></i> &nbsp; LIMPIAR</button>
             &nbsp; &nbsp;
             <button type="submit" class="btn btn-raised btn-info btn-sm"><i class="far fa-save"></i> &nbsp; GUARDAR</button>

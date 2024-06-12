@@ -33,8 +33,8 @@ class pdf extends FPDF {
         $this->Cell(50, 5, 'NOMBRES & APELLIDOS', 1, 0, 'C', FALSE);
         $this->Cell(40, 5, 'DIRECCION', 1, 0, 'C', FALSE);
         $this->Cell(10, 5, 'CTO', 1, 0, 'C', FALSE);
-        $this->Cell(20, 5, 'FEC/INICIO', 1, 0, 'C', FALSE);
-        $this->Cell(20, 5, 'FEC/FINAL', 1, 0, 'C', FALSE);
+         $this->Cell(20, 5, 'FEC/INICIO', 1, 0, 'C', FALSE);
+           $this->Cell(20, 5, 'FEC/FINAL', 1, 0, 'C', FALSE);
         $this->Cell(13, 5, '#FAC', 1, 0, 'C', FALSE);
         $this->Cell(20, 5, 'DEUDA', 1, 0, 'C', FALSE);
         $this->Ln();
@@ -65,7 +65,7 @@ for ($e = 0; $e < count($this->datosbarrio); $e++) {
     $barrio = $this->datosbarrio[$e]['banombre'];
     $valordeuno = 0;
 //   
-    $CONTARUSUARIO = 0;
+       $CONTARUSUARIO = 0;
     for ($i = 0; $i < count($this->datos); $i++) {
         if ($this->datos[$i]['cosEstado'] == 'SUSPENDIDO') {
             $barrio2 = $this->datos[$i]['banombre'];
@@ -89,17 +89,17 @@ for ($e = 0; $e < count($this->datosbarrio); $e++) {
             }
         }
     }
-
+    
     $fpdf->SetTextColor(243, 12, 43);
-    $fpdf->Cell(196, 20, utf8_decode('Total de usuarios registrados en el barrio ' . $barrio . ': ' . $CONTARUSUARIO), 1, 'B', 'C', FALSE);
+    $fpdf->Cell(196, 20, utf8_decode('Total de usuarios registrados en el barrio '.$barrio.': ' . $CONTARUSUARIO), 1, 'B', 'C', FALSE);
     $fpdf->SetTextColor(0, 0, 0);
     $CONTARUSUARIO = 0;
-
+    
     if ($valordeuno == '0') {
         $fpdf->SetTextColor(243, 12, 43);
-        $fpdf->Cell(198, 20, utf8_decode('NO HAY USUARIOS MOROSOS PARA EL BARRIO: ' . $barrio), 1, 'B', 'C', FALSE);
-        $fpdf->SetTextColor(0, 0, 0);
-    }
+            $fpdf->Cell(198, 20, utf8_decode('NO HAY USUARIOS MOROSOS PARA EL BARRIO: '.$barrio), 1, 'B', 'C', FALSE);
+            $fpdf->SetTextColor(0, 0, 0);
+        }
 }
 
 // SE CREA OTRA PAGINA 

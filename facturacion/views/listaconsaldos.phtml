@@ -142,24 +142,24 @@ for ($e = 0; $e < count($this->datosbarrio); $e++) {
         $fpdf->SetTextColor(0, 0, 0);
     }
     $fpdf->Ln();
-
+    
     $fpdf->SetFont('Arial', 'B', 10); // Establecer fuente, estilo y tamaño
-    $fpdf->Cell(45, 8, 'Guias de Colores', 1, 0, 'C', false); // Celda combinada con color de fondo
+    $fpdf->Cell(65, 8, 'GUIA DE COLORES', 1, 0, 'C', false); // Celda combinada con color de fondo
     $fpdf->Ln(); // Salto de línea después del título
 // Primera fila: PAGADA y color verde claro
-    $fpdf->Cell(30, 8, 'PAGADA', 1, 0, 'C');
+    $fpdf->Cell(50, 8, 'PAGADA', 1, 0, 'C');
     $fpdf->SetFillColor(204, 255, 204); // Establecer color de fondo para la celda
     $fpdf->Cell(15, 8, '', 1, 0, '', true);
 
 // Segunda fila: POR PAGAR y color amarillo claro
     $fpdf->Ln(); // Salto de línea para la siguiente fila
-    $fpdf->Cell(30, 8, 'POR PAGAR', 1, 0, 'C');
+    $fpdf->Cell(50, 8, 'POR PAGAR', 1, 0, 'C');
     $fpdf->SetFillColor(255, 255, 204); // Establecer color de fondo para la celda
     $fpdf->Cell(15, 8, '', 1, 0, '', true);
 
 // Tercera fila: SUSPENDIDO y color rojo claro
     $fpdf->Ln(); // Salto de línea para la siguiente fila
-    $fpdf->Cell(30, 8, 'SUSPENDIDO', 1, 0, 'C');
+    $fpdf->Cell(50, 8, 'SUSPENDIDO SIN PAGAR', 1, 0, 'C');
     $fpdf->SetFillColor(255, 204, 204); // Establecer color de fondo para la celda
     $fpdf->Cell(15, 8, '', 1, 0, '', true);
 }

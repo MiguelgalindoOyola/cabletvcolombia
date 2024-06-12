@@ -6,19 +6,19 @@
 <div id="divcarga">
     <div class="card-body container">
         <input type="hidden" id="txtsosId" name="txtsosId" value="<?php echo $this->datos[0]['Codigo']; ?>">
-            <div class="form-group">
-                <fieldset>
-                    <div class="container-fluid card">
-                        <div class="row ">
-                            <div class="container-fluid card-header bg-lightblue border-success"> 
-                                <h5 class="text-center "><?php echo $this->accion; ?></h5>
-                            </div>  </div>
+        <div class="form-group">
+            <fieldset>
+                <div class="container-fluid card">
+                    <div class="row ">
+                        <div class="container-fluid card-header bg-lightblue border-success"> 
+                            <h5 class="text-center "><?php echo $this->accion; ?></h5>
+                        </div>  </div>
 
-                    </div>
-                    <STYLE type="text/css">
-                        H4 { text-align: center}
-                    </STYLE>
-            </div>
+                </div>
+                <STYLE type="text/css">
+                    H4 { text-align: center}
+                </STYLE>
+        </div>
         <div class="container card-body card">
             <div class="col-12 col-md-12 row ">
                 <div class="col-md-6">
@@ -59,6 +59,8 @@
                 </div>
             </div>
         </div>
+
+
 
         <div class="container card-body card ">
             <div class="col-12 col-md-4">
@@ -121,7 +123,7 @@
                             <td class="<?php echo $COLOR; ?>" scope="row" ><?php echo ucwords(strtolower($this->datosfacturas[$l]['froFechaPago'])); ?></td>
                             <td class="<?php echo $COLOR; ?>" scope="row" ><?php echo ucwords(strtolower($this->datosfacturas[$l]['froDescuento'])); ?></td>
                             <td class="<?php echo $COLOR; ?>" scope="row" ><?php echo ucwords(strtolower($this->datosfacturas[$l]['froTotalVenta'])); ?></td>
-                            <td class="<?php echo $COLOR; ?>" scope="row" ><?php echo ucwords(strtolower($this->datosfacturas[$l]['froObservaciones'])); ?></td>
+                               <td class="<?php echo $COLOR; ?>" scope="row" ><?php echo ucwords(strtolower($this->datosfacturas[$l]['froObservaciones'])); ?></td>
                             <td class="<?php echo $COLOR; ?>" scope="row" > <?php echo ucwords(strtolower($this->datosfacturas[$l]['froEstadoFactura'])); ?></td>
                             <?php ?>
                         </tr>

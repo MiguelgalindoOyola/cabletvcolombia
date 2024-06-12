@@ -248,7 +248,7 @@ CONTRATO:' . $this->datosfacturamaestro[$A]['cosId']), 0, 'C', 0);
     $pdf->SetFont('Arial', 'B', 9);
     $pdf->Cell(1.8, 0.5, 'DIRECCION:', 0, ' ', 1);
     $pdf->SetFont('Arial', '', 9);
-    $pdf->MultiCell(4, 0.5, ' ' . utf8_decode($this->datosfacturamaestro[$A]['uosDireccion']), 0, '', 0);
+    $pdf->MultiCell(4, 0.5,' '. utf8_decode($this->datosfacturamaestro[$A]['uosDireccion']), 0, '', 0);
 
     $pdf->Ln(-0.5);
     $pdf->Cell(10);
@@ -291,7 +291,7 @@ CONTRATO:' . $this->datosfacturamaestro[$A]['cosId']), 0, 'C', 0);
     $pdf->MultiCell(2.5, 0.5, 'VALOR:', 1, 'C', 1);
 
 
-    $pdf->SetWidths(array(9.7, 3, 0.3, 6, 2.5));
+   $pdf->SetWidths(array(9.7, 3, 0.3, 6, 2.5));
 
     $contador = 0;
     $totalPrecioVenta2 = 0;
@@ -351,6 +351,7 @@ CONTRATO:' . $this->datosfacturamaestro[$A]['cosId']), 0, 'C', 0);
         $pdf->SetDrawColor(0, 0, 0);
         $pdf->SetTextColor(0, 0, 0);
     }
+    
     $pdf->SetFont('Arial', 'B', 9);
 
     $pdf->SetFillColor(173, 212, 255);
@@ -365,6 +366,7 @@ CONTRATO:' . $this->datosfacturamaestro[$A]['cosId']), 0, 'C', 0);
     } if ($this->datosfacturamaestro[$A]['froTotalVenta'] <= 29000) {
         $pdf->MultiCell(4, 0.7, 'PAGUE HASTA: ' . $this->datosfacturamaestro[$A]['froFechaVencimiento'], 1, 'C', 1);
     }
+    
     $pdf->Ln(-1.4);
     $pdf->Cell(9.7);
     $pdf->MultiCell(3, 1.3, 'SALDO A PAGAR', 1, 'C', 1);
@@ -386,11 +388,11 @@ CONTRATO:' . $this->datosfacturamaestro[$A]['cosId']), 0, 'C', 0);
     $pdf->Ln(-1.8);
     $pdf->Cell(13);
     $pdf->SetFillColor(173, 212, 255);
-    $pdf->MultiCell(4.5, 0.9, 'ULTIMO PERIODO: ' . $this->datosfacturamaestro[$A]['Concepto'], 1, 'C', 1);
+    $pdf->MultiCell(4.5, 0.9, 'ULTIMO PERIODO: '. $this->datosfacturamaestro[$A]['Concepto'], 1, 'C', 1);
 
     $pdf->Ln(-1.8);
     $pdf->Cell(17.5);
-    $pdf->MultiCell(4, 0.9, 'SALDO A PAGAR: ' . '$' . $formato = number_format($this->datosfacturamaestro[$A]['froTotalVenta'],), 1, 'C', 1);
+    $pdf->MultiCell(4, 0.9, 'SALDO A PAGAR: '. '$' . $formato = number_format($this->datosfacturamaestro[$A]['froTotalVenta'],), 1, 'C', 1);
 }
 
 $pdf->Output();

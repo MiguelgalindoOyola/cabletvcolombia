@@ -8,92 +8,8 @@ class facturacionController extends Controller {
     public function __construct() {
         parent::__construct("facturacion");
     }
-
-// FACTUURA UNICA 
-    public function factutaunica() {
-        Session::acceso("General");
-        $data = $this->loadModel('facturacion');
-        $this->_view->accion = 'Generar Factura Unica';
-        $this->_view->title = "facturacion - Unica";
-        $this->_view->modulo = "suscriptores";
-        $this->_view->metodo = "Facturacion";
-        $this->_view->contultafactura = $data->consultaultimafactura();
-        $this->_view->consultaselec = $data->consultaselectusuarios();
-        $this->_view->DatosServiciosfactura = $data->consultaservicios();
-        $this->_view->ConsultaPeriodosFacturados = $data->consultaMesFacturado();
-
-
-//        $this->_view->ConsultaU = $data->Cconsultadatospersonales();
-//        $this->_view->ConsultaBarrios = $data->Consulta_Barrios();
-//        $this->_view->ConsultaClientesTab = $data->ConsultaClientesEstadosPrincipal();
-//        $this->_view->ConsultaClientesTab1 = $data->ConsultaClientesEstadosPrincipal1();
-
-        $this->_view->renderizar('iniciofacturaunica', 'cangrejo');
-    }
-
-    //consulta usuario unica factura
-    public function consultausuariounicafactura($argum = false) {
-        Session::acceso("General");
-        $data = $this->loadModel('facturacion');
-
-        if ($argum) {
-            $this->_view->accion = 'Pagar Factura';
-            $this->_view->datosunica = $data->Consultadatosfacturaunica($argum);
-            $this->_view->datosfacturas = $data->consultafacturas1($argum);
-            $this->_view->datos_facturapendiente = $data->consulta_facturaporguardar($argum);
-
-            $this->_view->DatosServiciosfactura = $data->consultaservicios();
-        } else {
-            $this->_view->accion = 'Agregar Proveedores';
-            $this->_view->datos = array();
-            $this->_view->datos1 = array();
-        }
-
-        $this->_view->renderizar('datosuunicafactura', 'blank');
-    }
-
-//    public function GuardarUnicaFactura() {
-//        Session::acceso("General");
-//        $data = $this->loadModel('facturacion');
-//        $sql = $data->GuardarUnicaFactura();
-//
-//        if ($sql) {
-//            Session::set('mensaje', 'Factura Generada Satisfactorniamente');
-//            Session::set('tipomensaje', 'alert-success');
-//        } else {
-//
-//            Session::set('mensaje', 'error al guardar - La Factura');
-//            Session::set('tipomensaje', 'alert-danger');
-//        }
-//        $this->redireccionar('facturacion/factutaunica');
-//    }
-
-    public function GuardarUnicaFactura() {
-        Session::acceso("General");
-        $data = $this->loadModel('facturacion');
-        $sql = $data->GuardarUnicaFactura();
-
-        if ($sql !== false) {
-            Session::set('mensaje', 'Factura Generada Satisfactoriamente');
-            Session::set('tipomensaje', 'alert-success');
-        } else {
-            $errorInfo = $this->_db->errorInfo();
-            $errorMessage = $errorInfo[2];
-
-            $mensajeError = 'Error al guardar la Factura. Detalles de la consulta SQL: ' . $errorMessage;
-            Session::set('mensaje', $mensajeError);
-            Session::set('tipomensaje', 'alert-danger');
-        }
-        $this->redireccionar('facturacion/factutaunica');
-    }
-
-//    $this->_view->title = "facturacion - suscriptores";
-//            $this->_view->modulo = "facturacion";
-//            $this->_view->metodo = "";
-//            $this->_view->datos = $data->ConstultaFacturaPorpagar($argum);
-//            $this->_view->datos1 = $data->ConstultaFacturaDetallePorpagar($argum);
-    //reporte usuarios con saldos
-    public function usuariosconsaldo() {
+     
+      public function usuariosconsaldo() {
         Session::acceso("General");
         $data = $this->loadModel('facturacion');
         $this->_view->title = "reportes - Inicio";
@@ -103,6 +19,17 @@ class facturacionController extends Controller {
         $this->_view->datosbarrio = $data->consulta_barrios2();
         $this->_view->datosfacturamaestro = $data->ConsultaFacturaUltimaPorContrato();
 
+        $this->_view->renderizar('listaconsaldos', 'blank');
+    }
+      public function usuariosconsaldoactivo() {
+        Session::acceso("General");
+        $data = $this->loadModel('facturacion');
+        $this->_view->title = "reportes - Inicio";
+        $this->_view->modulo = "reportes";
+        $this->_view->metodo = "reportes";
+        $this->_view->datos = $data->Consultausuariosconsaldoactivo();
+        $this->_view->datosbarrio = $data->consulta_barrios2();
+        $this->_view->datosfacturamaestro = $data->ConsultaFacturaUltimaPorContrato();
         $this->_view->renderizar('listaconsaldos', 'blank');
     }
 
@@ -119,18 +46,6 @@ class facturacionController extends Controller {
         $this->_view->renderizar('listasinsaldo', 'blank');
     }
 
-    public function usuariosconsaldoactivo() {
-        Session::acceso("General");
-        $data = $this->loadModel('facturacion');
-        $this->_view->title = "reportes - Inicio";
-        $this->_view->modulo = "reportes";
-        $this->_view->metodo = "reportes";
-        $this->_view->datos = $data->Consultausuariosconsaldoactivo();
-        $this->_view->datosbarrio = $data->consulta_barrios2();
-        $this->_view->datosfacturamaestro = $data->ConsultaFacturaUltimaPorContrato();
-        $this->_view->renderizar('listaconsaldos', 'blank');
-    }
-
     //reporte usuarios sin saldos 
     public function usuariossinsaldoactivo() {
         Session::acceso("General");
@@ -143,7 +58,7 @@ class facturacionController extends Controller {
 
         $this->_view->renderizar('listasinsaldo', 'blank');
     }
-
+ 
     public function pagos() {
         Session::acceso("General");
         $data = $this->loadModel('facturacion');
@@ -156,12 +71,12 @@ class facturacionController extends Controller {
 
         $this->_view->renderizar('iniciofacturasporpagar', 'cangrejo');
     }
-
+    
     //   carga  modal pagar facturas 
     public function pagarfactura($argum = false) {
         Session::acceso("General");
         $data = $this->loadModel('facturacion');
-
+        
         if ($argum) {
             $this->_view->accion = 'Pagar Factura';
 //            $this->_view->title = "facturacion - suscriptores";
@@ -177,13 +92,16 @@ class facturacionController extends Controller {
 
         $this->_view->renderizar('modalpagafactura', 'blank');
     }
+    
 
+    
     // NUEVAS MODIFICACIONES 
+    
     //   carga  modal abono a la  facturas 
     public function abonarfactura($argum = false) {
         Session::acceso("General");
         $data = $this->loadModel('facturacion');
-
+        
         if ($argum) {
             $this->_view->accion = 'Abono Factura';
 //            $this->_view->title = "facturacion - suscriptores";
@@ -199,7 +117,6 @@ class facturacionController extends Controller {
 
         $this->_view->renderizar('modalabonofactura', 'blank');
     }
-
     //    guarda abono a la factura pagada
     public function GuardarabonoFactura() {
         Session::acceso("General");
@@ -207,8 +124,7 @@ class facturacionController extends Controller {
 
         $sql = $data->GuardarabonoFacturas();
         $sql2 = $data->GuardarPagoCuentaEfectivo();
-        $sql3 = $data->creafacturaabono();
-
+        $sql2 = $data->creafacturaabono();
 
 
         if ($sql) {
@@ -221,14 +137,21 @@ class facturacionController extends Controller {
         }
         $this->redireccionar('facturacion/pagos');
     }
-
+    
+    
+    
+    
+    
     //TERMINAN LAS MODIFICACIONES 
+
 //carga pagina principal pagos
+    
+
 //   carga  modal EDITAR FACTURA 
     public function Editarfactura($argum = false) {
         Session::acceso("General");
         $data = $this->loadModel('facturacion');
-
+        
         if ($argum) {
             $this->_view->accion = 'Editar Factura';
 //            $this->_view->title = "facturacion - suscriptores";
@@ -244,7 +167,7 @@ class facturacionController extends Controller {
 
         $this->_view->renderizar('modaleditafactura', 'blank');
     }
-
+    
     public function generarDomPDF() {
 
         Session::acceso("General");
@@ -335,10 +258,11 @@ class facturacionController extends Controller {
     public function generarPDF($argum = false) {
         Session::acceso("General");
         $data = $this->loadModel('facturacion');
-        $dato = $argum;
+        $dato=$argum;
         if ($argum) {
             $this->_view->datosfacturamaestro = $data->ConstultaFacturaPorpagarPDF($argum);
-            $this->_view->datosfacturadetalle = $data->ConstultaFacturaDetallePorpagarPDF($dato);
+           $this->_view->datosfacturadetalle = $data->ConstultaFacturaDetallePorpagarPDF($dato);
+            
         } else {
             $this->_view->datosfacturamaestro = array();
         }
@@ -350,10 +274,11 @@ class facturacionController extends Controller {
     public function generarUNUSUARIOPDF($argum = false) {
         Session::acceso("General");
         $data = $this->loadModel('facturacion');
-        $dato = $argum;
+        $dato=$argum;
         if ($argum) {
             $this->_view->datosfacturamaestro = $data->ConstultaFacturaPorpagarUnUsuarioPDF($argum);
-            $this->_view->datosfacturadetalle = $data->ConstultaFacturaDetallePorpagarUnUsuarioPDF($dato);
+           $this->_view->datosfacturadetalle = $data->ConstultaFacturaDetallePorpagarUnUsuarioPDF($dato);
+            
         } else {
             $this->_view->datosfacturamaestro = array();
         }
@@ -379,7 +304,7 @@ class facturacionController extends Controller {
         $sql2 = $data->AsignarEstadoCliente();
         $sql3 = $data->RegistrarOrdenes();
 //           $sql3 = $data->Registrar_Contratos();
-
+        
 
         if ($sql) {
             Session::set('mensaje', 'Contrato Registrado Satisfactoriamente');

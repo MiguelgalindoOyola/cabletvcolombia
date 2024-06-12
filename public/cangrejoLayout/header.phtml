@@ -3,6 +3,7 @@
 <html lang="en">
 
     <head>
+       
         <meta charset="utf-8">
         <link rel='icon' href='<?php echo COMMON; ?>img/icono.ico'>
     <a href="../common/img/icono.ico"></a>
@@ -18,7 +19,7 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="<?php echo COMMON; ?>assets/dist/css/adminlte.min.css">
 
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- jQuery -->
     <script src="<?php echo COMMON; ?>assets/plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
@@ -31,14 +32,14 @@
     <link href="<?php echo COMMON ?>/datatables/extensions/TableTools/css/dataTables.tableTools.css" rel="stylesheet" type="text/css"/>
     <script src="<?php echo COMMON; ?>assets/dist/js/adminlte.min.js"></script>
     <script src="<?php echo COMMON; ?>js/jquery.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="<?php echo COMMON; ?>vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo COMMON; ?>vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="<?php echo COMMON; ?>vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
     <link href="<?php echo COMMON; ?>css/sb-admin.css" rel="stylesheet">
     <link href="<?php echo COMMON; ?>css/pnotify.custom.min.css" rel="stylesheet">
-    <script src="<?php echo RUTA_URL; ?>public/cangrejoLayout/js/script.js" type="text/javascript"></script>
     <link href='<?php echo COMMON; ?>formvalidation/dist/css/bootstrapValidator.css' rel='stylesheet'><script src='<?php echo COMMON; ?>formvalidation/dist/js/bootstrapValidator.js'></script><script src='<?php echo COMMON; ?>formvalidation/dist/js/language/es_CL.js'></script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7359767203541632"
+     crossorigin="anonymous"></script>
 </head>
 
 <body class=""hold-transition sidebar-mini"" id="page-top">
@@ -99,7 +100,7 @@
 
                                     <li class="nav-item">
                                         <a href="#" class="nav-link ">
-                                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                                            <i class="<?php echo $_layoutParams['menu1'][$i]['icono']; ?>"></i>
                                             <p>
                                                 <?php echo $_layoutParams['menu1'][$i]['titulo']; ?>
                                                 <i class="right fas fa-angle-left"></i>

@@ -291,7 +291,7 @@ CONTRATO:' . $this->datosfacturamaestro[$A]['cosId']), 0, 'C', 0);
     $pdf->MultiCell(2.5, 0.5, 'VALOR:', 1, 'C', 1);
 
 
-    $pdf->SetWidths(array(9.7, 3, 0.3, 6, 2.5));
+$pdf->SetWidths(array(9.7, 3, 0.3, 6, 2.5));
 
     $contador = 0;
     $totalPrecioVenta2 = 0;
@@ -351,6 +351,7 @@ CONTRATO:' . $this->datosfacturamaestro[$A]['cosId']), 0, 'C', 0);
         $pdf->SetDrawColor(0, 0, 0);
         $pdf->SetTextColor(0, 0, 0);
     }
+
     $pdf->SetFont('Arial', 'B', 9);
 
     $pdf->SetFillColor(173, 212, 255);

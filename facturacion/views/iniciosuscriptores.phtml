@@ -25,7 +25,6 @@
 <script src="<?php echo COMMON; ?>/js/ajax.js" type="text/javascript"></script>
 <script src="<?php echo COMMON; ?>/js/jquery.js" type="text/javascript"></script>
 <script src='<?php echo COMMON; ?>js/validar.js'></script>
-<script src="<?php echo RUTA_URL; ?>public/cangrejoLayout/js/script.js" type="text/javascript"></script>
 <div class=" container-fluid">
     <div class="col-md-1"></div>
     <div class="col-md-10">
@@ -76,7 +75,7 @@
                 </div>
 
             </div>
-            <div class="container">
+           <div class="container">
                 <!-- small box -->
                 <!--                <div class="col-md-6"></div>-->
                 <div class="col-md-6">
@@ -122,7 +121,6 @@
                     </div>
                 </div>
             </div>
-
             <div id="divcarga">
 
                 <table   style="" class="table table-sm border-width-2  table-condensed" id="dataTable" width="100%" cellspacing="0">
@@ -133,7 +131,7 @@
                             <th style="" class="col-sm-">Asignacion</th>  
                             <th style="" class="col-sm-">Num Contrato</th>
                             <th style="" class="col-sm-">Estado</th>
-                            <!--<th style="" class="col-sm-1">Opciones</th>-->   
+                           <!--<th style="" class="col-sm-1">Opciones</th>-->   
                         </tr>
                     </thead>
                     <tbody class="table-condensed">
@@ -147,7 +145,7 @@
                                 <td ><?php echo ucwords(strtolower($this->ConsultaClientesTab[$i]['uosEstadoContrato'])); ?></td>
                                 <td ><?php echo ucwords(strtolower($this->ConsultaClientesTab[$i]['cosId'])); ?></td>
                                 <td class="alert <?php echo $this->ConsultaClientesTab[$i]['cosEstilo']; ?>"><?php echo ucwords(strtolower($this->ConsultaClientesTab[$i]['cosEstado'])); ?></td>                      
-    <!--                                <td class="form-row ">
+                            <!--    <td class="form-row ">
                                     <button  
                                         class="default" title="Editar" value="<?php echo $this->ConsultaClientesTab[$i]['uosDocumento']; ?>" name="btnEditarServicio" id="btnEditarServicio"><i class="fa fa-pencil-square-o fa-0" ></i></button>
                                     <button  
@@ -165,7 +163,7 @@
                                              data-nom="<?php echo ucwords(strtolower($this->ConsultaClientesTab[$i]['uosNombres'])); ?>">
                                         <i class="fa fa fa-trash-o"></i>
                                     </button>
-                                </td>-->
+                                </td> -->
                             </tr>
                         <?php } ?>
                         <?php for ($A = 0; $A < count($this->ConsultaClientesTab1); $A++) { ?>
@@ -179,7 +177,7 @@
                                 <td ><?php echo ucwords(strtolower($this->ConsultaClientesTab1[$A]['uosEstadoContrato'])); ?></td>
                                 <td class="alert alert-danger">Por definir</td>
                                 <td class="alert alert-danger">Por definir</td>                      
-    <!--                                <td class="form-row ">
+                               <!-- <td class="form-row ">
                                     <button  class="default btn-sm" title="Editar" value="<?php echo $this->ConsultaClientesTab1[$A]['uosDocumento']; ?>" name="btnEditarServicio" id="btnEditarServicio"><i class="fa fa-pencil-square-o fa-0" ></i></button>
                                     <button  class="default btn-sm" title="Novedades" value="" name="btnNovedadesServicios" id="btnNovedadesServicios"><i class="fa fa-bars fa-0" ></i></button>
 
@@ -191,7 +189,7 @@
                                              data-nom="<?php echo ucwords(strtolower($this->ConsultaClientesTab[$i]['uosNombres'])); ?>">
                                         <i class="fa fa fa-trash-o"></i>
                                     </button>
-                                </td>-->
+                                </td> -->
                             </tr>
                         <?php } ?>
                     </tbody>

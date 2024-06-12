@@ -5,90 +5,7 @@ class facturacionModel extends Model {
     public function __construct() {
         parent::__construct();
     }
-
-    function consultaultimafactura() {
-//         CONSULTA ULTIMA FACTURA PARA FACTURA UNICA --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        $UltimaFacturaMestro1 = $this->_db->query("SELECT * FROM facturacion_maestro WHERE froNomFctura = (SELECT MAX(froNomFctura) FROM facturacion_maestro) ORDER BY froNomFctura");
-        return $ResultadoUltimafacturamaestro = $UltimaFacturaMestro1->fetchall();
-    }
-
-    function consultaselectusuarios() {
-//         CONSULTA ULTIMA FACTURA PARA FACTURA UNICA --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        $sql = $this->_db->query("SELECT uosDocumento, CONCAT_WS(' ',uosNombres, uosApellidos) AS NOMBRES,  CONCAT_WS(' ',uosDireccion,banombre) AS DIRECCION,  banombre, cosId, cosEstado, cosFechainici, cosFechafinal FROM clientes INNER JOIN barrios ON clientes.uosIdBarrio=barrios.baid INNER JOIN contrartos ON clientes.uosDocumento=contrartos.cosIdusuario WHERE uosEstado='activo' AND cosEstado='ACTIVO' ORDER BY uosNombres ASC");
-        return $datosselec = $sql->fetchall();
-    }
-
-    function Consultadatosfacturaunica($arg = false) {
-        if ($arg) {
-            $sql = $this->_db->query("SELECT uosDocumento, froContrato,froNomFctura, froFecha, froFechaVencimiento, froFechaPago, froTotalVenta, froEstadoFactura FROM clientes INNER JOIN contrartos ON clientes.uosDocumento=contrartos.cosIdusuario INNER JOIN facturacion_maestro ON contrartos.cosId=facturacion_maestro.froContrato WHERE uosDocumento='" . $arg . "'");
-            return $sql->fetchall();
-        } else {
-            return 0;
-        }
-    }
-
-    function consultafacturas1($argu = false) {
-        if ($argu) {
-            $sql48 = $this->_db->query("SELECT perId, CONCAT_WS('/',perMes,perAno) AS periodo,uosDocumento, cosId, froNomFctura,froFechaVencimiento,froFecha,froFechaPago,froDescuento, froTotalVenta , froEstadoFactura, froObservaciones FROM facturacion_maestro INNER JOIN tbperiodos ON facturacion_maestro.froPeriodo=tbperiodos.perId INNER JOIN contrartos ON facturacion_maestro.froContrato=contrartos.cosId INNER JOIN clientes ON contrartos.cosIdusuario=clientes.uosDocumento WHERE uosDocumento='" . $argu . "'");
-
-            return $sql48->fetchall();
-        } else {
-            return 0;
-        }
-    }
-
-    function consulta_facturaporguardar($argu = false) {
-        if ($argu) {
-            $sql49 = $this->_db->query("SELECT spfId, spfIdContrato, spfIdServicio, sosNombre, sosDescripcion,spfEstado, spfValor FROM servicios_por_facturar INNER JOIN contrartos ON servicios_por_facturar.spfIdContrato=contrartos.cosId INNER JOIN clientes ON contrartos.cosIdusuario =clientes.uosDocumento INNER JOIN servicios ON servicios_por_facturar.spfIdServicio=servicios.sosId WHERE uosDocumento='" . $argu . "' AND spfEstado='P'");
-
-            return $sql49->fetchall();
-        } else {
-            return 0;
-        }
-    }
-
-    function consultaservicios() {
-//         CONSULTA ULTIMA FACTURA PARA FACTURA UNICA --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        $sql = $this->_db->query("SELECT sosId, sosNombre, sosDescripcion, sosValor FROM servicios WHERE sosEstado='activo'");
-        return $datosservicios = $sql->fetchall();
-    }
-
-    function guardardatosfacturaunica() {
-        if ($_POST) {
-            for ($i = 1; $i < count($_POST['Nombre']); $i++) {
-                $count = $this->_db->exec("INSERT INTO clonardatos (ctosFecha, ctosProveedor, ctosRegistro,ctoscodigo,ctosnombre,ctoscantidad,ctosValor)"
-                        . "VALUES ('" . $_POST['txtfecharegistro'] . "','" . $_POST['txtproveedor'] . "', '" . $_POST['txtEncargado'] . "','" . $_POST['Codigo'][$i] . "','" . $_POST['Nombre'][$i] . "','" . $_POST['Cantidad'][$i] . "','" . $_POST['Valor'][$i] . "')");
-            }
-            return $count;
-        } else {
-
-            return 0;
-        }
-    }
-
-    function GuardarUnicaFactura() {
-        if ($_POST) {
-            $sql = $this->_db->exec("INSERT INTO facturacion_maestro (froNomFctura,froPeriodo,froContrato,froFecha,froFechaVencimiento,froTotalVenta,froEstadoFactura,froObservaciones) VALUES"
-                    . " ('" . $_POST['txtsosId'] . "','" . $_POST['txtPeriodo'] . "','218','" . $_POST['dateFechaElaboracion'] . "','" . $_POST['FechaVencimiento'] . "','" . $_POST['FechaVencimiento'] . "','" . $_POST['total'] . "','PORPAGAR','')");
-
-            return $sql;
-        } else {
-            return 0;
-        }
-    }
-
-//function GuardarUnicaFactura() {
-//    if ($_POST) {
-//        $sql = "INSERT INTO facturacion_maestro (froNomFctura, froPeriodo, froContrato, froFecha, froFechaVencimiento, froTotalVenta, froEstadoFactura, froObservaciones) VALUES"
-//            . " ('9001','9','225','" . $_POST['dateFechaElaboracion'] . "','" . $_POST['dateFechaElaboracion'] . "','" . $_POST['FechaVencimiento'] . "','" . $_POST['total'] . "','PORPAGAR','nada')";
-//
-//        $result = $this->_db->exec($sql);
-//
-//        return $result;
-//    } else {
-//        return false;
-//    }
-//}
+    
 // function Editavalorfactura($arg = false) {
 //        if ($arg) {
 //            
@@ -106,7 +23,9 @@ class facturacionModel extends Model {
 //    }
 //    
 //    ///consulta usuarios sin saldo
-    function Consultausuarionsinsado() {
+    
+    
+     function Consultausuarionsinsado() {
         $sql = $this->_db->query("SELECT uosDocumento, CONCAT_WS(' ',uosNombres, uosApellidos) AS NOMBRES,  CONCAT_WS(' ',uosDireccion,banombre) AS DIRECCION,  banombre, cosId, cosEstado, cosFechainici, cosFechafinal FROM clientes INNER JOIN barrios ON clientes.uosIdBarrio=barrios.baid INNER JOIN contrartos ON clientes.uosDocumento=contrartos.cosIdusuario WHERE	uosEstado='activo' ORDER BY uosNombres ASC");
         return $sql->fetchall();
     }
@@ -122,25 +41,26 @@ class facturacionModel extends Model {
         $sql = $this->_db->query("SELECT uosDocumento, CONCAT_WS(' ',uosNombres, uosApellidos) AS NOMBRES,  CONCAT_WS(' ',uosDireccion,banombre) AS DIRECCION,  banombre, cosId, cosEstado, cosFechainici FROM clientes INNER JOIN barrios ON clientes.uosIdBarrio=barrios.baid INNER JOIN contrartos ON clientes.uosDocumento=contrartos.cosIdusuario WHERE cosEstado='ACTIVO' ORDER BY uosNombres ASC");
         return $sql->fetchall();
     }
-
+    
     //    ///consulta usuarios con saldo
     function Consultausuariosconsaldo() {
         $sql = $this->_db->query("SELECT uosDocumento, CONCAT_WS(' ',uosNombres, uosApellidos) AS NOMBRES,  CONCAT_WS(' ',uosDireccion,banombre) AS DIRECCION,  banombre, cosId, cosEstado, cosFechainici FROM clientes INNER JOIN barrios ON clientes.uosIdBarrio=barrios.baid INNER JOIN contrartos ON clientes.uosDocumento=contrartos.cosIdusuario WHERE cosEstado='ACTIVO' OR cosEstado='SUSPENDIDO' ORDER BY uosNombres ASC");
         return $sql->fetchall();
     }
-
     //    ///consulta Facturas ULtimas por cada Contrato
     function ConsultaFacturaUltimaPorContrato() {
         $sql = $this->_db->query("   SELECT fm.froNomFctura, fm.froPeriodo, fm.froFecha, fm.froTotalVenta, fm.froEstadoFactura, fm.froContrato FROM facturacion_maestro fm INNER JOIN (    SELECT froContrato, MAX(froPeriodo) AS UltimoPeriodo    FROM facturacion_maestro    GROUP BY froContrato) ultima_factura ON fm.froContrato = ultima_factura.froContrato AND fm.froPeriodo = ultima_factura.UltimoPeriodo");
         return $sql->fetchall();
     }
-
+    
     ///consulta barrios
     function consulta_barrios2() {
         $sql = $this->_db->query("SELECT baid, banombre FROM barrios WHERE baestado='activo'");
         return $sql->fetchall();
     }
-
+    
+    
+    
     //    guarda factura pagada
     function GuardarabonoFacturas() {
         if ($_POST) {
@@ -154,21 +74,18 @@ class facturacionModel extends Model {
 
     //    guarda factura pagada
     function creafacturaabono() {
-        if ($_POST) {
-            // Consulta la última factura en la tabla facturacion_maestro
+       if ($_POST) {
+            //          CONSULTA ULTIMA FACTURA --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             $UltimaFacturaMestro = $this->_db->query("SELECT * FROM facturacion_maestro WHERE froNomFctura = (SELECT MAX(froNomFctura) FROM facturacion_maestro) ORDER BY froNomFctura");
             $numerouno = 1;
             $ResultadoUltimafacturamaestroo = $UltimaFacturaMestro->fetchall();
-
-            // Obtiene el número de la última factura y le suma uno para generar un nuevo número de factura
+//          asigno el valor a una variable              
             $numeroantiguo = $ResultadoUltimafacturamaestroo[0]['froNomFctura'];
             $nuevonumfactura = $numeroantiguo + $numerouno;
 
-            // Consulta los datos de la factura existente en la tabla facturacion_maestro
-            $consultadatos = $this->_db->query("SELECT froNomFctura, froPeriodo, froContrato, froFecha, froFechaVencimiento FROM facturacion_maestro WHERE froNomFctura='" . $_POST['txtcodigofactura'] . "'");
+            $consultadatos = $this->_db->query("SELECT froNomFctura,froPeriodo,froContrato,froFecha,froFechaVencimiento FROM facturacion_maestro WHERE froNomFctura='" . $_POST['txtcodigofactura'] . "'");
             $Resultadoconsultadatos = $consultadatos->fetchall();
-
-            // Obtiene los valores de la factura existente
+//          asigno el valor a una variable   
             $numfactura = $Resultadoconsultadatos[0]['froNomFctura'];
             $periodo = $Resultadoconsultadatos[0]['froPeriodo'];
             $numcontrato = $Resultadoconsultadatos[0]['froContrato'];
@@ -178,14 +95,11 @@ class facturacionModel extends Model {
             $NUMFACTURASD = $_POST['txtcodigofactura'];
             $nombreservicio = 'ABONO FACTURA No.' . $NUMFACTURASD;
 
-            // Inserta un nuevo registro en la tabla facturacion_maestro con los valores proporcionados
-            $sql11 = $this->_db->exec("INSERT INTO facturacion_maestro (froNomFctura, froPeriodo, froContrato, froFecha, froFechaVencimiento, froFechaPago, froTotalVenta, froEstadoFactura, froObservaciones) VALUES"
-                    . " ($nuevonumfactura, $periodo, $numcontrato, '" . $Resultadoconsultadatos[0]['froFecha'] . "', '" . $Resultadoconsultadatos[0]['froFechaVencimiento'] . "', '" . $_POST['txtFechaPago'] . "', $valorfactura, 'PAGADA', '$nombreservicio')");
+            $sql11 = $this->_db->exec("INSERT INTO facturacion_maestro (froNomFctura,froPeriodo,froContrato,froFecha,froFechaVencimiento,froFechaPago,froTotalVenta,froEstadoFactura,froObservaciones) VALUES"
+                    . " ($nuevonumfactura,$periodo,$numcontrato,'" . $Resultadoconsultadatos[0]['froFecha'] . "','" . $Resultadoconsultadatos[0]['froFechaVencimiento'] . "','" . $_POST['txtFechaPago'] . "',$valorfactura,'PAGADA','$nombreservicio')");
+            $sql112 = $this->_db->exec("INSERT INTO facturacion_detalle (fleIdFactura,fleCodigoServicio,flePrecioVenta,fleNombreServicio) VALUES ('$nuevonumfactura','17','$valorfactura','$nombreservicio')");
 
-            // Inserta un nuevo registro en la tabla facturacion_detalle con los valores proporcionados
-            $sql112 = $this->_db->exec("INSERT INTO facturacion_detalle (fleIdFactura, fleCodigoServicio, flePrecioVenta, fleNombreServicio) VALUES ('$nuevonumfactura', '17', '$valorfactura', '$nombreservicio')");
-
-            return $sql11l; // No está claro qué es "sq11l", se asume que es un error de escritura y debería ser "sql11"
+            return $sq11l;
         } else {
             return 0;
         }
@@ -200,8 +114,9 @@ class facturacionModel extends Model {
             return 0;
         }
     }
-
-    //    consulta factura un usuario a pagar modal PDF
+    
+    
+  //    consulta factura un usuario a pagar modal PDF
     function ConstultaFacturaPorpagarUnUsuarioPDF($arg = false) {
         if ($arg) {
             $sql = $this->_db->query("SELECT banombre, uosDocumento, CONCAT_WS(' ', uosNombres,uosApellidos) AS Nombresyapellidos, uosDireccion, cosId, froNomFctura, froFecha,froFechaVencimiento,froDescuento, froTotalVenta, CONCAT_WS('/', perMes, PerAno) AS Concepto  FROM barrios INNER JOIN clientes ON barrios.baid=clientes.uosIdBarrio INNER JOIN contrartos ON clientes.uosDocumento=contrartos.cosIdusuario INNER JOIN facturacion_maestro ON contrartos.cosId=facturacion_maestro.froContrato "
@@ -213,8 +128,7 @@ class facturacionModel extends Model {
             return 0;
         }
     }
-
-    //    consulta detalle  factura un usuario a pagar modal PDF
+  //    consulta detalle  factura un usuario a pagar modal PDF
     function ConstultaFacturaDetallePorpagarUnUsuarioPDF($argu = false) {
         if ($argu) {
             $sql46 = $this->_db->query("SELECT fleIdFactura, fleCodigoServicio, flePrecioVenta, fleNombreServicio   FROM facturacion_detalle INNER JOIN facturacion_maestro ON facturacion_detalle.fleIdFactura=facturacion_maestro.froNomFctura INNER JOIN contrartos ON facturacion_maestro.froContrato=contrartos.cosId INNER JOIN clientes ON contrartos.cosIdusuario=clientes.uosDocumento INNER JOIN barrios ON clientes.uosIdBarrio=barrios.baid WHERE froEstadoFactura='PORPAGAR' AND froNomFctura='" . $argu . "'");
@@ -224,11 +138,12 @@ class facturacionModel extends Model {
             return 0;
         }
     }
-
+    
+    
 //    consulta factura a pagar modal PDF
     function ConstultaFacturaPorpagarPDF($arg = false) {
         if ($arg) {
-            $sql = $this->_db->query("SELECT banombre, uosDocumento, CONCAT_WS(' ', uosNombres,uosApellidos) AS Nombresyapellidos, uosDireccion, cosId, froNomFctura, froFecha,froDescuento,froFechaVencimiento, froTotalVenta, CONCAT_WS('/', perMes, PerAno) AS Concepto  FROM barrios INNER JOIN clientes ON barrios.baid=clientes.uosIdBarrio INNER JOIN contrartos ON clientes.uosDocumento=contrartos.cosIdusuario INNER JOIN facturacion_maestro ON contrartos.cosId=facturacion_maestro.froContrato "
+            $sql = $this->_db->query("SELECT banombre, uosDocumento, CONCAT_WS(' ', uosNombres,uosApellidos) AS Nombresyapellidos, uosDireccion, cosId, froNomFctura, froFecha,froFechaVencimiento, froDescuento, froTotalVenta, CONCAT_WS('/', perMes, PerAno) AS Concepto  FROM barrios INNER JOIN clientes ON barrios.baid=clientes.uosIdBarrio INNER JOIN contrartos ON clientes.uosDocumento=contrartos.cosIdusuario INNER JOIN facturacion_maestro ON contrartos.cosId=facturacion_maestro.froContrato "
                     . "INNER JOIN tbperiodos ON facturacion_maestro.froPeriodo=tbperiodos.perId "
                     . "WHERE froEstadoFactura='PORPAGAR' AND baid='" . $arg . "'");
 //            echo $arg;
@@ -251,12 +166,12 @@ class facturacionModel extends Model {
 
 //    CONSULTA FACTURA POR PAGAR TABLA
     function Consulta_Cantidad_Facturas_PORPAGAR() {
-        $sql253 = $this->_db->query("SELECT MAX(froPeriodo) AS ULTIMOPERIODO FROM facturacion_maestro");
-        $RESULT = $sql253->fetchall();
-
-        $ULTP = $RESULT[0]['ULTIMOPERIODO'];
-
-        $sql = $this->_db->query("SELECT uosDocumento, froNomFctura,froContrato,froTotalVenta,froFechaVencimiento, uosNombres,uosApellidos,perMes,froEstadoFactura FROM facturacion_maestro  INNER JOIN contrartos ON facturacion_maestro.froContrato=contrartos.cosId INNER JOIN clientes ON contrartos.cosIdusuario=clientes.uosDocumento INNER JOIN tbperiodos ON facturacion_maestro.froPeriodo=tbperiodos.perId WHERE froEstadoFactura='PORPAGAR' OR froEstadoFactura='PAGADA' AND froPeriodo=$ULTP");
+           $sql253 = $this->_db->query("SELECT MAX(froPeriodo) AS ULTIMOPERIODO FROM facturacion_maestro");
+              $RESULT = $sql253->fetchall();
+   
+           $ULTP = $RESULT[0]['ULTIMOPERIODO'];
+        
+        $sql = $this->_db->query("SELECT uosDocumento,froNomFctura,froContrato,froTotalVenta,froFechaVencimiento, uosNombres, uosApellidos, perMes, froEstadoFactura, cosEstado FROM facturacion_maestro INNER JOIN contrartos ON facturacion_maestro.froContrato=contrartos.cosId INNER JOIN clientes ON contrartos.cosIdusuario=clientes.uosDocumento INNER JOIN tbperiodos ON facturacion_maestro.froPeriodo=tbperiodos.perId WHERE (froEstadoFactura='PORPAGAR' OR froEstadoFactura='VENCIDA' OR froEstadoFactura='PAGADA') AND froPeriodo=$ULTP AND cosEstado='ACTIVO' ORDER BY facturacion_maestro.froContrato ASC");
         return $sql->fetchall();
     }
 
@@ -312,7 +227,7 @@ class facturacionModel extends Model {
 //    CIERRA CICLO
 
     function CerrarCiclo() {
-
+        
         $sql2 = $this->_db->exec("UPDATE facturacion_maestro SET froEstadoFactura='VENCIDA' WHERE froEstadoFactura='PORPAGAR'");
         return $sql2;
     }
@@ -338,47 +253,42 @@ class facturacionModel extends Model {
 
     function generarfacturacion() {
         if ($_POST) {
-
-            // Consulta contratos activos
-            $contratos = $this->_db->query("SELECT cosId, cosIdservicio,cosFechainici FROM contrartos WHERE cosEstado='ACTIVO'");
-            $resulcontrato = $contratos->fetchAll();
+//            consulta contratos activos
+            $contratos = $this->_db->query("SELECT cosId, cosIdservicio FROM contrartos WHERE cosEstado='ACTIVO'");
+            $resulcontrato = $contratos->fetchall();
             $array_j = array();
 
-            // Procedimientos para asignar facturas vencidas
-            // Consulta última factura
+
+
+//            procedimientos asignar facturas vencidas
+//          CONSULTA ULTIMA FACTURA --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             $UltimaFacturaMestro = $this->_db->query("SELECT * FROM facturacion_maestro WHERE froNomFctura = (SELECT MAX(froNomFctura) FROM facturacion_maestro) ORDER BY froNomFctura");
-            $ResultadoUltimafacturamaestro = $UltimaFacturaMestro->fetchAll();
-
-            // Obtener el número de la última factura maestro
+            $ResultadoUltimafacturamaestro = $UltimaFacturaMestro->fetchall();
+//          asigno el valor a una variable              
             $numero_ultima_factura_maestro = $ResultadoUltimafacturamaestro[0]['froNomFctura'];
-
-            // Inicializar variables
+//          creo ciclo con cantidad de consulta--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             $valordeuno = 1;
             $valorFacrurasVencidas = 0;
             $valor_saldo_inicial = 0;
             $valor_saldo_adicional = 0;
             $valor_total_factura = 0;
-
-            // Ciclo para registrar factura maestro
+//            CICLO PARA REGISTRAR FACTURA MAESTRO---------------------------------------------------------------------------------------------------------------------------------------------------------------------
             for ($ct = 0; $ct < count($resulcontrato); $ct++) {
                 $nuevo_numero_de_factura = $numero_ultima_factura_maestro + $valordeuno;
                 $Idcontrato = $resulcontrato[$ct]['cosId'];
 
-                // Insertar nueva factura maestro
                 $sql = $this->_db->exec("INSERT INTO facturacion_maestro (froNomFctura,froPeriodo,froContrato,froFecha,froFechaVencimiento) "
                         . "VALUES ($nuevo_numero_de_factura," . $_POST['txtPeriodo'] . ",$Idcontrato,'" . $_POST['dateFechaFacturacion'] . "','" . $_POST['dateFechaVencimiento'] . "')");
 
-                // Consulta facturas vencidas relacionadas al contrato
                 $facturavencida = $this->_db->query("SELECT froNomFctura, froContrato, froPeriodo, froTotalVenta, froEstadoFactura, CONCAT_WS('/', perMes, PerAno) AS Concepto FROM facturacion_maestro INNER JOIN tbperiodos ON facturacion_maestro.froPeriodo=tbperiodos.perId WHERE froEstadoFactura='VENCIDA' AND froContrato=$Idcontrato");
-                $consultafacturavencida = $facturavencida->fetchAll();
-
-                // Ciclo para registrar detalles de facturas vencidas
+                /** @var type $consultafacturavencida */
+                $consultafacturavencida = $facturavencida->fetchall();
                 for ($FV = 0; $FV < count($consultafacturavencida); $FV++) {
+
                     $codFacvencida = $consultafacturavencida[$FV]['froNomFctura'];
                     $valorFacVencida = $consultafacturavencida[$FV]['froTotalVenta'];
                     $ConceptoVencida = $consultafacturavencida[$FV]['Concepto'];
 
-                    // Insertar detalle de factura vencida
                     $sql5 = $this->_db->exec("INSERT INTO facturacion_detalle (fleIdFactura,fleCodigoServicio,flePrecioVenta,fleNombreServicio)"
                             . "VALUES($nuevo_numero_de_factura,$codFacvencida,$valorFacVencida,'$ConceptoVencida')");
 
@@ -387,38 +297,33 @@ class facturacionModel extends Model {
                     $sql136 = $this->_db->exec("UPDATE facturacion_maestro SET froEstadoFactura='VENCIDA_ASIGNADA' WHERE froNomFctura=$codFacvencida");
                 }
 
-                // Consulta servicio inicial del contrato
                 $ConsultaservicioInicial_CTO = $this->_db->query("SELECT cosIdservicio,sosNombre,sosValor FROM contrartos INNER JOIN servicios ON contrartos.cosIdservicio=servicios.sosId WHERE contrartos.cosId=$Idcontrato");
-                $resultadoSercio_Inicial_CTO = $ConsultaservicioInicial_CTO->fetchAll();
-
-                // Ciclo para registrar detalles de servicio inicial
+                $resultadoSercio_Inicial_CTO = $ConsultaservicioInicial_CTO->fetchall();
+//                CICLO PARA REGISTRAR EL DETALLA DE LA FACTURA---------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 for ($FC = 0; $FC < count($resultadoSercio_Inicial_CTO); $FC++) {
+
                     $idservicio = $resultadoSercio_Inicial_CTO[$FC]['cosIdservicio'];
                     $sosNombres = $resultadoSercio_Inicial_CTO[$FC]['sosNombre'];
                     $sosValors = $resultadoSercio_Inicial_CTO[$FC]['sosValor'];
 
-                    // Insertar detalle de servicio inicial en factura
                     $sql5 = $this->_db->exec("INSERT INTO facturacion_detalle (fleIdFactura,fleCodigoServicio,flePrecioVenta,fleNombreServicio)"
                             . "VALUES($nuevo_numero_de_factura,$idservicio,$sosValors,'$sosNombres')");
-
                     $valor_saldo_inicial = $resultadoSercio_Inicial_CTO[$FC]['sosValor'];
                 }
 
-                // Consulta servicios adicionales del contrato
                 $ConsultaservicioAdicional_CTO = $this->_db->query("SELECT spfId,spfIdServicio,spfEstado,sosNombre,sosValor,spfValor FROM servicios_por_facturar INNER JOIN servicios ON servicios_por_facturar.spfIdServicio=servicios.sosId WHERE servicios_por_facturar.spfIdContrato=$Idcontrato AND servicios_por_facturar.spfEstado='P'");
-                $resultadoSercio_Adicional_CTO = $ConsultaservicioAdicional_CTO->fetchAll();
-
+                $resultadoSercio_Adicional_CTO = $ConsultaservicioAdicional_CTO->fetchall();
                 if (empty($resultadoSercio_Adicional_CTO)) {
-                    // No hay servicios adicionales
+
+//              ESTA VACIA -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 } else {
-                    // Ciclo para registrar detalles de servicios adicionales
                     for ($Fda = 0; $Fda < count($resultadoSercio_Adicional_CTO); $Fda++) {
                         $IDSERVICIOADICIONAL = $resultadoSercio_Adicional_CTO[$Fda]['spfId'];
                         $idservicioa = $resultadoSercio_Adicional_CTO[$Fda]['spfIdServicio'];
                         $sosNombresa = $resultadoSercio_Adicional_CTO[$Fda]['sosNombre'];
                         $sosValorsa = $resultadoSercio_Adicional_CTO[$Fda]['spfValor'];
 
-                        // Insertar detalle de servicio adicional en factura
+
                         $sql6 = $this->_db->exec("INSERT INTO facturacion_detalle (fleIdFactura,fleCodigoServicio,flePrecioVenta,fleNombreServicio)"
                                 . "VALUES($nuevo_numero_de_factura,$idservicioa,$sosValorsa,'$sosNombresa')");
 
@@ -427,25 +332,23 @@ class facturacionModel extends Model {
                         $valor_saldo_adicional = $resultadoSercio_Adicional_CTO[$Fda]['sosValor'];
                     }
                 }
-
                 $valordeuno++;
                 $count = +1;
+//                $valor_total_factura = $valor_saldo_adicional + $valor_saldo_inicial + $valorFacrurasVencidas;
 
-                // Obtener el valor total de la factura
                 $consultavalortotalFac = $this->_db->query("SELECT SUM(flePrecioVenta) AS totalvalor FROM facturacion_detalle WHERE fleIdFactura = $nuevo_numero_de_factura");
-                $resultadovalortotalfac = $consultavalortotalFac->fetchAll();
+                $resultadovalortotalfac = $consultavalortotalFac->fetchall();
 
                 $valor_total_factura = $resultadovalortotalfac[0]['totalvalor'];
-
                 $sql7 = $this->_db->exec("UPDATE facturacion_maestro SET froTotalVenta=$valor_total_factura, froEstadoFactura='PORPAGAR' WHERE froNomFctura=$nuevo_numero_de_factura");
-
                 $valor_saldo_inicial = 0;
                 $valor_saldo_adicional = 0;
                 $valor_total_factura = 0;
 
+
+
                 $sql8 = $this->_db->exec("UPDATE tbperiodos SET perEstado='a' WHERE perId=" . $_POST['txtPeriodo'] . "");
             }
-
             return $count;
         } else {
             return 0;
