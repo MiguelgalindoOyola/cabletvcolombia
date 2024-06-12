@@ -1,6 +1,6 @@
 <?php
 
-define('RUTA_URL', 'http://localhost/CABLETVCOLOMBIA/');
+define('RUTA_URL', 'http://localhost/cabletvcolombia/');
 define('COMMON', RUTA_URL . 'public/common/');
 define('BASE_URL_LIB', ROOT . 'core/library' . DS);
 define('DEFAULT_CONTROLLER', 'inicio');
